@@ -1,0 +1,6 @@
+-*- mode: org; mode: visual-line; -*-
+#+STARTUP: indent
+
+* `shado-clj`
+
+The SHADO monome rendering library in Lua for the monome norns.
