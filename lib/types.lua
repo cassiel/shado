@@ -38,7 +38,7 @@ function LampState.new(level, blend)
     return self
 end
 
-LampState.OFF = LampState.new(0, 1)
+LampState.OFF = LampState.new(0, 0)
 LampState.ON = LampState.new(1, 0)
 LampState.THRU = LampState.new(0, 1)
 LampState.FLIP = LampState.new(0, -1)
