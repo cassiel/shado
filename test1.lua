@@ -5,13 +5,13 @@ local g = nil
 
 
 for k, _ in pairs(package.loaded) do
-    if k:find("shado/lib/") == 1 then
+    if k:find("shado-lua/lib/") == 1 then
         print("rm " .. k)
         package.loaded[k] = nil
     end
 end
 
-local f1 = require "shado/lib/f1"
+local f1 = require "shado-lua/lib/f1"
 
 print(">>>")
 print(f1)

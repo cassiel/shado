@@ -1,6 +1,14 @@
 -*- mode: org; mode: visual-line; -*-
 #+STARTUP: indent
 
-* `shado-clj`
+* =shado-lua=
 
 The SHADO monome rendering library in Lua for the monome norns.
+
+** Unit Testing
+
+From the =code= directory, test with
+
+#+BEGIN_SRC shell-script
+  lua shado-lua/test-all.lua
+#+END_SRC

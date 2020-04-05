@@ -1,7 +1,5 @@
 -- -*- lua-indent-level: 4; -*-
 
-local types = { }
-
 local LampState = { }
 LampState.__index = LampState
 
@@ -51,5 +49,6 @@ function LampState:againstBlack()
     return self:cover(LampState.OFF).level
 end
 
-types.LampState = LampState
-return types
+return {
+    LampState = LampState
+}
