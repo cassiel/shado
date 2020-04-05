@@ -3,8 +3,8 @@
 
 local lu = require "luaunit"
 
-local types = require "shado-lua/lib/types"
-local blocks = require "shado-lua/lib/blocks"
+local types = require "shado-lua.lib.types"
+local blocks = require "shado-lua.lib.blocks"
 local inspect = require "inspect"
 
 test_Other = {

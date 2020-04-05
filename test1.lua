@@ -3,7 +3,6 @@
 
 local g = nil
 
-
 for k, _ in pairs(package.loaded) do
     if k:find("shado-lua/lib/") == 1 then
         print("rm " .. k)
@@ -11,7 +10,7 @@ for k, _ in pairs(package.loaded) do
     end
 end
 
-local f1 = require "shado-lua/lib/f1"
+local f1 = require "shado-lua.lib.f1"
 
 print(">>>")
 print(f1)
