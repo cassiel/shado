@@ -5,7 +5,7 @@ local types = require "shado-lua.lib.types"
 local Block = { }
 Block.__index = Block
 
-function Block.new(width, height)
+function block_wh(width, height)
     local lamps = { }
 
     for x = 1, width do
@@ -20,6 +20,17 @@ function Block.new(width, height)
             lamps = lamps}
 
     return setmetatable(self, Block)
+end
+
+function block_str(pattern)
+end
+
+function Block.new(a1, a2)
+    if type(a1) == "string" and a2 == nil then
+        return block_str(a1)
+    else
+        return block_wh(a1, a2)
+    end
 end
 
 function Block:setLamp(x, y, lampState)

@@ -78,6 +78,19 @@ test_Blocks = {
 
         b:fill(types.LampState.ON)
         lu.assertEquals(b:getLamp(1, 1), types.LampState.ON, "lamp state")
+    end,
+
+    testCreateFromRows = function ()
+        local b = blocks.Block.new("1010 .... ././")
+
+        lu.assertEquals(b.getLamp(2, 0), LampState.ON, "lamp 1")
+        lu.assertEquals(b.getLamp(0, 1), LampState.THRU, "lamp 2")
+        lu.assertEquals(b.getLamp(3, 2), LampState.FLIP, "lamp 3")
+    end,
+
+    testCanMakeThinBlocks = function()
+        local b1 = blocks.Block.new(1, 10)
+        local b2 = blocks.Block.new(10, 1)
     end
 }
 
