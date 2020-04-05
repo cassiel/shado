@@ -1,10 +1,11 @@
 -- -*- lua-indent-level: 4; -*-
 -- Unit testing.
 
-local lu = require "shado-lua/lib/luaunit"
+local lu = require "luaunit"
 
 local types = require "shado-lua/lib/types"
 local blocks = require "shado-lua/lib/blocks"
+local inspect = require "inspect"
 
 test_Other = {
     test_Fooble = function ()
@@ -64,10 +65,18 @@ test_Types = {
 }
 
 test_Blocks = {
-    testSimpleLampSet = function()
+    testSimpleLampSet = function ()
         local b = blocks.Block.new(1, 1)
 
         b:setLamp(1, 1, types.LampState.ON)
+        lu.assertEquals(b:getLamp(1, 1), types.LampState.ON, "lamp state")
+    end,
+
+    testCanFill = function ()
+        local b = blocks.Block.new(2, 2)
+        -- print(inspect.inspect(b))
+
+        b:fill(types.LampState.ON)
         lu.assertEquals(b:getLamp(1, 1), types.LampState.ON, "lamp state")
     end
 }

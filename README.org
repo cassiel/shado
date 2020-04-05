@@ -5,6 +5,24 @@
 
 The SHADO monome rendering library in Lua for the monome norns.
 
+** Setup
+
+Install =luarocks= (the Lua package manager) and =luaunit= (the unit testing library). On norns:
+
+#+BEGIN_SRC shell-script
+  sudo apt-get install luarocks
+  sudo luarocks install luaunit
+#+END_SRC
+
+To run the tests on macOS (with Homebrew):
+
+#+BEGIN_SRC shell-script
+  brew install luarocks
+  luarocks install luaunit
+#+END_SRC
+
+We also use the library =inspect= for some debugging in the tests; install as above.
+
 ** Unit Testing
 
 From the =code= directory, test with
