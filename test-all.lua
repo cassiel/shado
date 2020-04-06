@@ -83,9 +83,21 @@ test_Blocks = {
     testCreateFromRows = function ()
         local b = blocks.Block.new("1010 .... ././")
 
-        lu.assertEquals(b.getLamp(2, 0), LampState.ON, "lamp 1")
-        lu.assertEquals(b.getLamp(0, 1), LampState.THRU, "lamp 2")
-        lu.assertEquals(b.getLamp(3, 2), LampState.FLIP, "lamp 3")
+        lu.assertEquals(b:getLamp(2, 0), types.LampState.ON, "lamp 1")
+        lu.assertEquals(b:getLamp(0, 1), types.LampState.THRU, "lamp 2")
+        lu.assertEquals(b:getLamp(3, 2), types.LampState.FLIP, "lamp 3")
+    end,
+
+    testOutsideRangeForSet = function ()
+        local b = blocks.Block.new(1, 1)
+        lu.assertErrorMsgContains("XXX",
+                                  b.setLamp, b,
+                                  10, 10, types.LampState.ON)
+    end,
+
+    testOutsideRangeForGet = function ()
+        local b = blocks.Block.new(1, 1)
+        lu.assertEquals(b:getLamp(10, 10), types.LampState.THRU, "out of range > THRU")
     end,
 
     testCanMakeThinBlocks = function()
