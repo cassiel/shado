@@ -90,7 +90,7 @@ test_Blocks = {
 
     testOutsideRangeForSet = function ()
         local b = blocks.Block.new(1, 1)
-        lu.assertErrorMsgContains("XXX",
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange",
                                   b.setLamp, b,
                                   10, 10, types.LampState.ON)
     end,

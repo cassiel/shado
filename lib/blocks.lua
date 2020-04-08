@@ -34,7 +34,11 @@ function Block.new(a1, a2)
 end
 
 function Block:setLamp(x, y, lampState)
-    self.lamps[x][y] = lampState
+    if x >= 1 and x <= self.width and y >= 1 and y <= self.height then
+        self.lamps[x][y] = lampState
+    else
+        error("shado: setLamp: coordinates (" .. x .. ", " .. y .. ") out of range")
+    end
 end
 
 function Block:fill(lampState)
@@ -46,7 +50,11 @@ function Block:fill(lampState)
 end
 
 function Block:getLamp(x, y)
-    return self.lamps[x][y]
+    if x >= 1 and x <= self.width and y >= 1 and y <= self.height then
+        return self.lamps[x][y]
+    else
+        return types.LampState.THRU
+    end
 end
 
 return {
