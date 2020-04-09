@@ -84,15 +84,15 @@ test_Blocks = {
     testCreateFromTokens = function ()
         local b = blocks.Block.new("1010 .... ././")
 
-        lu.assertEquals(b:getLamp(2, 0), types.LampState.ON, "lamp 1")
-        lu.assertEquals(b:getLamp(0, 1), types.LampState.THRU, "lamp 2")
-        lu.assertEquals(b:getLamp(3, 2), types.LampState.FLIP, "lamp 3")
+        lu.assertEquals(b:getLamp(3, 1), types.LampState.ON, "lamp 1")
+        lu.assertEquals(b:getLamp(1, 2), types.LampState.THRU, "lamp 2")
+        lu.assertEquals(b:getLamp(4, 3), types.LampState.FLIP, "lamp 3")
     end,
 
     testDetectsBadTokenLists = function ()
-        lu.assertErrorMsgMatches(".*%sshado:%s.*%slength mismatch",
+        lu.assertErrorMsgMatches(".*%sshado: length mismatch%s.*",
                                  blocks.Block.new, "11 111")
-        lu.assertErrorMsgMatches(".*%sshado:%s.*%sbad token",
+        lu.assertErrorMsgMatches(".*%sshado: bad character%s.*",
                                  blocks.Block.new, "111 000 00$")
     end,
 

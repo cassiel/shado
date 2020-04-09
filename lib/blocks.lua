@@ -36,24 +36,29 @@ function block_str(pattern)
     local toks = { }
 
     -- Determine width and height:
-    for tok in pattern.match("%S+") do
+    for tok in string.gmatch(pattern, "%S+") do
         if width > 0 and #tok ~= width then
             error("shado: length mismatch in block token \"" .. tok .. "\"")
         else
             width = #tok
         end
 
-        toks.add(tok)
+        table.insert(toks, tok)
     end
 
     local b = block_wh(width, #toks)
 
     for y = 1, #toks do
         local tok = toks[y]
-        local x = 1
-        for t in tok.gmatch("01%./") do
-            b:setLamp(x, y, lampStateForChar[t])
-            x = x + 1
+
+        if string.match(tok, "^[01./]+$") then
+            local x = 1
+            for t in string.gmatch(tok, "[01./]") do
+                b:setLamp(x, y, lampStateForChar[t])
+                x = x + 1
+            end
+        else
+            error("shado: bad character in block token: \"" .. tok .. "\"")
         end
     end
 
