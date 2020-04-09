@@ -15,14 +15,49 @@ function block_wh(width, height)
         end
     end
 
-    self = {width = width,
-            height = height,
-            lamps = lamps}
+    result = {width = width,
+              height = height,
+              lamps = lamps}
 
-    return setmetatable(self, Block)
+    return setmetatable(result, Block)
 end
 
+local lampStateForChar = { }
+lampStateForChar["0"] = types.LampState.OFF
+lampStateForChar["1"] = types.LampState.ON
+lampStateForChar["."] = types.LampState.THRU
+lampStateForChar["/"] = types.LampState.FLIP
+
 function block_str(pattern)
+    -- pattern is a string of space-separated tokens, each of which is composed from 01./
+    -- denoting OFF, ON, THRU and FLIP respectively.
+    local width = 0
+
+    local toks = { }
+
+    -- Determine width and height:
+    for tok in pattern.match("%S+") do
+        if width > 0 and #tok ~= width then
+            error("shado: length mismatch in block token \"" .. tok .. "\"")
+        else
+            width = #tok
+        end
+
+        toks.add(tok)
+    end
+
+    local b = block_wh(width, #toks)
+
+    for y = 1, #toks do
+        local tok = toks[y]
+        local x = 1
+        for t in tok.gmatch("01%./") do
+            b:setLamp(x, y, lampStateForChar[t])
+            x = x + 1
+        end
+    end
+
+    return b
 end
 
 function Block.new(a1, a2)

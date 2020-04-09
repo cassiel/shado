@@ -5,6 +5,7 @@ local lu = require "luaunit"
 
 local types = require "shado-lua.lib.types"
 local blocks = require "shado-lua.lib.blocks"
+local frames = require "shado-lua.lib.frames"
 local inspect = require "inspect"
 
 test_Other = {
@@ -80,12 +81,19 @@ test_Blocks = {
         lu.assertEquals(b:getLamp(1, 1), types.LampState.ON, "lamp state")
     end,
 
-    testCreateFromRows = function ()
+    testCreateFromTokens = function ()
         local b = blocks.Block.new("1010 .... ././")
 
         lu.assertEquals(b:getLamp(2, 0), types.LampState.ON, "lamp 1")
         lu.assertEquals(b:getLamp(0, 1), types.LampState.THRU, "lamp 2")
         lu.assertEquals(b:getLamp(3, 2), types.LampState.FLIP, "lamp 3")
+    end,
+
+    testDetectsBadTokenLists = function ()
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%slength mismatch",
+                                 blocks.Block.new, "11 111")
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%sbad token",
+                                 blocks.Block.new, "111 000 00$")
     end,
 
     testOutsideRangeForSet = function ()
@@ -100,9 +108,38 @@ test_Blocks = {
         lu.assertEquals(b:getLamp(10, 10), types.LampState.THRU, "out of range > THRU")
     end,
 
-    testCanMakeThinBlocks = function()
+    testCanMakeThinBlocks = function ()
         local b1 = blocks.Block.new(1, 10)
         local b2 = blocks.Block.new(10, 1)
+    end
+}
+
+test_Frames = {
+    testFrameChecksItemRange = function ()
+        f = frames.Frame.new()
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange",
+                                 f.get, f, 0)
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange",
+                                 f.get, f, 1)
+    end,
+
+    testCanAddToBottom = function ()
+        f = frame.Frames.new()
+        b1 = blocks.Block.new(0, 0)
+        b2 = blocks.Block.new(0, 0)
+
+        f:add(b1, 1, 1)
+        f:add(b2, 1, 1)
+
+        lu.assertIs(f:get(1), b1)
+        lu.assertIs(f:get(2), b2)
+
+        -- Test chaining:
+        f = frame.Frames.new()
+        f:add(b1, 1, 1):add(b2, 1, 1)
+
+        lu.assertIs(f:get(1), b1)
+        lu.assertIs(f:get(2), b2)
     end
 }
 
