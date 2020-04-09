@@ -10,10 +10,28 @@ function Frame.new()
 end
 
 function Frame:add(item)
-   return self
+    -- Stacking order: [1] is lowest, [#len] is highest. "add" adds to "top".
+    table.insert(self.contentStack, item)
+    return self
 end
 
 function Frame:get(i)
+    if i < 1 or i > #self.contentStack then
+        error("shado: frame index out of range: " .. i)
+    else
+        return self.contentStack[i]
+    end
+
+end
+
+function Frame:getLamp(x, y)
+    local result = types.LampState.THRU
+
+    for i = 1, #self.contentStack do
+        result = self.contentStack[i]:getLamp(x, y):cover(result)
+    end
+
+    return result
 end
 
 return {

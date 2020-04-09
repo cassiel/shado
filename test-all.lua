@@ -117,16 +117,16 @@ test_Blocks = {
 test_Frames = {
     testFrameChecksItemRange = function ()
         f = frames.Frame.new()
-        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange",
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange:.*",
                                  f.get, f, 0)
-        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange",
+        lu.assertErrorMsgMatches(".*%sshado:%s.*%srange:.*",
                                  f.get, f, 1)
     end,
 
     testCanAddToBottom = function ()
-        f = frame.Frames.new()
-        b1 = blocks.Block.new(0, 0)
-        b2 = blocks.Block.new(0, 0)
+        local f = frames.Frame.new()
+        local b1 = blocks.Block.new(0, 0)
+        local b2 = blocks.Block.new(0, 0)
 
         f:add(b1, 1, 1)
         f:add(b2, 1, 1)
@@ -135,11 +135,21 @@ test_Frames = {
         lu.assertIs(f:get(2), b2)
 
         -- Test chaining:
-        f = frame.Frames.new()
+        f = frames.Frame.new()
         f:add(b1, 1, 1):add(b2, 1, 1)
 
         lu.assertIs(f:get(1), b1)
         lu.assertIs(f:get(2), b2)
+    end,
+
+    testFrameStackingOrder = function ()
+        local f = frames.Frame.new()
+        f:add(blocks.Block.new('1')):add(blocks.Block.new('0'))
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
+
+        f = frames.Frame.new()
+        f:add(blocks.Block.new('1')):add(blocks.Block.new('/'))
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
     end
 }
 
