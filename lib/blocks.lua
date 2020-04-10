@@ -22,11 +22,12 @@ function block_wh(width, height)
     return setmetatable(result, Block)
 end
 
-local lampStateForChar = { }
-lampStateForChar["0"] = types.LampState.OFF
-lampStateForChar["1"] = types.LampState.ON
-lampStateForChar["."] = types.LampState.THRU
-lampStateForChar["/"] = types.LampState.FLIP
+local lampStateForChar = {
+    ["0"] = types.LampState.OFF,
+    ["1"] = types.LampState.ON,
+    ["."] = types.LampState.THRU,
+    ["/"] = types.LampState.FLIP
+}
 
 function block_str(pattern)
     -- pattern is a string of space-separated tokens, each of which is composed from 01./
