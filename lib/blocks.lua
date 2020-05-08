@@ -88,6 +88,8 @@ function Block:fill(lampState)
             self.lamps[x][y] = lampState
         end
     end
+
+    return self
 end
 
 function Block:getLamp(x, y)

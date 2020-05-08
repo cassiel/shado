@@ -156,46 +156,32 @@ test_Frames = {
 
 test_ViewPorts = {
     testCanCropOnBlock = function ()
-        --[[
-        IPressRouter block = new Block(4, 4).fill(LampState.ON);
-        IRenderable cropped = new ViewPort(block, 0, 1, 4, 2);
-
-        assertEquals("above/1", LampState.THRU, cropped.getLamp(0, 0));
-        assertEquals("within/1", LampState.ON, cropped.getLamp(0, 1));
-        assertEquals("within/2", LampState.ON, cropped.getLamp(3, 2));
-        assertEquals("above/1", LampState.THRU, cropped.getLamp(3, 3));
-        ]]
-
         local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
         -- args: (x, y, width, height). (1, 1) is normalised viewport position, Lua-style.
         local cropped = viewports.ViewPort.new(block, 1, 2, 4, 2)
 
-        --[[
         lu.assertEquals(cropped:getLamp(1, 1), types.LampState.THRU, "above/1")
         lu.assertEquals(cropped:getLamp(1, 2), types.LampState.ON, "within/1")
         lu.assertEquals(cropped:getLamp(4, 3), types.LampState.ON, "within/2")
-        lu.assertEquals(cropped:getLamp(4, 4), types.LampState.THRU, "above/1")
-        ]]
+        lu.assertEquals(cropped:getLamp(4, 4), types.LampState.THRU, "below/1")
     end,
 
     testCanMoveWindow = function ()
-        --[[
-        IPressRouter block = new Block(4, 4).fill(LampState.ON);
-        ViewPort cropped = new ViewPort(block, 0, 0, 2, 2);
+        local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
+        local cropped = viewports.ViewPort.new(block, 1, 1, 2, 2)
 
-        assertEquals("TL/1", LampState.ON, cropped.getLamp(0, 0));
-        assertEquals("BR/1", LampState.THRU, cropped.getLamp(3, 3));
+        lu.assertEquals(cropped:getLamp(1, 1), types.LampState.ON, "TL/1")
+        lu.assertEquals(cropped:getLamp(4, 4), types.LampState.THRU, "BR/1")
 
-        cropped.setX(2);
+        cropped:setX(3)
 
-        assertEquals("TL/2", LampState.THRU, cropped.getLamp(0, 0));
-        assertEquals("BR/2", LampState.THRU, cropped.getLamp(3, 3));
+        lu.assertEquals(cropped:getLamp(1, 1), types.LampState.THRU, "TL/2")
+        lu.assertEquals(cropped:getLamp(4, 4), types.LampState.THRU, "BR/2")
 
-        cropped.setY(2);
+        cropped:setY(3)
 
-        assertEquals("TL/3", LampState.THRU, cropped.getLamp(0, 0));
-        assertEquals("BR/3", LampState.ON, cropped.getLamp(3, 3));
-        ]]
+        lu.assertEquals(cropped:getLamp(1, 1), types.LampState.THRU, "TL/3")
+        lu.assertEquals(cropped:getLamp(4, 4), types.LampState.ON, "BR/3")
     end,
 
     testWillMapPressToLocalCoordinates = function ()
