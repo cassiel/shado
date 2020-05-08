@@ -5,7 +5,7 @@ local types = require "shado.lib.types"
 local Block = { }
 Block.__index = Block
 
-function block_wh(width, height)
+local function block_wh(width, height)
     local lamps = { }
 
     for x = 1, width do
@@ -29,7 +29,7 @@ local lampStateForChar = {
     ["/"] = types.LampState.FLIP
 }
 
-function block_str(pattern)
+local function block_str(pattern)
     -- pattern is a string of space-separated tokens, each of which is composed from 01./
     -- denoting OFF, ON, THRU and FLIP respectively.
     local width = 0
