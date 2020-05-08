@@ -15,9 +15,9 @@ local function block_wh(width, height)
         end
     end
 
-    result = {width = width,
-              height = height,
-              lamps = lamps}
+    local result = {width = width,
+                    height = height,
+                    lamps = lamps}
 
     return setmetatable(result, Block)
 end

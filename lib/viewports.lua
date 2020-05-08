@@ -6,7 +6,7 @@ local ViewPort = { }
 ViewPort.__index = ViewPort
 
 function ViewPort.new(content, x, y, width, height)
-    result = {
+    local result = {
         content = content,
         x = x,
         y = y,
