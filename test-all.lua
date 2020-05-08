@@ -3,9 +3,9 @@
 
 local lu = require "luaunit"
 
-local types = require "shado-lua.lib.types"
-local blocks = require "shado-lua.lib.blocks"
-local frames = require "shado-lua.lib.frames"
+local types = require "shado.lib.types"
+local blocks = require "shado.lib.blocks"
+local frames = require "shado.lib.frames"
 local inspect = require "inspect"
 
 test_Other = {

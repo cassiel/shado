@@ -1,6 +1,6 @@
 -- -*- lua-indent-level: 4; -*-
 
-local types = require "shado-lua.lib.types"
+local types = require "shado.lib.types"
 
 local Block = { }
 Block.__index = Block
