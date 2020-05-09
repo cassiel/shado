@@ -158,6 +158,30 @@ test_Frames = {
         local f = frames.Frame.new():add(blocks.Block.new('1'), 2, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
         lu.assertEquals(f:getLamp(2, 1), types.LampState.ON)
+    end,
+
+    testCanMoveInFrame = function ()
+        local f = frames.Frame.new()
+        local b = blocks.Block.new('1')
+
+        f:add(b, 1, 1)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+        lu.assertEquals(f:getLamp(2, 2), types.LampState.THRU)
+
+        f:moveTo(b, 2, 2)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
+        lu.assertEquals(f:getLamp(2, 2), types.LampState.ON)
+    end,
+
+    testErrorFindingInFrame = function ()
+        local f = frames.Frame.new()
+        local b1 = blocks.Block.new('1')
+        local b2 = blocks.Block.new('1')
+
+        f:add(b1, 1, 1)
+
+        lu.assertErrorMsgMatches(".*%sshado: item not found in frame.*",
+                                 f.moveTo, f, b2, 1, 1)
     end
 }
 

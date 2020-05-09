@@ -15,13 +15,34 @@ function Frame:add(item, x, y)
     return self
 end
 
+local function find00(stack, item)
+    for _, v in pairs(stack) do
+        if v.item == item then
+            return v
+        end
+    end
+
+    return nil
+end
+
+function Frame:moveTo(item, x, y)
+    local v = find00(self.contentStack, item)
+
+    if v then
+        v.x = x
+        v.y = y
+        return self
+    else
+        error("shado: item not found in frame")
+    end
+end
+
 function Frame:get(i)
     if i < 1 or i > #self.contentStack then
         error("shado: frame index out of range: " .. i)
     else
         return self.contentStack[i].item
     end
-
 end
 
 function Frame:getLamp(x, y)
