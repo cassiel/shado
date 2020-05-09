@@ -117,7 +117,7 @@ test_Blocks = {
 
 test_Frames = {
     testFrameChecksItemRange = function ()
-        f = frames.Frame.new()
+        local f = frames.Frame.new()
         lu.assertErrorMsgMatches(".*%sshado:%s.*%srange:.*",
                                  f.get, f, 0)
         lu.assertErrorMsgMatches(".*%sshado:%s.*%srange:.*",
