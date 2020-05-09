@@ -9,9 +9,9 @@ function Frame.new()
    return setmetatable({contentStack = { }}, Frame)
 end
 
-function Frame:add(item)
+function Frame:add(item, x, y)
     -- Stacking order: [1] is lowest, [#len] is highest. "add" adds to "top".
-    table.insert(self.contentStack, item)
+    table.insert(self.contentStack, {item = item, x = x, y = y})
     return self
 end
 
@@ -19,7 +19,7 @@ function Frame:get(i)
     if i < 1 or i > #self.contentStack then
         error("shado: frame index out of range: " .. i)
     else
-        return self.contentStack[i]
+        return self.contentStack[i].item
     end
 
 end
@@ -28,7 +28,8 @@ function Frame:getLamp(x, y)
     local result = types.LampState.THRU
 
     for i = 1, #self.contentStack do
-        result = self.contentStack[i]:getLamp(x, y):cover(result)
+        local entry = self.contentStack[i]
+        result = entry.item:getLamp(x - entry.x + 1, y - entry.y + 1):cover(result)
     end
 
     return result

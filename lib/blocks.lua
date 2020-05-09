@@ -93,6 +93,10 @@ function Block:fill(lampState)
 end
 
 function Block:getLamp(x, y)
+    --[[
+        TODO Could just do an "(expr or THRU)" for this, rather than range check?
+        (At least for the inner dimension.)
+    ]]
     if x >= 1 and x <= self.width and y >= 1 and y <= self.height then
         return self.lamps[x][y]
     else

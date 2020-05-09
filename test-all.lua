@@ -146,12 +146,18 @@ test_Frames = {
 
     testFrameStackingOrder = function ()
         local f = frames.Frame.new()
-        f:add(blocks.Block.new('1')):add(blocks.Block.new('0'))
+        f:add(blocks.Block.new('1'), 1, 1):add(blocks.Block.new('0'), 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
 
         f = frames.Frame.new()
-        f:add(blocks.Block.new('1')):add(blocks.Block.new('/'))
+        f:add(blocks.Block.new('1'), 1, 1):add(blocks.Block.new('/'), 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
+    end,
+
+    testFrameOffset = function ()
+        local f = frames.Frame.new():add(blocks.Block.new('1'), 2, 1)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
+        lu.assertEquals(f:getLamp(2, 1), types.LampState.ON)
     end
 }
 
@@ -219,12 +225,54 @@ test_Rendering = {
     testBlockRender = function ()
         local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
         local grid = mockGrid()
-        local renderer = renderers.BinaryBlockRenderer.new(grid)
+        local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
 
         renderer:render(block)
 
         local expected = {
-            "x=1 y=1 v=1.00",
+            "x=1 y=1 v=15.00",
+            "x=2 y=1 v=15.00",
+            "refresh"
+        }
+
+        lu.assertEquals(grid.logging, expected)
+    end,
+
+    testFrameRender = function ()
+        local block = blocks.Block.new(2, 2):fill(types.LampState.ON)
+        local frame = frames.Frame.new()
+
+        -- Shift block to right:
+        frame:add(block, 2, 1)
+
+        local grid = mockGrid()
+        local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
+
+        renderer:render(frame)
+
+        local expected = {
+            "x=1 y=1 v=0.00",
+            "x=2 y=1 v=15.00",
+            "refresh"
+        }
+
+        lu.assertEquals(grid.logging, expected)
+    end,
+
+    testViewPortRender = function ()
+        local block = blocks.Block.new(2, 2):fill(types.LampState.ON)
+
+        -- Port starts at (2, 1):
+        local port = viewports.ViewPort.new(block, 2, 1, 1, 1)
+
+        local grid = mockGrid()
+        local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
+
+        renderer:render(port)
+
+        local expected = {
+            "x=1 y=1 v=0.00",
+            "x=2 y=1 v=15.00",
             "refresh"
         }
 
