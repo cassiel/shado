@@ -11,7 +11,7 @@ for x = 1, 16 do
         --g:all(0)
         g:led(x, y, 15)
         g:refresh()
-        lastX = X
-        lastY = Y
+        lastX = x
+        lastY = y
     end
 end
