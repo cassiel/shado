@@ -7,6 +7,7 @@ local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
 local viewports = require "shado.lib.viewports"
 local frames = require "shado.lib.frames"
+local renderers = require "shado.lib.renderers"
 local inspect = require "inspect"
 
 test_Other = {
@@ -185,114 +186,49 @@ test_ViewPorts = {
     end,
 
     testWillMapPressToLocalCoordinates = function ()
-        --[[
-        final IPressable pressable = itsContext.mock(IPressable.class);
-
-        itsContext.checking(new Expectations() {{
-            //	Expect a press at (0, 0):
-            one(pressable).press(0, 0, 1); will(returnValue(true));
-        }});
-
-        IPressRouter b = new Block(2, 2);
-
-        ViewPort w =
-            new ViewPort(b, 1, 0, 1, 1) {
-                @Override public boolean press(int x, int y, int how) {
-                    return pressable.press(x, y, how);
-                }
-            };
-
-        assertNull("window press out of range", w.routePress00(0, 0));
-        assertNotNull("window press in range", w.routePress00(1, 0));
-        ]]
     end,
 
     testWillCorrectlyPassPressesToContents = function ()
-        --[[
-		final IPressable pressable = itsContext.mock(IPressable.class);
-
-		itsContext.checking(new Expectations() {{
-			//	Expect a press at (1, 0):
-			one(pressable).press(1, 0, 1); will(returnValue(true));
-		}});
-
-		//	We'll expect a press to the inner block:
-		IPressRouter b = new Block(2, 2) {
-			@Override public boolean press(int x, int y, int how) {
-				return pressable.press(x, y, how);
-			}
-		};
-
-		//	The port is at X=1:
-		ViewPort w =
-			new ViewPort(b, 1, 0, 1, 1) {
-				@Override public boolean press(int x, int y, int how) {
-					return false;
-				}
-			};
-
-		assertNull("port press out of range", w.routePress00(0, 0));
-		assertNotNull("port press in range", w.routePress00(1, 0));
-        ]]
-	end,
+    end,
 
     testPortWillNotPassFrameStampToContent = function ()
-        --[[
-        final IPressable pressable = itsContext.mock(IPressable.class);
-
-        itsContext.checking(new Expectations() {{
-                                    //	only expect the bottom item to route a click:
-            one(pressable).press(0, 0, 1); will(returnValue(true));
-        }});
-
-        IPressRouter b = new Block(1, 1) {
-            @Override public boolean press(int x, int y, int how) {
-                return pressable.press(x, y, how);
-            }
-        };
-
-        ViewPort p = new ViewPort(b, 0, 0, 1, 1);
-
-        Frame f = new Frame();
-
-        f.add(p, 0, 0);
-
-        assertNotNull("press", f.routePress00(0, 0));
-        ]]
     end,
 
     testPressEventsCorrelateWhenViewPortMoves = function ()
-        --[[
-        final IPressable pressable = itsContext.mock(IPressable.class);
+    end
+}
 
-        itsContext.checking(new Expectations() {{
-                                    one(pressable).press(0, 0, 1); will(returnValue(true));
-                                    one(pressable).press(0, 0, 0); will(returnValue(true));
-        }});
+local function mockGrid()
+    local logging = { }
 
-        IPressRouter b = new Block(2, 2) {
-            @Override public boolean press(int x, int y, int how) {
-                return pressable.press(x, y, how);
-                                                                  }
-                                         };
+    return {
+        led = function (self, x, y, val)
+            -- Truncated float formatting so that we can compare precisely:
+            table.insert(logging, string.format("x=%d y=%d v=%.2f", x, y, val))
+        end,
 
-        ViewPort p = new ViewPort(b, 0, 0, 2, 2);
+        refresh = function (self)
+            table.insert(logging, "refresh")
+        end,
 
-        PressManager mgr = new PressManager(p);
+        logging = logging
+    }
+end
 
-        //	press, with 2x2 port directly over block:
-            mgr.press(0, 0, 1);
+test_Rendering = {
+    testBlockRender = function ()
+        local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
+        local grid = mockGrid()
+        local renderer = renderers.BinaryBlockRenderer.new(grid)
 
-        //	move the port:
-            p.setX(p.getX() + 1);
+        renderer:render(block)
 
-        //	release: should still be at (0, 0).
-            mgr.press(0, 0, 0);
+        local expected = {
+            "x=1 y=1 v=1.00",
+            "refresh"
+        }
 
-        //	press again (ignored, since it's now outside the port,
-		//	even though a hidden part of the block is here):
-            mgr.press(0, 0, 1);
-        ]]
+        lu.assertEquals(grid.logging, expected)
     end
 }
 
