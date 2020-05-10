@@ -126,28 +126,38 @@ test_Blocks = {
 PushBlock = blocks.Block:new()
 
 function PushBlock:press(x, y, how)
-    print("SAW PRESS")
+    self.handledX = x
+    self.handledY = y
     return true
 end
 
 test_BlocksInput = {
     testCanRouteSimpleOriginPress = function ()
+        local pb = PushBlock:new(2, 1)
+        pb:routePress00(2, 1, true)
+        lu.assertEquals(pb.handledX, 2)
+        lu.assertEquals(pb.handledY, 1)
+    end,
+
+    testIgnoresPressesOutOfRange = function ()
         local pb = PushBlock:new(1, 1)
-        pb.press(1, 1, true)
+        pb:routePress00(2, 1, true)
+        lu.assertNil(pb.handledX)
+        lu.assertNil(pb.handledY)
     end,
 
     testCanRouteSimpleOriginPressViaPatch = function ()
-        local b = blocks.Block:new(1, 1)
+        local b = blocks.Block:new(2, 1)
 
         function b:press(x, y, how)
-            print("PATCHED PRESS")
+            self.handledX = x
+            self.handledY = y
             return true
         end
 
-        b.press(1, 1, true)
-    end,
-
-    testWillNotRoutePressesOutsideRange = function ()
+        b:routePress00(2, 1, true)
+        lu.assertEquals(b.handledX, 2)
+        lu.assertEquals(b.handledY, 1)
     end
 }
 

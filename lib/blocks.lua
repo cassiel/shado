@@ -82,8 +82,12 @@ function Block:new(a1, a2)
     end
 end
 
+function Block:inRange(x, y)
+    return x >= 1 and x <= self.width and y >= 1 and y <= self.height
+end
+
 function Block:setLamp(x, y, lampState)
-    if x >= 1 and x <= self.width and y >= 1 and y <= self.height then
+    if self:inRange(x, y) then
         self.lamps[x][y] = lampState
     else
         error("shado: setLamp: coordinates (" .. x .. ", " .. y .. ") out of range")
@@ -105,7 +109,7 @@ function Block:getLamp(x, y)
         TODO Could just do an "(expr or THRU)" for this, rather than range check?
         (At least for the inner dimension.)
     ]]
-    if x >= 1 and x <= self.width and y >= 1 and y <= self.height then
+    if self:inRange(x, y) then
         return self.lamps[x][y]
     else
         return types.LampState.THRU
@@ -113,9 +117,21 @@ function Block:getLamp(x, y)
 end
 
 function Block:press(x, y, how)
-    -- Default press handler returns false, meaning press ignored.
-    -- TODO needs to delegate to dynamic method after we've range-checked.
+    --[[
+        Default press handler returns false, meaning press ignored.
+        Contract that x and y are within block coordinates.
+        Subclasses override this.
+    ]]
     return false
+end
+
+function Block:routePress00(x, y, how)
+    if self:inRange(x, y) and self:press(x, y, how) then
+        -- TODO proper press tracking here
+        return "XXXXX"
+    else
+        return nil
+    end
 end
 
 return {
