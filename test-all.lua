@@ -120,10 +120,19 @@ test_Blocks = {
     end
 }
 
+-- Machinery for Blocks inheritance:
+
+PushBlock = blocks.Block:new()
+
+function PushBlock:press(x, y, how)
+    print("SAW PRESS")
+    return true
+end
+
 test_BlocksInput = {
     testCanRouteSimpleOriginPress = function ()
-        local b = blocks.Block:new(1, 1)
-
+        local pb = PushBlock:new(1, 1)
+        pb.press(1, 1, true)
     end,
 
     testWillNotRoutePressesOutsideRange = function ()

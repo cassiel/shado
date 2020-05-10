@@ -3,7 +3,6 @@
 local types = require "shado.lib.types"
 
 local Block = { }
-Block.__index = Block
 
 local function block_wh(self, width, height)
     local lamps = { }
@@ -19,6 +18,13 @@ local function block_wh(self, width, height)
                     height = height,
                     lamps = lamps}
 
+    --[[
+        Different machinery here compared to Frame and ViewPort, since we expect
+        inheritance from Block.
+        TODO fix up Frame and ViewPort to match in style.
+    ]]
+
+    self.__index = self
     return setmetatable(result, self)
 end
 
@@ -67,7 +73,9 @@ local function block_str(self, pattern)
 end
 
 function Block:new(a1, a2)
-    if type(a1) == "string" and a2 == nil then
+    if a1 == nil then -- Empty-constructor used for inheritance.
+        return block_wh(self, 0, 0)
+    elseif type(a1) == "string" and a2 == nil then
         return block_str(self, a1)
     else
         return block_wh(self, a1, a2)
@@ -102,6 +110,12 @@ function Block:getLamp(x, y)
     else
         return types.LampState.THRU
     end
+end
+
+function Block:press(x, y, how)
+    -- Default press handler returns false, meaning press ignored.
+    -- TODO needs to delegate to dynamic method after we've range-checked.
+    return false
 end
 
 return {
