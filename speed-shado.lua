@@ -1,5 +1,12 @@
 -- SHADO speed-test.
 
+for k, _ in pairs(package.loaded) do
+    if k:find("shado/lib/") == 1 then
+        print("rm " .. k)
+        package.loaded[k] = nil
+    end
+end
+
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
 local frames = require "shado.lib.frames"
