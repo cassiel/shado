@@ -1,7 +1,7 @@
 -- SHADO speed-test.
 
 for k, _ in pairs(package.loaded) do
-    if k:find("shado/lib/") == 1 then
+    if k:find("shado.lib.") == 1 then
         print("rm " .. k)
         package.loaded[k] = nil
     end
@@ -28,8 +28,7 @@ end
 
 -- EFFORT 2
 local frame = frames.Frame.new():add(block, 1, 1)
-print("get", frame.get)
-print("moveTo", frame.moveTo)
+
 for x = 1, 16 do
     for y = 1, 8 do
         frame:moveTo(block, x, y)
