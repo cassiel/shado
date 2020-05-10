@@ -258,6 +258,26 @@ test_ViewPorts = {
 
         lu.assertEquals(cropped:getLamp(1, 1), types.LampState.THRU, "TL/3")
         lu.assertEquals(cropped:getLamp(4, 4), types.LampState.ON, "BR/3")
+    end
+}
+
+test_ViewPortsInput = {
+    testPressInRange = function ()
+        local block = blocks.Block:new(4, 4)
+        local port = viewports.ViewPort:new(block, 1, 1, 1, 1)
+
+        function block:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        port:routePress00(1, 1, true)
+        lu.assertEquals(block.handledX, 1)
+        lu.assertEquals(block.handledY, 1)
+    end,
+
+    testPressOutOfRange = function ()
     end,
 
     testWillMapPressToLocalCoordinates = function ()
@@ -271,6 +291,7 @@ test_ViewPorts = {
 
     testPressEventsCorrelateWhenViewPortMoves = function ()
     end
+
 }
 
 local function mockGrid()

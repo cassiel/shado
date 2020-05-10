@@ -25,12 +25,24 @@ function ViewPort:setY(y)
     self.y = y
 end
 
+function ViewPort:inRange(x, y)
+    return x >= self.x and x < self.x + self.width
+        and y >= self.y and y < self.y + self.height
+end
+
 function ViewPort:getLamp(x, y)
-    if x >= self.x and x < self.x + self.width
-    and y >= self.y and y < self.y + self.height then
+    if self:inRange(x, y) then
         return self.content:getLamp(x, y)
     else
         return types.LampState.THRU
+    end
+end
+
+function ViewPort:routePress00(x, y, how)
+    if self:inRange(x, y) then
+        return self.content:routePress00(x, y, how)
+    else
+        return nil
     end
 end
 
