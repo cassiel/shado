@@ -5,8 +5,8 @@ local types = require "shado.lib.types"
 local Frame = { }
 Frame.__index = Frame
 
-function Frame.new()
-   return setmetatable({contentStack = { }}, Frame)
+function Frame:new()
+   return setmetatable({contentStack = { }}, self)
 end
 
 function Frame:add(item, x, y)

@@ -69,14 +69,14 @@ test_Types = {
 
 test_Blocks = {
     testSimpleLampSet = function ()
-        local b = blocks.Block.new(1, 1)
+        local b = blocks.Block:new(1, 1)
 
         b:setLamp(1, 1, types.LampState.ON)
         lu.assertEquals(b:getLamp(1, 1), types.LampState.ON, "lamp state")
     end,
 
     testCanFill = function ()
-        local b = blocks.Block.new(2, 2)
+        local b = blocks.Block:new(2, 2)
         -- print(inspect.inspect(b))
 
         b:fill(types.LampState.ON)
@@ -84,7 +84,7 @@ test_Blocks = {
     end,
 
     testCreateFromTokens = function ()
-        local b = blocks.Block.new("1010 .... ././")
+        local b = blocks.Block:new("1010 .... ././")
 
         lu.assertEquals(b:getLamp(3, 1), types.LampState.ON, "lamp 1")
         lu.assertEquals(b:getLamp(1, 2), types.LampState.THRU, "lamp 2")
@@ -92,33 +92,47 @@ test_Blocks = {
     end,
 
     testDetectsBadTokenLists = function ()
+        local function new(str)
+            return blocks.Block:new(str)
+        end
+
         lu.assertErrorMsgMatches(".*%sshado: length mismatch%s.*",
-                                 blocks.Block.new, "11 111")
+                                 new, "11 111")
         lu.assertErrorMsgMatches(".*%sshado: bad character%s.*",
-                                 blocks.Block.new, "111 000 00$")
+                                 new, "111 000 00$")
     end,
 
     testOutsideRangeForSet = function ()
-        local b = blocks.Block.new(1, 1)
+        local b = blocks.Block:new(1, 1)
         lu.assertErrorMsgMatches(".*%sshado:%s.*%srange",
                                   b.setLamp, b,
                                   10, 10, types.LampState.ON)
     end,
 
     testOutsideRangeForGet = function ()
-        local b = blocks.Block.new(1, 1)
+        local b = blocks.Block:new(1, 1)
         lu.assertEquals(b:getLamp(10, 10), types.LampState.THRU, "out of range > THRU")
     end,
 
     testCanMakeThinBlocks = function ()
-        local b1 = blocks.Block.new(1, 10)
-        local b2 = blocks.Block.new(10, 1)
+        local b1 = blocks.Block:new(1, 10)
+        local b2 = blocks.Block:new(10, 1)
+    end
+}
+
+test_BlocksInput = {
+    testCanRouteSimpleOriginPress = function ()
+        local b = blocks.Block:new(1, 1)
+
+    end,
+
+    testWillNotRoutePressesOutsideRange = function ()
     end
 }
 
 test_Frames = {
     testFrameChecksItemRange = function ()
-        local f = frames.Frame.new()
+        local f = frames.Frame:new()
         lu.assertErrorMsgMatches(".*%sshado:%s.*%srange:.*",
                                  f.get, f, 0)
         lu.assertErrorMsgMatches(".*%sshado:%s.*%srange:.*",
@@ -126,9 +140,9 @@ test_Frames = {
     end,
 
     testCanAddToBottom = function ()
-        local f = frames.Frame.new()
-        local b1 = blocks.Block.new(0, 0)
-        local b2 = blocks.Block.new(0, 0)
+        local f = frames.Frame:new()
+        local b1 = blocks.Block:new(0, 0)
+        local b2 = blocks.Block:new(0, 0)
 
         f:add(b1, 1, 1)
         f:add(b2, 1, 1)
@@ -137,7 +151,7 @@ test_Frames = {
         lu.assertIs(f:get(2), b2)
 
         -- Test chaining:
-        f = frames.Frame.new()
+        f = frames.Frame:new()
         f:add(b1, 1, 1):add(b2, 1, 1)
 
         lu.assertIs(f:get(1), b1)
@@ -145,24 +159,24 @@ test_Frames = {
     end,
 
     testFrameStackingOrder = function ()
-        local f = frames.Frame.new()
-        f:add(blocks.Block.new('1'), 1, 1):add(blocks.Block.new('0'), 1, 1)
+        local f = frames.Frame:new()
+        f:add(blocks.Block:new('1'), 1, 1):add(blocks.Block:new('0'), 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
 
-        f = frames.Frame.new()
-        f:add(blocks.Block.new('1'), 1, 1):add(blocks.Block.new('/'), 1, 1)
+        f = frames.Frame:new()
+        f:add(blocks.Block:new('1'), 1, 1):add(blocks.Block:new('/'), 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
     end,
 
     testFrameOffset = function ()
-        local f = frames.Frame.new():add(blocks.Block.new('1'), 2, 1)
+        local f = frames.Frame:new():add(blocks.Block:new('1'), 2, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
         lu.assertEquals(f:getLamp(2, 1), types.LampState.ON)
     end,
 
     testCanMoveInFrame = function ()
-        local f = frames.Frame.new()
-        local b = blocks.Block.new('1')
+        local f = frames.Frame:new()
+        local b = blocks.Block:new('1')
 
         f:add(b, 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
@@ -174,9 +188,9 @@ test_Frames = {
     end,
 
     testErrorFindingInFrame = function ()
-        local f = frames.Frame.new()
-        local b1 = blocks.Block.new('1')
-        local b2 = blocks.Block.new('1')
+        local f = frames.Frame:new()
+        local b1 = blocks.Block:new('1')
+        local b2 = blocks.Block:new('1')
 
         f:add(b1, 1, 1)
 
@@ -187,9 +201,9 @@ test_Frames = {
 
 test_ViewPorts = {
     testCanCropOnBlock = function ()
-        local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
+        local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
         -- args: (x, y, width, height). (1, 1) is normalised viewport position, Lua-style.
-        local cropped = viewports.ViewPort.new(block, 1, 2, 4, 2)
+        local cropped = viewports.ViewPort:new(block, 1, 2, 4, 2)
 
         lu.assertEquals(cropped:getLamp(1, 1), types.LampState.THRU, "above/1")
         lu.assertEquals(cropped:getLamp(1, 2), types.LampState.ON, "within/1")
@@ -198,8 +212,8 @@ test_ViewPorts = {
     end,
 
     testCanMoveWindow = function ()
-        local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
-        local cropped = viewports.ViewPort.new(block, 1, 1, 2, 2)
+        local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
+        local cropped = viewports.ViewPort:new(block, 1, 1, 2, 2)
 
         lu.assertEquals(cropped:getLamp(1, 1), types.LampState.ON, "TL/1")
         lu.assertEquals(cropped:getLamp(4, 4), types.LampState.THRU, "BR/1")
@@ -247,7 +261,7 @@ end
 
 test_Rendering = {
     testBlockRender = function ()
-        local block = blocks.Block.new(4, 4):fill(types.LampState.ON)
+        local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
         local grid = mockGrid()
         local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
 
@@ -263,8 +277,8 @@ test_Rendering = {
     end,
 
     testFrameRender = function ()
-        local block = blocks.Block.new(2, 2):fill(types.LampState.ON)
-        local frame = frames.Frame.new()
+        local block = blocks.Block:new(2, 2):fill(types.LampState.ON)
+        local frame = frames.Frame:new()
 
         -- Shift block to right:
         frame:add(block, 2, 1)
@@ -284,10 +298,10 @@ test_Rendering = {
     end,
 
     testViewPortRender = function ()
-        local block = blocks.Block.new(2, 2):fill(types.LampState.ON)
+        local block = blocks.Block:new(2, 2):fill(types.LampState.ON)
 
         -- Port starts at (2, 1):
-        local port = viewports.ViewPort.new(block, 2, 1, 1, 1)
+        local port = viewports.ViewPort:new(block, 2, 1, 1, 1)
 
         local grid = mockGrid()
         local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)

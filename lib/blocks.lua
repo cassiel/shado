@@ -5,7 +5,7 @@ local types = require "shado.lib.types"
 local Block = { }
 Block.__index = Block
 
-local function block_wh(width, height)
+local function block_wh(self, width, height)
     local lamps = { }
 
     for x = 1, width do
@@ -19,7 +19,7 @@ local function block_wh(width, height)
                     height = height,
                     lamps = lamps}
 
-    return setmetatable(result, Block)
+    return setmetatable(result, self)
 end
 
 local lampStateForChar = {
@@ -29,7 +29,7 @@ local lampStateForChar = {
     ["/"] = types.LampState.FLIP
 }
 
-local function block_str(pattern)
+local function block_str(self, pattern)
     -- pattern is a string of space-separated tokens, each of which is composed from 01./
     -- denoting OFF, ON, THRU and FLIP respectively.
     local width = 0
@@ -47,7 +47,7 @@ local function block_str(pattern)
         table.insert(toks, tok)
     end
 
-    local b = block_wh(width, #toks)
+    local b = block_wh(self, width, #toks)
 
     for y = 1, #toks do
         local tok = toks[y]
@@ -66,11 +66,11 @@ local function block_str(pattern)
     return b
 end
 
-function Block.new(a1, a2)
+function Block:new(a1, a2)
     if type(a1) == "string" and a2 == nil then
-        return block_str(a1)
+        return block_str(self, a1)
     else
-        return block_wh(a1, a2)
+        return block_wh(self, a1, a2)
     end
 end
 

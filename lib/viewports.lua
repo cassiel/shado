@@ -5,7 +5,7 @@ local types = require "shado.lib.types"
 local ViewPort = { }
 ViewPort.__index = ViewPort
 
-function ViewPort.new(content, x, y, width, height)
+function ViewPort:new(content, x, y, width, height)
     local result = {
         content = content,
         x = x,
@@ -14,7 +14,7 @@ function ViewPort.new(content, x, y, width, height)
         height = height
     }
 
-    return setmetatable(result, ViewPort)
+    return setmetatable(result, self)
 end
 
 function ViewPort:setX(x)
