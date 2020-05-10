@@ -121,6 +121,7 @@ test_Blocks = {
 }
 
 -- Machinery for Blocks inheritance:
+-- TODO we'll need to allow arbitrary arguments in sub-class constructors.
 
 PushBlock = blocks.Block:new()
 
