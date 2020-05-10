@@ -135,6 +135,17 @@ test_BlocksInput = {
         pb.press(1, 1, true)
     end,
 
+    testCanRouteSimpleOriginPressViaPatch = function ()
+        local b = blocks.Block:new(1, 1)
+
+        function b:press(x, y, how)
+            print("PATCHED PRESS")
+            return true
+        end
+
+        b.press(1, 1, true)
+    end,
+
     testWillNotRoutePressesOutsideRange = function ()
     end
 }
