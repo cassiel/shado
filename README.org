@@ -30,3 +30,8 @@ From the directory containing =shado= (on the norns that would be =/home/we/dust
 #+BEGIN_SRC shell-script
   lua shado/test-all.lua
 #+END_SRC
+
+** Comparison with Java SHADO
+
+- All coordinates have origin or top-left at =(1, 1)= (Lua-style) rather than =(0, 0)=.
+- Rename: =ViewPort= is now called =Mask=, which is a bit snappier and more indicative of what it actually does.
