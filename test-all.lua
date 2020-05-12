@@ -5,7 +5,7 @@ local lu = require "luaunit"
 
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
-local viewports = require "shado.lib.viewports"
+local masks = require "shado.lib.masks"
 local frames = require "shado.lib.frames"
 local renderers = require "shado.lib.renderers"
 local inspect = require "inspect"
@@ -230,11 +230,11 @@ test_Frames = {
     end
 }
 
-test_ViewPorts = {
+test_Masks = {
     testCanCropOnBlock = function ()
         local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
-        -- args: (x, y, width, height). (1, 1) is normalised viewport position, Lua-style.
-        local cropped = viewports.ViewPort:new(block, 1, 2, 4, 2)
+        -- args: (x, y, width, height). (1, 1) is normalised mask position, Lua-style.
+        local cropped = masks.Mask:new(block, 1, 2, 4, 2)
 
         lu.assertEquals(cropped:getLamp(1, 1), types.LampState.THRU, "above/1")
         lu.assertEquals(cropped:getLamp(1, 2), types.LampState.ON, "within/1")
@@ -244,7 +244,7 @@ test_ViewPorts = {
 
     testCanMoveWindow = function ()
         local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
-        local cropped = viewports.ViewPort:new(block, 1, 1, 2, 2)
+        local cropped = masks.Mask:new(block, 1, 1, 2, 2)
 
         lu.assertEquals(cropped:getLamp(1, 1), types.LampState.ON, "TL/1")
         lu.assertEquals(cropped:getLamp(4, 4), types.LampState.THRU, "BR/1")
@@ -261,10 +261,10 @@ test_ViewPorts = {
     end
 }
 
-test_ViewPortsInput = {
+test_MasksInput = {
     testPressInRange = function ()
         local block = blocks.Block:new(4, 4)
-        local port = viewports.ViewPort:new(block, 1, 1, 1, 1)
+        local port = masks.Mask:new(block, 1, 1, 1, 1)
 
         function block:press(x, y, how)
             self.handledX = x
@@ -289,7 +289,7 @@ test_ViewPortsInput = {
     testPortWillNotPassFrameStampToContent = function ()
     end,
 
-    testPressEventsCorrelateWhenViewPortMoves = function ()
+    testPressEventsCorrelateWhenMaskMoves = function ()
     end
 
 }
@@ -349,11 +349,11 @@ test_Rendering = {
         lu.assertEquals(grid.logging, expected)
     end,
 
-    testViewPortRender = function ()
+    testMaskRender = function ()
         local block = blocks.Block:new(2, 2):fill(types.LampState.ON)
 
         -- Port starts at (2, 1):
-        local port = viewports.ViewPort:new(block, 2, 1, 1, 1)
+        local port = masks.Mask:new(block, 2, 1, 1, 1)
 
         local grid = mockGrid()
         local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
