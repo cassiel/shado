@@ -125,9 +125,9 @@ function Block:press(x, y, how)
     return false
 end
 
-function Block:routePress00(x, y, how)
-    if self:inRange(x, y) and self:press(x, y, how) then
-        -- TODO proper press tracking here
+function Block:routePress00(x, y)
+    if self:inRange(x, y) and self:press(x, y, 1) then
+        -- TODO proper press tracking
         return "XXXXX"
     else
         return nil

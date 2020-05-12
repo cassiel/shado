@@ -134,14 +134,14 @@ end
 test_BlocksInput = {
     testCanRouteSimpleOriginPress = function ()
         local pb = PushBlock:new(2, 1)
-        pb:routePress00(2, 1, true)
+        pb:routePress00(2, 1)
         lu.assertEquals(pb.handledX, 2)
         lu.assertEquals(pb.handledY, 1)
     end,
 
     testIgnoresPressesOutOfRange = function ()
         local pb = PushBlock:new(1, 1)
-        pb:routePress00(2, 1, true)
+        pb:routePress00(2, 1)
         lu.assertNil(pb.handledX)
         lu.assertNil(pb.handledY)
     end,
@@ -155,7 +155,7 @@ test_BlocksInput = {
             return true
         end
 
-        b:routePress00(2, 1, true)
+        b:routePress00(2, 1)
         lu.assertEquals(b.handledX, 2)
         lu.assertEquals(b.handledY, 1)
     end
@@ -264,7 +264,7 @@ test_Masks = {
 test_MasksInput = {
     testPressInRange = function ()
         local block = blocks.Block:new(4, 4)
-        local port = masks.Mask:new(block, 1, 1, 1, 1)
+        local mask = masks.Mask:new(block, 1, 1, 1, 1)
 
         function block:press(x, y, how)
             self.handledX = x
@@ -272,26 +272,159 @@ test_MasksInput = {
             return true
         end
 
-        port:routePress00(1, 1, true)
+        mask:routePress00(1, 1)
         lu.assertEquals(block.handledX, 1)
         lu.assertEquals(block.handledY, 1)
     end,
 
     testPressOutOfRange = function ()
+        local block = blocks.Block:new(4, 4)
+        local mask = masks.Mask:new(block, 4, 4, 1, 1)
+
+        function block:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        mask:routePress00(1, 1)
+        lu.assertNil(block.handledX)
+        lu.assertNil(block.handledY)
     end,
 
-    testWillMapPressToLocalCoordinates = function ()
+    testWillMapPressToMaskCoordinates = function ()
+        --[[
+            If the mask handles the press, the coordinates are relative to the view port in the mask,
+            not the mask origin. Also checks that the block doesn't get the press if the mask does.
+        ]]
+        local block = blocks.Block:new(4, 4)
+        local mask = masks.Mask:new(block, 2, 1, 1, 1)
+
+        function block:pressed(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        function mask:pressed(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        mask:routePress00(2, 1)
+        lu.assertEquals(mask.handledX, 1)
+        lu.assertEquals(mask.handledY, 1)
+        lu.assertNil(block.handledX)
+        lu.assertNil(block.handledY)
+    end,
+
+    testWillMapPressToMaskAndContent = function ()
+        --[[
+            If the mask returns false from the press, it's passed to the contents.
+        ]]
+        local block = blocks.Block:new(4, 4)
+        local mask = masks.Mask:new(block, 1, 1, 1, 1)
+
+        function block:pressed(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        function mask:pressed(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return false
+        end
+
+        mask:routePress00(1, 1)
+        lu.assertEquals(mask.handledX, 1)
+        lu.assertEquals(mask.handledY, 1)
+        lu.assertEquals(block.handledX, 1)
+        lu.assertEquals(block.handledY, 1)
     end,
 
     testWillCorrectlyPassPressesToContents = function ()
+        --[[
+            Any contained object will receive presses at their own coordinates, regardness
+            of the position of the mask. TODO I could be persuaded to change this to use
+            mask port coordinates, but I feel masks should have minimal functional impact.
+        ]]
+        local block = blocks.Block:new(4, 4)
+        local mask = masks.Mask:new(block, 2, 1, 1, 1)
+
+        function block:pressed(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        mask:routePress00(2, 1)
+        lu.assertEquals(block.handledX, 2)
+        lu.assertEquals(block.handledY, 1)
     end,
 
     testPortWillNotPassFrameStampToContent = function ()
+        --[[
+            Historical test, not quite sure what it's testing, other than propagation.
+        ]]
+        local block = blocks.Block:new(1, 1)
+
+        function block:pressed(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        local mask = masks.Mask:new(block, 1, 1, 1, 1)
+        local frame = frames.Frame:new()
+
+        frame:add(mask, 1, 1)
+
+        frame:routePress00(1, 1)
+
+        lu.assertEquals(block.handledX, 1)
+        lu.assertEquals(block.handledY, 1)
     end,
 
     testPressEventsCorrelateWhenMaskMoves = function ()
+        local block = blocks.Block:new(2, 2)
+
+        local history = { }
+
+        function block:pressed(x, y, how)
+            history.append{x = x, y = y, how = how}
+        end
+
+        local mask = masks.Mask:new(block, 1, 1, 2, 2)
+
+        --[[ TODO
+        mgr = PressManager(mask)
+
+        -- press, with 2x2 port directly over block:
+        mgr:press(1, 1, 1)
+
+        -- move the port:
+        mask:setX(mask:getX() + 1)
+
+        -- release: should still be at (1, 1) on the block:
+        mgr:press(1, 1, 0)
+
+        -- press again (ignored, since it's now outside the port,
+        -- even though a hidden part of the block is here):
+        mgr:press(1, 1, 1)
+
+        lu.assertEquals({
+                {x = 1, y = 1, how = 1},
+                {x = 1, y = 1, how = 0}},
+            history)
+        ]]
     end
 
+}
+
+test_FramesInput = {
 }
 
 local function mockGrid()

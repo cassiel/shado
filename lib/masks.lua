@@ -38,9 +38,9 @@ function Mask:getLamp(x, y)
     end
 end
 
-function Mask:routePress00(x, y, how)
+function Mask:routePress00(x, y)
     if self:inRange(x, y) then
-        return self.content:routePress00(x, y, how)
+        return self.content:routePress00(x, y)
     else
         return nil
     end

@@ -56,6 +56,11 @@ function Frame:getLamp(x, y)
     return result
 end
 
+function Frame:routePress00(x, y)
+    -- TODO
+    return nil
+end
+
 return {
    Frame = Frame
 }
