@@ -365,11 +365,12 @@ test_MasksInput = {
         lu.assertEquals(block.handledY, 1)
     end,
 
-    testPortWillNotPassFrameStampToContent = function ()
+    testMaskWillNotPassFrameStampToContent = function ()
         --[[
-            Historical test, not quite sure what it's testing, other than propagation.
+            Historical test, not quite sure what it\'s testing, other than propagation
+            from Frame to Mask to Block (with offset)
         ]]
-        local block = blocks.Block:new(1, 1)
+        local block = blocks.Block:new(2, 1)
 
         function block:pressed(x, y, how)
             self.handledX = x
@@ -377,15 +378,38 @@ test_MasksInput = {
             return true
         end
 
-        local mask = masks.Mask:new(block, 1, 1, 1, 1)
+        local mask = masks.Mask:new(block, 1, 1, 2, 1)
         local frame = frames.Frame:new()
 
-        frame:add(mask, 1, 1)
+        frame:add(mask, 1, 2)
 
-        frame:routePress00(1, 1)
+        frame:routePress00(2, 2)
 
         lu.assertEquals(block.handledX, 1)
-        lu.assertEquals(block.handledY, 1)
+        lu.assertEquals(block.handledY, 2)
+    end,
+
+    testMaskCanHandlePressWithOffset = function ()
+        local block = blocks.Block:new(2, 2)
+
+        function block:press(x, y, how)
+            self.wasWronglyPressed = true
+            return true
+        end
+
+        local mask = masks.Mask:new(block, 2, 2, 1, 1)
+
+        function mask:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        mask:routePress00(2, 2)
+
+        lu.assertNil(block.wasWronglyPressed)
+        lu.assertEquals(mask.handledX, 1)
+        lu.assertEquals(mask.handledY, 1)
     end,
 
     testPressEventsCorrelateWhenMaskMoves = function ()
@@ -504,4 +528,4 @@ test_Rendering = {
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--verbose")
+runner:runSuite("--pattern", "MasksInput.*", "--verbose")

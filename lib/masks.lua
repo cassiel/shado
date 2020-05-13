@@ -38,9 +38,23 @@ function Mask:getLamp(x, y)
     end
 end
 
+function Mask:press(x, y, how)
+    return false
+end
+
 function Mask:routePress00(x, y)
     if self:inRange(x, y) then
-        return self.content:routePress00(x, y)
+        -- Are we handling the press in the mask directly?
+        -- TODO: should be x - self.x + 1, but let's unit test first.
+        local portX = x - self.x + 1
+        local portY = y - self.y + 1
+        local done = self:press(portX, portY, 1)
+
+        if done then
+            return "TODO" -- PressRouteResult(self, x, y)
+        else
+            return self.content:routePress00(x, y)
+        end
     else
         return nil
     end
