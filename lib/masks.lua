@@ -48,7 +48,7 @@ function Mask:routePress00(x, y)
         -- TODO: should be x - self.x + 1, but let's unit test first.
         local portX = x - self.x + 1
         local portY = y - self.y + 1
-        local done = self:press(portX, portY, 1)
+        local done = (self:press(portX, portY, 1) ~= false)
 
         if done then
             return "TODO" -- PressRouteResult(self, x, y)

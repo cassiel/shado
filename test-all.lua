@@ -128,7 +128,6 @@ PushBlock = blocks.Block:new()
 function PushBlock:press(x, y, how)
     self.handledX = x
     self.handledY = y
-    return true
 end
 
 test_BlocksInput = {
@@ -152,7 +151,6 @@ test_BlocksInput = {
         function b:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         b:routePress00(2, 1)
@@ -269,7 +267,6 @@ test_MasksInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         mask:routePress00(1, 1)
@@ -284,7 +281,6 @@ test_MasksInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         mask:routePress00(1, 1)
@@ -304,13 +300,11 @@ test_MasksInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         function mask:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         mask:routePress00(2, 1)
@@ -330,7 +324,6 @@ test_MasksInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         function mask:press(x, y, how)
@@ -359,7 +352,6 @@ test_MasksInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         mask:routePress00(2, 1)
@@ -373,7 +365,6 @@ test_MasksInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         local mask = masks.Mask:new(block, 1, 1, 2, 1)
@@ -392,7 +383,6 @@ test_MasksInput = {
 
         function block:press(x, y, how)
             self.wasWronglyPressed = true
-            return true
         end
 
         local mask = masks.Mask:new(block, 2, 2, 1, 1)
@@ -400,7 +390,6 @@ test_MasksInput = {
         function mask:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         mask:routePress00(2, 2)
@@ -453,7 +442,6 @@ test_FramesInput = {
         function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         local frame = frames.Frame:new()
@@ -474,7 +462,6 @@ test_FramesInput = {
         function frame:press(x, y, how)
             self.handledX = x
             self.handledY = y
-            return true
         end
 
         frame:routePress00(1, 2)

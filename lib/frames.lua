@@ -64,7 +64,7 @@ function Frame:routePress00(x, y)
     -- TODO: optional local handling of presses
     -- TODO: if we care: what if stack content changes as a result of press() calls?
     -- (We should dup.)
-    if self:press(x, y, 1) then
+    if self:press(x, y, 1) ~= false then
         return "TODO"
     else
         for _, v in ipairs(self.contentStack) do
