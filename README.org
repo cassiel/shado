@@ -35,3 +35,4 @@ From the directory containing =shado= (on the norns that would be =/home/we/dust
 
 - All coordinates have origin or top-left at =(1, 1)= (Lua-style) rather than =(0, 0)=.
 - Rename: =ViewPort= is now called =Mask=, which is a bit snappier and more indicative of what it actually does.
+- (TODO) =press()= to return =nil= to signify success; reserve =false= as ignore.

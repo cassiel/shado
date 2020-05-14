@@ -16,7 +16,7 @@ function Frame:add(item, x, y)
 end
 
 local function find00(stack, item)
-    for _, v in pairs(stack) do
+    for _, v in ipairs(stack) do
         if v.item == item then
             return v
         end
@@ -56,9 +56,26 @@ function Frame:getLamp(x, y)
     return result
 end
 
+function Frame:press(x, y, how)
+    return false
+end
+
 function Frame:routePress00(x, y)
-    -- TODO
-    return nil
+    -- TODO: optional local handling of presses
+    -- TODO: if we care: what if stack content changes as a result of press() calls?
+    -- (We should dup.)
+    if self:press(x, y, 1) then
+        return "TODO"
+    else
+        for _, v in ipairs(self.contentStack) do
+            local p = v.item:routePress00(x - v.x + 1, y - v.y + 1)
+            if p then
+                return "TODO"
+            end
+        end
+
+        return nil
+    end
 end
 
 return {

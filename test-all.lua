@@ -294,19 +294,20 @@ test_MasksInput = {
 
     testWillMapPressToMaskCoordinates = function ()
         --[[
-            If the mask handles the press, the coordinates are relative to the view port in the mask,
-            not the mask origin. Also checks that the block doesn't get the press if the mask does.
+            If the mask handles the press, the coordinates are relative to the
+            view port in the mask, not the mask origin. Also checks that the block
+            doesn't get the press if the mask does.
         ]]
         local block = blocks.Block:new(4, 4)
         local mask = masks.Mask:new(block, 2, 1, 1, 1)
 
-        function block:pressed(x, y, how)
+        function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
             return true
         end
 
-        function mask:pressed(x, y, how)
+        function mask:press(x, y, how)
             self.handledX = x
             self.handledY = y
             return true
@@ -326,13 +327,13 @@ test_MasksInput = {
         local block = blocks.Block:new(4, 4)
         local mask = masks.Mask:new(block, 1, 1, 1, 1)
 
-        function block:pressed(x, y, how)
+        function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
             return true
         end
 
-        function mask:pressed(x, y, how)
+        function mask:press(x, y, how)
             self.handledX = x
             self.handledY = y
             return false
@@ -347,14 +348,15 @@ test_MasksInput = {
 
     testWillCorrectlyPassPressesToContents = function ()
         --[[
-            Any contained object will receive presses at their own coordinates, regardness
-            of the position of the mask. TODO I could be persuaded to change this to use
-            mask port coordinates, but I feel masks should have minimal functional impact.
+            Any contained object will receive presses at their underlying coordinates,
+            regardness of the position of the mask. TODO I could be persuaded to change this
+            to use mask port coordinates, but I feel masks should have minimal
+            functional impact.
         ]]
         local block = blocks.Block:new(4, 4)
         local mask = masks.Mask:new(block, 2, 1, 1, 1)
 
-        function block:pressed(x, y, how)
+        function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
             return true
@@ -365,14 +367,10 @@ test_MasksInput = {
         lu.assertEquals(block.handledY, 1)
     end,
 
-    testMaskWillNotPassFrameStampToContent = function ()
-        --[[
-            Historical test, not quite sure what it\'s testing, other than propagation
-            from Frame to Mask to Block (with offset)
-        ]]
+    testCanPressThroughFrameAndMask = function ()
         local block = blocks.Block:new(2, 1)
 
-        function block:pressed(x, y, how)
+        function block:press(x, y, how)
             self.handledX = x
             self.handledY = y
             return true
@@ -385,8 +383,8 @@ test_MasksInput = {
 
         frame:routePress00(2, 2)
 
-        lu.assertEquals(block.handledX, 1)
-        lu.assertEquals(block.handledY, 2)
+        lu.assertEquals(block.handledX, 2)
+        lu.assertEquals(block.handledY, 1)
     end,
 
     testMaskCanHandlePressWithOffset = function ()
@@ -449,6 +447,41 @@ test_MasksInput = {
 }
 
 test_FramesInput = {
+    testFrameCanPassPressToBlock = function ()
+        local block = blocks.Block:new(2, 1)
+
+        function block:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        local frame = frames.Frame:new()
+
+        frame:add(block, 1, 2)
+
+        frame:routePress00(2, 2)
+
+        lu.assertEquals(block.handledX, 2)
+        lu.assertEquals(block.handledY, 1)
+    end,
+
+    -- TODO test for correct layer order.
+
+    testFrameCanTakeInput = function ()
+        local frame = frames.Frame:new()
+
+        function frame:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+            return true
+        end
+
+        frame:routePress00(1, 2)
+
+        lu.assertEquals(frame.handledX, 1)
+        lu.assertEquals(frame.handledY, 2)
+    end
 }
 
 local function mockGrid()
@@ -528,4 +561,4 @@ test_Rendering = {
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--pattern", "test_MasksInput%..*", "--verbose" --[[, "--failure" ]])
+runner:runSuite("--pattern", ".*" .. "%." .. ".*", "--verbose", "--failure")
