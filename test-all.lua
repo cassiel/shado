@@ -528,4 +528,4 @@ test_Rendering = {
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--pattern", "MasksInput.*", "--verbose")
+runner:runSuite("--pattern", "test_MasksInput%..*", "--verbose" --[[, "--failure" ]])
