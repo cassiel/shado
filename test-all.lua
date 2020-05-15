@@ -8,6 +8,7 @@ local blocks = require "shado.lib.blocks"
 local masks = require "shado.lib.masks"
 local frames = require "shado.lib.frames"
 local renderers = require "shado.lib.renderers"
+local manager = require "shado.lib.manager"
 local inspect = require "inspect"
 
 test_Other = {
@@ -316,7 +317,7 @@ test_MasksInput = {
 
     testWillMapPressToMaskAndContent = function ()
         --[[
-            If the mask returns false from the press, it's passed to the contents.
+            If the mask returns false from the press, it\'s passed to the contents.
         ]]
         local block = blocks.Block:new(4, 4)
         local mask = masks.Mask:new(block, 1, 1, 1, 1)
@@ -397,42 +398,7 @@ test_MasksInput = {
         lu.assertNil(block.wasWronglyPressed)
         lu.assertEquals(mask.handledX, 1)
         lu.assertEquals(mask.handledY, 1)
-    end,
-
-    testPressEventsCorrelateWhenMaskMoves = function ()
-        local block = blocks.Block:new(2, 2)
-
-        local history = { }
-
-        function block:pressed(x, y, how)
-            history.append{x = x, y = y, how = how}
-        end
-
-        local mask = masks.Mask:new(block, 1, 1, 2, 2)
-
-        --[[ TODO
-        mgr = PressManager(mask)
-
-        -- press, with 2x2 port directly over block:
-        mgr:press(1, 1, 1)
-
-        -- move the port:
-        mask:setX(mask:getX() + 1)
-
-        -- release: should still be at (1, 1) on the block:
-        mgr:press(1, 1, 0)
-
-        -- press again (ignored, since it's now outside the port,
-        -- even though a hidden part of the block is here):
-        mgr:press(1, 1, 1)
-
-        lu.assertEquals({
-                {x = 1, y = 1, how = 1},
-                {x = 1, y = 1, how = 0}},
-            history)
-        ]]
     end
-
 }
 
 test_FramesInput = {
@@ -544,6 +510,65 @@ test_Rendering = {
         }
 
         lu.assertEquals(grid.logging, expected)
+    end
+}
+
+test_PressCorrelation = {
+    testSimpleBlockCorrelation = function ()
+        local block = blocks.Block:new(1, 1)
+
+        block.logging = { }
+
+        function block:press(x, y, how)
+            table.insert(self.logging, string.format("x=%d y=%d how=%d", x, y, how))
+        end
+
+        local mgr = manager.PressManager:new(block)
+
+        mgr:press(1, 1, 1)
+        mgr:press(1, 1, 0)
+
+        local expected = {
+            "x=1 y=1 how=1",
+            "x=1 y=1 how=0"
+        }
+
+        lu.assertEquals(block.logging, expected)
+    end,
+
+    testPressEventsCorrelateWhenMaskMoves = function ()
+        local block = blocks.Block:new(1, 1)
+
+        block.logging = { }
+
+        function block:press(x, y, how)
+            table.insert(self.logging, string.format("x=%d y=%d how=%d", x, y, how))
+        end
+
+        local mask = masks.Mask:new(block, 1, 1, 2, 2)
+
+        mgr = manager.PressManager:new(mask)
+
+        -- press, with 2x2 port directly over block:
+        mgr:press(1, 1, 1)
+        print(inspect.inspect(block.logging))
+
+        -- move the port to the right:
+        mask:setX(mask:getX() + 1)
+
+        -- release: should still be at (1, 1) on the block:
+        mgr:press(1, 1, 0)
+
+        -- press again (ignored, since it\'s now outside the port,
+        -- even though a hidden part of the block is here):
+        mgr:press(1, 1, 1)
+
+        local expected = {
+            "x=1 y=1 how=1",
+            "x=1 y=1 how=0"
+        }
+
+        lu.assertEquals(block.logging, expected)
     end
 }
 

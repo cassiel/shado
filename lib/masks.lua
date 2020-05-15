@@ -25,6 +25,14 @@ function Mask:setY(y)
     self.y = y
 end
 
+function Mask:getX()
+    return self.x
+end
+
+function Mask:getY()
+    return self.y
+end
+
 function Mask:inRange(x, y)
     return x >= self.x and x < self.x + self.width
         and y >= self.y and y < self.y + self.height
