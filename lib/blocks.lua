@@ -1,6 +1,7 @@
 -- -*- lua-indent-level: 4; -*-
 
 local types = require "shado.lib.types"
+local manager = require "shado.lib.manager"
 
 local Block = { }
 
@@ -106,7 +107,7 @@ end
 
 function Block:getLamp(x, y)
     --[[
-        TODO Could just do an "(expr or THRU)" for this, rather than range check?
+        TODO Could just do an '(expr or THRU)' for this, rather than range check?
         (At least for the inner dimension.)
     ]]
     if self:inRange(x, y) then
@@ -127,8 +128,7 @@ end
 
 function Block:routePress00(x, y)
     if self:inRange(x, y) and self:press(x, y, 1) ~= false then
-        -- TODO proper press tracking
-        return "XXXXX"
+        return manager.RouteResult:new(self, x, y)
     else
         return nil
     end

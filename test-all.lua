@@ -573,4 +573,4 @@ test_PressCorrelation = {
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--pattern", ".*" .. "%." .. ".*", "--verbose", "--failure")
+runner:runSuite("--pattern", ".*" .. "%." .. "testSimpleBlockCorrelation", "--verbose", "--failure")
