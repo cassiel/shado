@@ -36,6 +36,11 @@ local function find(stack, item)
     end
 end
 
+function Frame:remove(item)
+    local _, i = find(self.contentStack, item)
+    table.remove(self.contentStack, i)
+end
+
 -- TODO top/bottom/show/hide should cascade!
 
 function Frame:top(item)
@@ -108,7 +113,9 @@ function Frame:routePress00(x, y)
     if self:press(x, y, 1) ~= false then
         return manager.RouteResult:new(self, x, y)
     else
-        for _, v in ipairs(self.contentStack) do
+        -- End of stack is top.
+        for i = #self.contentStack, 1, -1 do
+            v = self.contentStack[i]
             local p = v.item:routePress00(x - v.x + 1, y - v.y + 1)
             if p then
                 return p

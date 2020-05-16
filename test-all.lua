@@ -206,7 +206,21 @@ test_Frames = {
         lu.assertIs(f:get(2), b2)
     end,
 
-    -- TODO: remove (also errors)
+    testCanRemove = function ()
+        local f = frames.Frame:new()
+        local b = blocks.Block:new('1')
+
+        f:add(b, 1, 1)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+        f:remove(b)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
+    end,
+
+    testRemoveError = function ()
+        local f = frames.Frame:new()
+        lu.assertErrorMsgMatches(".*%sshado: item not found%s.*",
+                                 f.remove, f, blocks.Block:new(0, 0))
+    end,
 
     testFrameStackingOrder = function ()
         local f = frames.Frame:new()
@@ -217,8 +231,6 @@ test_Frames = {
         f:add(blocks.Block:new('1'), 1, 1):add(blocks.Block:new('/'), 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
     end,
-
-    -- TODO: top(), bottom() (also errors)
 
     testCanBringToTopOfFrame = function ()
         local f = frames.Frame:new()
@@ -499,7 +511,30 @@ test_FramesInput = {
         lu.assertEquals(block.handledY, 1)
     end,
 
-    -- TODO test for correct layer order.
+    testTopItemGetsPress = function ()
+        local b1 = blocks.Block:new(1, 1)
+        local b2 = blocks.Block:new(1, 1)
+
+        function b1:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+        end
+
+        function b2:press(x, y, how)
+            self.handledX = x
+            self.handledY = y
+        end
+
+        local frame = frames.Frame:new():add(b1, 1, 1):add(b2, 1, 1)
+
+        frame:routePress00(1, 1)
+
+        lu.assertNil(b1.handledX)
+        lu.assertNil(b1.handledY)
+        lu.assertEquals(b2.handledX, 1)
+        lu.assertEquals(b2.handledY, 1)
+    end,
+
     -- Note: no check here of the result of routePress00(): see correlation checks later.
 
     testFrameCanTakeInput = function ()
