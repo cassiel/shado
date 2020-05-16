@@ -54,7 +54,6 @@ end
 function Mask:routePress00(x, y)
     if self:inRange(x, y) then
         -- Are we handling the press in the mask directly?
-        -- TODO: should be x - self.x + 1, but let's unit test first.
         local portX = x - self.x + 1
         local portY = y - self.y + 1
         local done = (self:press(portX, portY, 1) ~= false)
