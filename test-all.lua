@@ -187,7 +187,7 @@ test_Frames = {
                                  f.get, f, 1)
     end,
 
-    testCanAddToBottom = function ()
+    testCanAddToEnd = function ()
         local f = frames.Frame:new()
         local b1 = blocks.Block:new(0, 0)
         local b2 = blocks.Block:new(0, 0)
@@ -206,6 +206,8 @@ test_Frames = {
         lu.assertIs(f:get(2), b2)
     end,
 
+    -- TODO: remove (also errors)
+
     testFrameStackingOrder = function ()
         local f = frames.Frame:new()
         f:add(blocks.Block:new('1'), 1, 1):add(blocks.Block:new('0'), 1, 1)
@@ -214,6 +216,36 @@ test_Frames = {
         f = frames.Frame:new()
         f:add(blocks.Block:new('1'), 1, 1):add(blocks.Block:new('/'), 1, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
+    end,
+
+    -- TODO: top(), bottom() (also errors)
+
+    testCanBringToTopOfFrame = function ()
+        local f = frames.Frame:new()
+        local b_OFF = blocks.Block:new('0')
+        local b_ON = blocks.Block:new('1')
+
+        f:add(b_OFF, 1, 1):add(b_ON, 1, 1)
+
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+        f:top(b_OFF)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
+        f:top(b_ON)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+    end,
+
+    testCanBringToBottomOfFrame = function ()
+        local f = frames.Frame:new()
+        local b_OFF = blocks.Block:new('0')
+        local b_ON = blocks.Block:new('1')
+
+        f:add(b_OFF, 1, 1):add(b_ON, 1, 1)
+
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+        f:bottom(b_ON)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
+        f:bottom(b_OFF)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
     end,
 
     testCannotHideNonExistentItem = function ()

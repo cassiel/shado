@@ -16,23 +16,46 @@ function Frame:add(item, x, y)
 end
 
 local function find00(stack, item)
-    for _, v in ipairs(stack) do
+    for i, v in ipairs(stack) do
         if v.item == item then
-            return v
+            return v, i
         end
     end
 
     return nil
 end
 
-local function setVisibility(stack, item, how)
-    local v = find00(stack, item)
+local function find(stack, item)
+    local v, i = find00(stack, item)
 
     if v then
-        v.visible = how
+        return v, i
     else
         error("shado: item not found in frame")
     end
+end
+
+-- TODO top/bottom/show/hide should cascade!
+
+function Frame:top(item)
+    local s = self.contentStack
+    local v, i = find(s, item)
+
+    table.remove(s, i)
+    table.insert(s, v)
+end
+
+function Frame:bottom(item)
+    local s = self.contentStack
+    local v, i = find(s, item)
+
+    table.remove(s, i)
+    table.insert(s, 1, v)
+end
+
+local function setVisibility(stack, item, how)
+    local v, _ = find(stack, item)
+    v.visible = how
 end
 
 function Frame:hide(item)
@@ -44,15 +67,11 @@ function Frame:show(item)
 end
 
 function Frame:moveTo(item, x, y)
-    local v = find00(self.contentStack, item)
+    local v, _ = find(self.contentStack, item)
 
-    if v then
-        v.x = x
-        v.y = y
-        return self
-    else
-        error("shado: item not found in frame")
-    end
+    v.x = x
+    v.y = y
+    return self
 end
 
 function Frame:get(i)
