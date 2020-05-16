@@ -216,6 +216,26 @@ test_Frames = {
         lu.assertEquals(f:getLamp(1, 1), types.LampState.OFF)
     end,
 
+    testCannotHideNonExistentItem = function ()
+        local b = blocks.Block:new('1')
+        local f = frames.Frame:new():add(b, 1, 1)
+        local b2 = blocks.Block:new('1')
+
+        lu.assertErrorMsgMatches(".*%sshado: item not found%s.*",
+                                 f.hide, f, b2)
+    end,
+
+    testCanHideItem = function ()
+        local b = blocks.Block:new('1')
+        local f = frames.Frame:new():add(b, 1, 1)
+
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+        f:hide(b)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
+        f:show(b)
+        lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
+    end,
+
     testFrameOffset = function ()
         local f = frames.Frame:new():add(blocks.Block:new('1'), 2, 1)
         lu.assertEquals(f:getLamp(1, 1), types.LampState.THRU)
@@ -587,9 +607,41 @@ test_PressCorrelation = {
         }
 
         lu.assertEquals(block.logging, expected)
+    end,
+
+    -- TODO: also check that hidden items still get clicks.
+    -- TODO: check clicks also for raise/lower.
+
+    testCorrelationWhenMovingInFrame = function ()
+        local block = blocks.Block:new(1, 1)
+
+        block.logging = { }
+
+        frame = frames.Frame:new()
+        frame:add(block, 1, 1)
+
+        function block:press(x, y, how)
+            table.insert(self.logging, string.format("x=%d y=%d how=%d", x, y, how))
+            if how == 1 then
+                frame:moveTo(self, 2, 2)
+            end
+        end
+
+        mgr = manager.PressManager:new(frame)
+
+        mgr:press(1, 1, 1)      -- Will move block to (2, 2) (before confirming)
+        mgr:press(1, 1, 0)      -- Should still fire the block at local (1, 1)
+        mgr:press(1, 1, 1)      -- Should be ignored: block has moved
+
+        local expected = {
+            "x=1 y=1 how=1",
+            "x=1 y=1 how=0"
+        }
+
+        lu.assertEquals(block.logging, expected)
     end
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--pattern", ".*" .. "%." .. ".*", "--verbose", "--failure")
+runner:runSuite("--pattern", "test_Frames" .. "%." .. ".*", "--verbose", "--failure")
 -- runner:runSuite("--pattern", "test_TwoDMap" .. "%." .. ".*", "--verbose", "--failure")

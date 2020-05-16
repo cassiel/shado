@@ -11,7 +11,7 @@ end
 
 function Frame:add(item, x, y)
     -- Stacking order: [1] is lowest, [#len] is highest. "add" adds to "top".
-    table.insert(self.contentStack, {item = item, x = x, y = y})
+    table.insert(self.contentStack, {item = item, x = x, y = y, visible = true})
     return self
 end
 
@@ -23,6 +23,24 @@ local function find00(stack, item)
     end
 
     return nil
+end
+
+local function setVisibility(stack, item, how)
+    local v = find00(stack, item)
+
+    if v then
+        v.visible = how
+    else
+        error("shado: item not found in frame")
+    end
+end
+
+function Frame:hide(item)
+    setVisibility(self.contentStack, item, false)
+end
+
+function Frame:show(item)
+    setVisibility(self.contentStack, item, true)
 end
 
 function Frame:moveTo(item, x, y)
@@ -50,7 +68,10 @@ function Frame:getLamp(x, y)
 
     for i = 1, #self.contentStack do
         local entry = self.contentStack[i]
-        result = entry.item:getLamp(x - entry.x + 1, y - entry.y + 1):cover(result)
+
+        if entry.visible then
+            result = entry.item:getLamp(x - entry.x + 1, y - entry.y + 1):cover(result)
+        end
     end
 
     return result
@@ -70,7 +91,7 @@ function Frame:routePress00(x, y)
         for _, v in ipairs(self.contentStack) do
             local p = v.item:routePress00(x - v.x + 1, y - v.y + 1)
             if p then
-                return "TODO"
+                return p
             end
         end
 
