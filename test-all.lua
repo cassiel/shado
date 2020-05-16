@@ -3,6 +3,7 @@
 
 local lu = require "luaunit"
 
+local utils = require "shado.lib.utils"
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
 local masks = require "shado.lib.masks"
@@ -14,6 +15,23 @@ local inspect = require "inspect"
 test_Other = {
     test_Fooble = function ()
         lu.assertEquals(1, 1)
+    end
+}
+
+test_TwoDMap = {
+    testNoMapEntry = function ()
+        lu.assertNil(utils.TwoDMap:new():get00(1, 1))
+    end,
+
+    testMapEntry = function ()
+        local m = utils.TwoDMap:new()
+
+        m:put(3, 4, "HELLO")
+        m:put(4, 3, "GOODBYE")
+
+        lu.assertEquals(m:get00(3, 4), "HELLO")
+        lu.assertEquals(m:get00(4, 3), "GOODBYE")
+        lu.assertNil(m:get00(2, 2))
     end
 }
 
@@ -551,7 +569,7 @@ test_PressCorrelation = {
 
         -- press, with 2x2 port directly over block:
         mgr:press(1, 1, 1)
-        print(inspect.inspect(block.logging))
+        -- print(inspect.inspect(block.logging))
 
         -- move the port to the right:
         mask:setX(mask:getX() + 1)
@@ -573,4 +591,5 @@ test_PressCorrelation = {
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--pattern", ".*" .. "%." .. "testSimpleBlockCorrelation", "--verbose", "--failure")
+runner:runSuite("--pattern", ".*" .. "%." .. ".*", "--verbose", "--failure")
+-- runner:runSuite("--pattern", "test_TwoDMap" .. "%." .. ".*", "--verbose", "--failure")

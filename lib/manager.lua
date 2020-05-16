@@ -11,9 +11,18 @@
 ]]
 
 local utils = require "shado.lib.utils"
+local inspect = require "inspect"
 
 local PressManager = { }
 PressManager.__index = PressManager
+
+--[[
+   The PressManager maintains a two-dimensional map from device (x, y) to
+   RouteResult, which encapsulates a press: it holds the (x, y) position
+   of the original press-down on the target object, and the target itself.
+   It has a release() method to send through a release to the target
+   at the same coordinates, even if the target has moved.
+]]
 
 local RouteResult = { }
 RouteResult.__index = RouteResult
@@ -28,7 +37,6 @@ function PressManager:new(target)
 end
 
 function PressManager:press(x, y, how)
-   -- TODO: incomplete
    self:release(x, y)
 
    if how ~= 0 then
