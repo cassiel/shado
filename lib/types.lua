@@ -29,7 +29,7 @@ function LampState:cover(lamp)
     return LampState.new(level, blend)
 end
 
-function LampState.new(level, blend)
+function LampState.new(level, blend)    -- TODO should be :new() for consistency.
     local self = setmetatable({ }, LampState)
     self.level = level
     self.blend = blend
