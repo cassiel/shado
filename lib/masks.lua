@@ -1,6 +1,7 @@
 -- -*- lua-indent-level: 4; -*-
 
 local types = require "shado.lib.types"
+local manager = require "shado.lib.manager"
 
 local Mask = { }
 Mask.__index = Mask
@@ -59,7 +60,7 @@ function Mask:routePress00(x, y)
         local done = (self:press(portX, portY, 1) ~= false)
 
         if done then
-            return "TODO" -- PressRouteResult(self, x, y)
+            return manager.RouteResult:new(self, x, y)
         else
             return self.content:routePress00(x, y)
         end

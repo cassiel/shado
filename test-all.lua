@@ -248,6 +248,15 @@ test_Frames = {
         lu.assertEquals(f:getLamp(1, 1), types.LampState.ON)
     end,
 
+    testErrorLiftingNonExistentFrame = function ()
+        local b = blocks.Block:new('1')
+        local f = frames.Frame:new():add(b, 1, 1)
+        local b2 = blocks.Block:new('1')
+
+        lu.assertErrorMsgMatches(".*%sshado: item not found%s.*",
+                                 f.top, f, b2)
+    end,
+
     testCannotHideNonExistentItem = function ()
         local b = blocks.Block:new('1')
         local f = frames.Frame:new():add(b, 1, 1)
@@ -491,6 +500,7 @@ test_FramesInput = {
     end,
 
     -- TODO test for correct layer order.
+    -- Note: no check here of the result of routePress00(): see correlation checks later.
 
     testFrameCanTakeInput = function ()
         local frame = frames.Frame:new()
@@ -641,8 +651,52 @@ test_PressCorrelation = {
         lu.assertEquals(block.logging, expected)
     end,
 
+    testFrameCorrelatesPress = function ()
+        local frame = frames.Frame:new()
+
+        frame.logging = { }
+
+        function frame:press(x, y, how)
+            table.insert(self.logging, string.format("x=%d y=%d how=%d", x, y, how))
+        end
+
+        local mgr = manager.PressManager:new(frame)
+
+        mgr:press(1, 1, 1)
+        mgr:press(1, 1, 0)
+
+        local expected = {
+            "x=1 y=1 how=1",
+            "x=1 y=1 how=0"
+        }
+
+        lu.assertEquals(frame.logging, expected)
+    end,
+
+    testMaskCorrelatesPress = function ()
+        local mask = masks.Mask:new(blocks.Block:new('1'), 1, 1, 1, 1)
+
+        mask.logging = { }
+
+        function mask:press(x, y, how)
+            table.insert(self.logging, string.format("x=%d y=%d how=%d", x, y, how))
+        end
+
+        local mgr = manager.PressManager:new(mask)
+
+        mgr:press(1, 1, 1)
+        mgr:press(1, 1, 0)
+
+        local expected = {
+            "x=1 y=1 how=1",
+            "x=1 y=1 how=0"
+        }
+
+        lu.assertEquals(mask.logging, expected)
+    end,
+
     -- TODO: also check that hidden items still get clicks.
-    -- TODO: check clicks also for raise/lower.
+    -- TODO: check clicks also for raise/lower (check target for press and for release).
 
     testCorrelationWhenMovingInFrame = function ()
         local block = blocks.Block:new(1, 1)
@@ -675,5 +729,5 @@ test_PressCorrelation = {
 }
 
 runner = lu.LuaUnit.new()
-runner:runSuite("--pattern", "test_Frames" .. "%." .. ".*", "--verbose", "--failure")
+runner:runSuite("--pattern", ".*" .. "%." .. ".*", "--verbose", "--failure")
 -- runner:runSuite("--pattern", "test_TwoDMap" .. "%." .. ".*", "--verbose", "--failure")

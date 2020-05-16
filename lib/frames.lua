@@ -1,6 +1,7 @@
 -- -*- lua-indent-level: 4; -*-
 
 local types = require "shado.lib.types"
+local manager = require "shado.lib.manager"
 
 local Frame = { }
 Frame.__index = Frame
@@ -105,7 +106,7 @@ function Frame:routePress00(x, y)
     -- TODO: if we care: what if stack content changes as a result of press() calls?
     -- (We should dup.)
     if self:press(x, y, 1) ~= false then
-        return "TODO"
+        return manager.RouteResult:new(self, x, y)
     else
         for _, v in ipairs(self.contentStack) do
             local p = v.item:routePress00(x - v.x + 1, y - v.y + 1)

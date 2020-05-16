@@ -37,7 +37,7 @@ function PressManager:new(target)
 end
 
 function PressManager:press(x, y, how)
-   self:release(x, y)
+   self:release(x, y)           -- TODO can we unit test this?
 
    if how ~= 0 then
       local press00 = self.target:routePress00(x, y)
