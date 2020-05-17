@@ -27,9 +27,14 @@ function init()
     
     function block:press(x, y, how)
         if how == 1 then
-            self:setLamp(lamp_full)
+            self:setLamp(x, y, lamp_full)
+            
+            local newX = math.random(1, 15)
+            local newY = math.random(1, 7)
+            
+            frame:moveTo(block, newX, newY)
         else
-            self:setLamp(lamp_dull)
+            self:setLamp(x, y, lamp_dull)
         end
         
         renderer:render(frame)
