@@ -9,7 +9,7 @@ The SHADO monome rendering library in Lua for the monome norns.
 
 To get a sense for what's achievable in =SHADO= (as of ten years ago with first-generation monome kit), take a look at this [[http://vimeo.com/1338613][video]].
 
-The file [[README.MANUAL]] will eventually be the manual for =SHADO=; for now, it contains an explanation of the =SHADO= architecture - quite possibly, along with the examples, just about enough to start writing =SHADO= "programs".
+The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for =SHADO=; for now, it contains an explanation of the =SHADO= architecture - quite possibly, along with the examples, just about enough to start writing =SHADO= "programs".
 
 ** Setup
 
