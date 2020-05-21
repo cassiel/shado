@@ -1,11 +1,5 @@
 -- SHADO demo 1.
 
-local types = require "shado.lib.types"
-local blocks = require "shado.lib.blocks"
-local frames = require "shado.lib.frames"
-local renderers = require "shado.lib.renderers"
-local manager = require "shado.lib.manager"
-
 -- Purge cache:
 for k, _ in pairs(package.loaded) do
     if k:find("shado.lib.") == 1 then
@@ -14,16 +8,22 @@ for k, _ in pairs(package.loaded) do
     end
 end
 
+local types = require "shado.lib.types"
+local blocks = require "shado.lib.blocks"
+local frames = require "shado.lib.frames"
+local renderers = require "shado.lib.renderers"
+local manager = require "shado.lib.manager"
+
 function init()
     local lamp_full = types.LampState.ON
     local lamp_dull =  types.LampState.new(0.3, 0)
     
-    g = grid.connect()
-    renderer = renderers.VariableBlockRenderer:new(16, 8, g)
+    local g = grid.connect()
+    local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
 
-    block = blocks.Block:new(2, 2):fill(lamp_dull)
+    local block = blocks.Block:new(2, 2):fill(lamp_dull)
 
-    frame = frames.Frame:new():add(block, 1, 1)
+    local frame = frames.Frame:new():add(block, 1, 1)
     
     function block:press(x, y, how)
         if how == 1 then
