@@ -5,6 +5,12 @@
 
 The SHADO monome rendering library in Lua for the monome norns.
 
+=SHADO= is a compositing and sprite library for the monome and arc devices on the [[https://monome.org/docs/norns/][monome norns]]. It is based on an [[https://github.com/cassiel/net.loadbang.shado/][earlier release]] written in Java as an OSC subsystem; this version is in Lua to run on norns natively.
+
+To get a sense for what's achievable in =SHADO= (as of ten years ago with first-generation monome kit), take a look at this [[http://vimeo.com/1338613][video]].
+
+The file [[README.MANUAL]] will eventually be the manual for =SHADO=; for now, it contains an explanation of the =SHADO= architecture - quite possibly, along with the examples, just about enough to start writing =SHADO= "programs".
+
 ** Setup
 
 Install =luarocks= (the Lua package manager) and =luaunit= (the unit testing library). On norns:
@@ -25,7 +31,7 @@ We also use the library =inspect= for some debugging in the tests; install as ab
 
 ** Unit Testing
 
-From the directory containing =shado= (on the norns that would be =/home/we/dust/code=), test with:
+From the directory containing =SHADO= (on the norns that would be =/home/we/dust/code=), test with:
 
 #+BEGIN_SRC shell-script
   lua shado/test-all.lua
