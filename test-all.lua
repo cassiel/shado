@@ -573,7 +573,7 @@ test_Rendering = {
     testBlockRender = function ()
         local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
         local grid = mockGrid()
-        local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
+        local renderer = renderers.VariableBlockRenderer:new(2, 1, grid)
 
         renderer:render(block)
 
@@ -594,7 +594,7 @@ test_Rendering = {
         frame:add(block, 2, 1)
 
         local grid = mockGrid()
-        local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
+        local renderer = renderers.VariableBlockRenderer:new(2, 1, grid)
 
         renderer:render(frame)
 
@@ -614,7 +614,7 @@ test_Rendering = {
         local port = masks.Mask:new(block, 2, 1, 1, 1)
 
         local grid = mockGrid()
-        local renderer = renderers.VariableBlockRenderer.new(2, 1, grid)
+        local renderer = renderers.VariableBlockRenderer:new(2, 1, grid)
 
         renderer:render(port)
 
