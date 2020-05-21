@@ -26,20 +26,22 @@ end
 function LampState:cover(lamp)
     local level = interp(self.level, lamp.level, self.blend)
     local blend = self.blend * lamp.blend
-    return LampState.new(level, blend)
+    return LampState:new(level, blend)
 end
 
-function LampState.new(level, blend)    -- TODO should be :new() for consistency.
-    local self = setmetatable({ }, LampState)
-    self.level = level
-    self.blend = blend
-    return self
+function LampState:new(level, blend)    -- TODO should be :new() for consistency.
+    local result = {
+        level = level,
+        blend = blend
+    }
+
+    return setmetatable(result, self)
 end
 
-LampState.OFF = LampState.new(0, 0)
-LampState.ON = LampState.new(1, 0)
-LampState.THRU = LampState.new(0, 1)
-LampState.FLIP = LampState.new(0, -1)
+LampState.OFF = LampState:new(0, 0)
+LampState.ON = LampState:new(1, 0)
+LampState.THRU = LampState:new(0, 1)
+LampState.FLIP = LampState:new(0, -1)
 
 --[[
     Get the brightness state of a lamp if drawn against black (off).

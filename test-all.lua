@@ -56,7 +56,7 @@ test_Types = {
     end,
 
     testBlend = function ()
-        local lamp = types.LampState.new
+        local function lamp(l, b) return types.LampState:new(l, b) end
 
         local function almostEquals(lamp1, lamp2, legend)
             lu.assertAlmostEquals(lamp1.level, lamp2.level, 0.001, legend .. "/level")
