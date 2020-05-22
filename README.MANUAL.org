@@ -170,3 +170,7 @@ We have implemented some machinery which guarantees a fundamental property of bu
 A side-effect of this is that, if an object chooses to ignore a press (by returning =false= from a =press(x, y, 1)= call) then it will never see the release call - that call will always go to the actual object which dealt with the press (if any).
 
 Another side-effect is that an object might receive multiple button-on presses at the same coordinates. If a =press(1, 1, 1)= event to a block causes it to move, another button on the grid might now map to the Block's top-left, and might send a second =press(1, 1, 1)=. In other words, it's quite possible for button-on events to be duplicated in the same location - and the release events will also be duplicated. This makes perfect sense to the PressManager so it had better make sense to your Lua scripts.
+
+** VARIABLE BRIGHTNESS
+
+TBC.
