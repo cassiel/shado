@@ -3,15 +3,15 @@
 
 * =shado=
 
-The SHADO monome rendering library in Lua for the monome norns.
+The =shado= monome rendering library in Lua for the monome norns.
 
-=SHADO= is a compositing and sprite library for the monome and arc devices on the [[https://monome.org/docs/norns/][monome norns]]. It is based on an [[https://github.com/cassiel/net.loadbang.shado/][earlier release]] written in Java as an OSC subsystem; this version is in Lua to run on norns natively.
+=shado= is a compositing and sprite library for the monome and arc devices on the [[https://monome.org/docs/norns/][monome norns]]. It is based on an [[https://github.com/cassiel/net.loadbang.shado/][earlier release]] written in Java as an OSC subsystem; this version is in Lua to run on norns natively.
 
-To get a sense for what's achievable in =SHADO= (as of ten years ago with first-generation monome kit), take a look at this [[http://vimeo.com/1338613][video]].
+To get a sense for what's achievable in =shado= (as of ten years ago with first-generation monome kit), take a look at this [[http://vimeo.com/1338613][video]].
 
-The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for =SHADO=; for now, it contains an explanation of the =SHADO= architecture - quite possibly, along with the examples, just about enough to start writing =SHADO= "programs".
+The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for =shado=; for now, it contains an explanation of the =shado= architecture - quite possibly, along with the examples, just about enough to start writing =shado= "programs".
 
-** Setup
+** Testing Setup
 
 Install =luarocks= (the Lua package manager) and =luaunit= (the unit testing library). On norns:
 
@@ -20,7 +20,9 @@ Install =luarocks= (the Lua package manager) and =luaunit= (the unit testing lib
   sudo luarocks install luaunit
 #+END_SRC
 
-To run the tests on macOS (with Homebrew):
+Note: the command-line Lua on norns is currently version 5.1. (You might be able to upgrade it.) The Lua used for scripting is 5.3. The unit tests should work under 5.1, although that version is under-tested.
+
+To set up the tests on macOS (with Homebrew):
 
 #+BEGIN_SRC shell-script
   brew install luarocks
@@ -31,14 +33,14 @@ We also use the library =inspect= for some debugging in the tests; install as ab
 
 ** Unit Testing
 
-From the directory containing =SHADO= (on the norns that would be =/home/we/dust/code=), test with:
+From the directory containing =shado= (on the norns that would be =/home/we/dust/code=), test with:
 
 #+BEGIN_SRC shell-script
   lua shado/test-all.lua
 #+END_SRC
 
-** Comparison with Java SHADO
+** Comparison with Java shado
 
-- All coordinates have origin or top-left at =(1, 1)= (Lua-style) rather than =(0, 0)=.
+- All coordinates have origin or top-left at =(1, 1)= (Lua-style) rather than =(0, 0)= (every other language in the world-style).
 - Rename: =ViewPort= is now called =Mask=, which is a bit snappier and more indicative of what it actually does.
 - In the Java implementation, =press()= is a boolean method returning =true= for press handled, =false= otherwise. Since Lua is more dynamic, we can have press-handled as the default by omitting any =return= statement - i.e., a result of =nil= implies handled. In fact, =false= is the only return value to mark a press as not handled.
