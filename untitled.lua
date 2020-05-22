@@ -1,1 +1,0 @@
--- SHADO demo 1.
