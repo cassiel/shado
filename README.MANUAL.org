@@ -55,14 +55,14 @@ The frame constructor has no arguments, so:
 
 is an easy way to clear a grid (an empty frame renders to black).
 
-Renderables are added using add():
+Renderables are added using =add()=:
 
 #+BEGIN_SRC lua
   local block = blocks.Block:new(.....)
   frame:add(block, 2, 3)
 #+END_SRC
 
-This adds a renderable to the *top* of a frame, in this case offset horizontally by two pixels and vertically by three.
+This adds a renderable to the *top* of a frame, in this case offset horizontally by one pixel and vertically by two (recall that Lua arrays originate from =1=).
 
 =Frame:add()= returns the frame itself, allowing cascading:
 
