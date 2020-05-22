@@ -32,9 +32,11 @@ Here's a simple 4 x 4 square of lights (see the example code for all the details
 
 =Block:new(...):fill(...)= sets all pixels in the block. Alternatively, single pixels can be set (via =setLamp()=). =Block= also has a constructor which takes an ASCII string representing pixel values (useful for quickly initialising those digital clock demos):
 
-	local block = blocks.Block:new('111 101 101 101 111')
+#+BEGIN_SRC lua
+  local block = blocks.Block:new('111 101 101 101 111')
+#+END_SRC
 
-='0'= means =OFF=, ='1'= means =ON=, ='.'= means =THRU= and ='/'= means =FLIP=. Each token is a row; the tokens are separated by white space.
+=0= means =OFF=, =1= means =ON=, =.= means =THRU= and =/= means =FLIP=. Each token is a row; the tokens are separated by white space.
 
 ** FRAMES
 
@@ -46,43 +48,55 @@ A frame renders its pixel values from the bottom to the top of its list; higher 
 
 The frame constructor has no arguments, so:
 
-    local f = frames.Frame:new()
-	renderer.render(f)
+#+BEGIN_SRC lua
+  local f = frames.Frame:new()
+  renderer.render(f)
+#+END_SRC
 
 is an easy way to clear a grid (an empty frame renders to black).
 
 Renderables are added using add():
 
-	local block = blocks.Block:new(.....)
-	frame:add(block, 2, 3)
+#+BEGIN_SRC lua
+  local block = blocks.Block:new(.....)
+  frame:add(block, 2, 3)
+#+END_SRC
 
 This adds a renderable to the *top* of a frame, in this case offset horizontally by two pixels and vertically by three.
 
 =Frame:add()= returns the frame itself, allowing cascading:
 
-	frame:add(b1):add(b2)
+#+BEGIN_SRC lua
+  frame:add(b1):add(b2)
+#+END_SRC
 
 A renderable can only be added to any frame once - this is because the renderable's identity is used in subsequent operations like =show()=, =hide()= and =top()=. It is possible to get replicated tiling effects by creating multiple unique sub-frames (or masks) over a single block, and adding these to the main frame.
 
 A frame allows a few operations on its stack of renderables:
 
-	frame:top(item):	bring a renderable to the top
-	frame:bottom(item):	send a renderable to the bottom
-	frame:hide(item):	hide a renderable (make it transparent)
-	frame:show(item):	show a renderable
-	frame:remove(item):	remove a renderable from a frame
+#+BEGIN_SRC lua
+  frame:top(item):	bring a renderable to the top
+  frame:bottom(item):	send a renderable to the bottom
+  frame:hide(item):	hide a renderable (make it transparent)
+  frame:show(item):	show a renderable
+  frame:remove(item):	remove a renderable from a frame
+#+END_SRC
 
 And finally, some sprite action:
 
-	frame:moveBy(item, dx, dy):
-				move a renderable by this distance
-	frame:moveTo(item, x, y):
-			    	move a renderable to this location
-				relative to the frame's origin
+#+BEGIN_SRC lua
+  frame:moveBy(item, dx, dy):
+                          move a renderable by this distance
+  frame:moveTo(item, x, y):
+                          move a renderable to this location
+                          relative to the frame's origin
+#+END_SRC
 
 Since the renderables might themselves be frames, all sorts of nested movement and animation is possible. In addition, =hide()= and =show()= (or, depending on taste, =bottom()= and =top()=) can be used for animation: if you want to invert an entire grid, use a frame with a large
 
-	blocks.Block:new(...):fill(types.LampState.FLIP)
+#+BEGIN_SRC lua
+  blocks.Block:new(...):fill(types.LampState.FLIP)
+#+END_SRC
 
 at the top; =hide()= and =show()= calls on it will invert everything. If you want to switch between a number of different patterns, create them all in advance, making sure they are all the same size and are opaque (=ON= or =OFF= values only, no =THRU= or =FLIP=) and them call =frame:top()= on them in sequence.
 
@@ -94,14 +108,18 @@ Masks are also renderables, and so may be incorporated into frames, cropped in o
 
 After:
 
-       p = masks.Mask:new(renderable, x, y, width, height)
+#+BEGIN_SRC lua
+  p = masks.Mask:new(renderable, x, y, width, height)
+#+END_SRC
 
 the renderable =p= will be the same as =renderable= for pixels whose column is between =x= and =x+width-1=, and whose row is between =y= and =y+height-1=. Outside those coordinates, the pixels of =p= will be =types.LampState.THRU=.
 
 Mask objects also expose properties =x=, =y=, =width= and =height=, so that the cropping dimensions can be changed dynamically:
 
-        p.x = 3
-        p.height = p.height - 1
+#+BEGIN_SRC lua
+  p.x = 3
+  p.height = p.height - 1
+#+END_SRC
 
 TODO: we'll probably protect inner fields and add getter/setter methods for this.
 
@@ -111,7 +129,9 @@ The machinery for dealing with grid button presses works with the same structure
 
 Here's how it works: the Block, Frame and Mask classes can be augmented with a method like so:
 
-	function Class:press(x, y, how) ... end
+#+BEGIN_SRC lua
+  function Class:press(x, y, how) ... end
+#+END_SRC
 
 This represents a button press. Arguments =x= and =y= are location (1-based), while =how= is =1= for press and =0= for release. The built-in classes provide a method which does nothing; in order to respond to button presses, a block, frame or mask must have this method overridden, either via inheritance (fiddly) or simply by assigning this method directly into an object.
 
@@ -123,11 +143,13 @@ If a block measuring =width= by =height= is within range of a press, it will be 
 
 A button press can be routed into any renderable: block, frame or mask. (A frame can handle presses directly or will pass them on to its children.) There's a class called =PressManager= which does this (and which also tracks on and off presses, as we describe later):
 
-	local f = frames.Frame:new()
-	...
-	local manager = PressManager(f)
-	...
-	manager:press(x, y, how)
+#+BEGIN_SRC lua
+  local f = frames.Frame:new()
+  ...
+  local manager = PressManager(f)
+  ...
+  manager:press(x, y, how)
+#+END_SRC
 
 (A =PressManager= can be built over a completely different structure to the one being displayed - but in most cases you probably don't want to do that.)
 
