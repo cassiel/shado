@@ -23,10 +23,12 @@ A *block* is a two-dimensional matrix of data values representing grid or arc li
 
 Here's a simple 4 x 4 square of lights (see the example code for all the details of the required =require= statements):
 
-    local g = grid.connect()
-    local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
-    local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
-    renderer:render(block)
+#+BEGIN_SRC lua
+  local g = grid.connect()
+  local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
+  local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
+  renderer:render(block)
+#+END_SRC
 
 =Block:new(...):fill(...)= sets all pixels in the block. Alternatively, single pixels can be set (via =setLamp()=). =Block= also has a constructor which takes an ASCII string representing pixel values (useful for quickly initialising those digital clock demos):
 
