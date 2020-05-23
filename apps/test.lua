@@ -1,3 +1,5 @@
+-- -*- lua-indent-level: 4; -*-
+
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
 local frames = require "shado.lib.frames"

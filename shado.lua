@@ -12,22 +12,45 @@ end
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
 local renderers = require "shado.lib.renderers"
+local manager = require "shado.lib.manager"
+
 
 -- Build list of apps:
 local appFiles = util.scandir(os.getenv("HOME") .. "/dust/code/shado/apps")
-local appNames = { }
+local apps = { }
 
 for _, v in ipairs(appFiles) do
-    print("** " .. v)
+    local _, _, name = string.find(v, "(%a+)%.lua$")
+    local app = require("shado.apps." .. name)
+    table.insert(apps, app)
+end
+
+local currentApp = apps[2]
+
+local g = grid.connect()
+local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
+
+local function service(i)
+    if currentApp.count then
+        currentApp:count(i)
+        renderer:render(currentApp.layer)
+    end
 end
 
 function init()
-    --local apps = util.scandir("/home/we/dust/code/shado/apps")
+    local layer = currentApp.layer
+    renderer:render(layer)
+    
+    local mgr = manager.PressManager:new(layer)
 
+    g.key = function (x, y, how)
+        mgr:press(x, y, how)
+        renderer:render(layer)
+    end
 
-    local test = require "shado.apps.test"
-
-    local g = grid.connect()
-    local layer = test.layer
-    renderers.VariableBlockRenderer:new(16, 8, g):render(layer)
+    local counter = metro.init()
+    counter.time = 0.1
+    counter.count = -1
+    counter.event = service
+    counter:start()
 end
