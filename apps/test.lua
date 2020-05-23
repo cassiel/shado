@@ -3,8 +3,8 @@ local blocks = require "shado.lib.blocks"
 local frames = require "shado.lib.frames"
 
 local block = blocks.Block:new(4, 4):fill(types.LampState.ON)
-local frame = frames.Frame:new():add(block, 6, 3)
+local frame = frames.Frame:new():add(block, 7, 3)
 
 return {
-    layer = block
+    layer = frame
 }

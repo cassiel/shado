@@ -1,4 +1,4 @@
--- SHADO demo.
+-- shado demo.
 -- Nick Rothwell, nick@cassiel.com
 
 -- Purge cache:
@@ -13,11 +13,17 @@ local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
 local renderers = require "shado.lib.renderers"
 
+-- Build list of apps:
+local appFiles = util.scandir(os.getenv("HOME") .. "/dust/code/shado/apps")
+local appNames = { }
+
+for _, v in ipairs(appFiles) do
+    print("** " .. v)
+end
+
 function init()
     --local apps = util.scandir("/home/we/dust/code/shado/apps")
-    local apps = util.scandir(os.getenv("HOME") .. "/dust/code/shado/apps")
 
-    for _, v in ipairs(apps) do print("** " .. v) end
 
     local test = require "shado.apps.test"
 
