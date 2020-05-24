@@ -29,37 +29,73 @@ for _, v in ipairs(appFiles) do
     frame:add(app.layer, 1, 9)   -- All apps are below the actual grid
 end
 
-local function selectApp(app)
+local g = grid.connect()
+local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
+
+local keysBlocked = false
+
+local function scroller(oldFrom, oldTo, oldStep, newOffset)
+    keysBlocked = true
+    return function ()
+        local oldAppLayer = frame:get(2)
+        local newAppLayer = frame:get(1)
+    
+        for i = oldFrom, oldTo, oldStep do
+            frame:moveTo(oldAppLayer, 1, i)
+            frame:moveTo(newAppLayer, 1, i + newOffset)
+            renderer:render(frame)
+            clock.sleep(0.02)
+        end
+        keysBlocked = false
+    end
+end
+
+local function selectApp(app, sense)
+    -- sense == -1 to scroll up, +1 for down, 0 for immediate select.
     -- TODO: we should really wrap each app in a mask to avoid it getting any
     -- out-of-bounds presses (or displaying out-of-bounds) when it's pushed away.
-    frame:moveTo(frame:get(1), 1, 9)        -- Old top app out of line of sight.
-    frame:top(app.layer)
-    frame:moveTo(frame:get(1), 1, 1)        -- New top app into line of sight. 
+    
+    local oldAppLayer = frame:get(1)
+    local newAppLayer = app.layer
+    
+    frame:top(newAppLayer)
+
+    if sense == 1 then
+        clock.run(scroller(0, -7, -1, 8))
+    elseif sense == -1 then
+        clock.run(scroller(2, 9, 1, -8))
+    else        -- Immediate move (launch of main script)
+        frame:moveTo(frame:get(2), 1, 9)        -- Old top app out of line of sight.
+        frame:moveTo(frame:get(1), 1, 1)        -- New top app into line of sight.
+    end
+
 end
 
 local currentAppIndex = 1
 local currentApp = apps[currentAppIndex]
-selectApp(currentApp)
-
-local g = grid.connect()
-local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
+selectApp(currentApp, 0)
 
 function key(n, z)
-    local newIndex
-    if z == 1 then
-        if n == 2 then
-            newIndex = currentAppIndex + 1
-            if newIndex > #apps then newIndex = 1 end
-        elseif n == 3 then
-            newIndex = currentAppIndex - 1
-            if newIndex < 1 then newIndex = #apps end
-        end
+    if not keysBlocked then
+        local newIndex, sense
+
+        if z == 1 then
+            if n == 2 then
+                newIndex = currentAppIndex + 1
+                if newIndex > #apps then newIndex = 1 end
+                sense = -1
+            elseif n == 3 then
+                newIndex = currentAppIndex - 1
+                if newIndex < 1 then newIndex = #apps end
+                sense = 1
+            end
         
-        currentAppIndex = newIndex
-        currentApp = apps[currentAppIndex]
-        selectApp(currentApp)
-        renderer:render(frame)
-    end 
+            currentAppIndex = newIndex
+            currentApp = apps[currentAppIndex]
+            selectApp(currentApp, sense)
+            renderer:render(frame)
+        end
+    end
 end
 
 local function service(i)
