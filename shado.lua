@@ -26,15 +26,20 @@ for _, v in ipairs(appFiles) do
     local _, _, name = string.find(v, "(%a+)%.lua$")
     local app = require("shado.apps." .. name)
     table.insert(apps, app)
-    frame:add(app.layer)
+    frame:add(app.layer, 1, 9)   -- All apps are below the actual grid
 end
 
 local function selectApp(app)
-    frame:top(app.layer)        -- Not quite right: apps aren't totally opaque, and some ignore presses
+    -- TODO: we should really wrap each app in a mask to avoid it getting any
+    -- out-of-bounds presses (or displaying out-of-bounds) when it's pushed away.
+    frame:moveTo(frame:get(1), 1, 9)        -- Old top app out of line of sight.
+    frame:top(app.layer)
+    frame:moveTo(frame:get(1), 1, 1)        -- New top app into line of sight. 
 end
 
 local currentAppIndex = 1
 local currentApp = apps[currentAppIndex]
+selectApp(currentApp)
 
 local g = grid.connect()
 local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
@@ -52,25 +57,26 @@ function key(n, z)
         
         currentAppIndex = newIndex
         currentApp = apps[currentAppIndex]
+        selectApp(currentApp)
+        renderer:render(frame)
     end 
 end
 
 local function service(i)
     if currentApp.count then
         currentApp:count(i)
-        renderer:render(currentApp.layer)
+        renderer:render(frame)
     end
 end
 
 function init()
-    local layer = currentApp.layer
-    renderer:render(layer)
+    renderer:render(frame)
     
-    local mgr = manager.PressManager:new(layer)
+    local mgr = manager.PressManager:new(frame)
 
     g.key = function (x, y, how)
         mgr:press(x, y, how)
-        renderer:render(layer)
+        renderer:render(frame)
     end
 
     local counter = metro.init()
