@@ -195,12 +195,29 @@ test_Frames = {
         f:add(b1, 1, 1)
         f:add(b2, 1, 1)
 
-        lu.assertIs(f:get(1), b1)
-        lu.assertIs(f:get(2), b2)
+        lu.assertIs(f:get(1), b2)
+        lu.assertIs(f:get(2), b1)
 
         -- Test chaining:
         f = frames.Frame:new()
         f:add(b1, 1, 1):add(b2, 1, 1)
+
+        lu.assertIs(f:get(1), b2)
+        lu.assertIs(f:get(2), b1)
+    end,
+
+    testCanBringToTop = function ()
+        local f = frames.Frame:new()
+        local b1 = blocks.Block:new(0, 0)
+        local b2 = blocks.Block:new(0, 0)
+
+        f:add(b1, 1, 1)
+        f:add(b2, 1, 1)
+
+        lu.assertIs(f:get(1), b2)
+        lu.assertIs(f:get(2), b1)
+
+        f:top(b1)
 
         lu.assertIs(f:get(1), b1)
         lu.assertIs(f:get(2), b2)

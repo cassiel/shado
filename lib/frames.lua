@@ -81,10 +81,12 @@ function Frame:moveTo(item, x, y)
 end
 
 function Frame:get(i)
-    if i < 1 or i > #self.contentStack then
+    local len = #self.contentStack
+    if i < 1 or i > len then
         error("shado: frame index out of range: " .. i)
     else
-        return self.contentStack[i].item
+        -- Top item is at the end; our indexing is from the top, so:
+        return self.contentStack[len - i + 1].item
     end
 end
 
