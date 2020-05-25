@@ -39,6 +39,16 @@ From the directory containing =shado= (on the norns that would be =/home/we/dust
   lua shado/test-all.lua
 #+END_SRC
 
+** Documentation
+
+We've used [[https://github.com/stevedonovan/LDoc][LDoc]], which can be cleanly installed with:
+
+#+BEGIN_SRC shell-script
+  [sudo] luarocks install ldoc
+#+END_SRC
+
+From the main =shado= directory, a =ldoc -f markdown lib= generates docs in =doc=.
+
 ** Comparison with Java shado
 
 - All coordinates have origin or top-left at =(1, 1)= (Lua-style) rather than =(0, 0)= (every other language in the world-style).

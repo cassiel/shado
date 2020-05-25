@@ -1,14 +1,24 @@
 -- -*- lua-indent-level: 4; -*-
 
+--- Frames: stacks of shado objects (including sub-frames).
+
 local types = require "shado.lib.types"
 local manager = require "shado.lib.manager"
 
 local Frame = { }
 Frame.__index = Frame
 
+--- Create a new, empty frame.
+
 function Frame:new()
    return setmetatable({contentStack = { }}, self)
 end
+
+--- Add an item to a frame, at the top. Calls can be cascaded, thus:
+--      frame:add(item1, x1, y1):add(item2, x2, y2)
+-- @param item the `shado` object to add
+-- @param x the horizontal location, `1` being the origin
+-- @param y the vertical location, `1` being the origin
 
 function Frame:add(item, x, y)
     -- Stacking order: [1] is lowest, [#len] is highest. "add" adds to "top".
@@ -36,12 +46,20 @@ local function find(stack, item)
     end
 end
 
+--- Remove a `shado` object from the frame.
+-- Raises an error if the item isn't present.
+-- *TODO* Calls to `remove` should chain.
+-- @param item the `shado` object to remove
+
 function Frame:remove(item)
     local _, i = find(self.contentStack, item)
     table.remove(self.contentStack, i)
 end
 
--- TODO top/bottom/show/hide should cascade!
+--- Bring a `shado` object to the top of a frame.
+-- Raises an error if the item isn't present.
+-- *TODO* Calls to `top` should chain.
+-- @param item the `shado` object to raise
 
 function Frame:top(item)
     local s = self.contentStack
@@ -50,6 +68,11 @@ function Frame:top(item)
     table.remove(s, i)
     table.insert(s, v)
 end
+
+--- Drop a `shado` object to the bottom of a frame.
+-- Raises an error if the item isn't present.
+-- *TODO* Calls to `bottom` should chain.
+-- @param item the `shado` object to lower
 
 function Frame:bottom(item)
     local s = self.contentStack
