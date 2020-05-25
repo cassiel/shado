@@ -47,7 +47,7 @@ We've used [[https://github.com/stevedonovan/LDoc][LDoc]], which can be cleanly 
   [sudo] luarocks install ldoc
 #+END_SRC
 
-From the main =shado= directory, a =ldoc -f markdown lib= generates docs in =doc=.
+From the main =shado= directory, a =ldoc -v .= reads from =config.ld= and generates docs in =doc=.
 
 ** Comparison with Java shado
 

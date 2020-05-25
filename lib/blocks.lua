@@ -1,6 +1,10 @@
 -- -*- lua-indent-level: 4; -*-
 
---- Blocks.
+--[[--
+Blocks: basic rectangular building blocks for `shado` applications.
+Blocks are populated with lamps.
+@see types.LampState:new
+]]
 
 local types = require "shado.lib.types"
 local manager = require "shado.lib.manager"

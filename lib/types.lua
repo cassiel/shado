@@ -1,5 +1,10 @@
 -- -*- lua-indent-level: 4; -*-
 
+--[[--
+`LampState`: the basic type representing an LED, with variable
+brightness and opacity.
+]]
+
 local LampState = { }
 LampState.__index = LampState
 
@@ -19,8 +24,9 @@ local function interp(ourLevel, theirLevel, ourBlend)
     return (ourLevel * (1 - ourBlend) + theirLevel * ourBlend)
 end
 
---[[
-    Return the result of this instance covering another instance.
+--[[--
+The result of this `LampState` instance covering another `LampState`.
+@param lamp the lamp that we are covering
 ]]
 
 function LampState:cover(lamp)
@@ -29,7 +35,16 @@ function LampState:cover(lamp)
     return LampState:new(level, blend)
 end
 
-function LampState:new(level, blend)    -- TODO should be :new() for consistency.
+--[[--
+Create a new lamp.
+@param level the brightness of the lamp from `0.0` (off)
+to `1.0` (full).
+@param blend a kind of normalised opacity; `0.0` is fully opaque, `1.0` is
+fully transparent, `-1.0` is full inversion of whatever is below.
+]]
+
+
+function LampState:new(level, blend)
     local result = {
         level = level,
         blend = blend
