@@ -44,5 +44,7 @@ return {
        -- Digit animation done by bringing the required digits to the top:
        tensFrame:top(blockObjects[tens])
        unitsFrame:top(blockObjects[units])
-    end
+    end,
+    
+    displayText = {"Counter", "Whatever"}
 }
