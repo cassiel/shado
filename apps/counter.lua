@@ -46,5 +46,9 @@ return {
        unitsFrame:top(blockObjects[units])
     end,
     
-    displayText = {"Counter", "Whatever"}
+    displayText = [[
+        Counter
+        Digit glyphs, counting to 99.
+        No button interaction.
+    ]]
 }

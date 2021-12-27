@@ -35,13 +35,18 @@ end
 local g = grid.connect()
 local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
 
--- Some local state for app-specific display text (multiple lines, first is title):
-local appDisplayText = { }
+-- Some local state for app-specific display text (multiple newline-separated lines, first is title):
+local appDisplayText = ""
 
 function redraw()
     screen.clear()
+    
+    local tab = { }
+    for line in appDisplayText:gmatch("%s*([^\n]+)") do
+        table.insert(tab, line)
+    end
 
-    for i, v in ipairs(appDisplayText) do
+    for i, v in ipairs(tab) do
         if i == 1 then              -- Title:
             screen.level(15)
             screen.font_face(15)    -- "VeraBd".
@@ -90,10 +95,10 @@ local function selectApp(app, sense)
     -- out-of-bounds presses (or displaying out-of-bounds) when it's pushed away.
     
     -- Immediately clear screen (we'll draw the text on end of scroll):
-    appDisplayText = { }
+    appDisplayText = ""
     redraw()
     
-    local displayText = app.displayText or { }
+    local displayText = app.displayText or ""
     
     local oldAppLayer = frame:get(1)
     local newAppLayer = app.layer

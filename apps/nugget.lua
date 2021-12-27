@@ -24,5 +24,13 @@ function block:press(x, y, how)
 end
 
 return {
-    layer = frame
+    layer = frame,
+    
+    displayText = [[
+        Nugget
+        Testing press- and release-
+        tracking for moving objects.
+        Random teleport, remembering
+        which corners are "held".
+    ]]
 }
