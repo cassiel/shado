@@ -29,7 +29,7 @@ for _, v in ipairs(appFiles) do
     local _, _, name = string.find(v, "(%a+)%.lua$")
     local app = require("shado.apps." .. name)
     table.insert(apps, app)
-    frame:add(app.layer, 1, 9)   -- All apps are visually sitting below the actual grid (y = 9).
+    frame:add(app.layer, 1, 9)   -- All apps are visually sitting below the actual grid, at y = 9.
 end
 
 -- Keep track of currently selected/running app:
@@ -186,7 +186,7 @@ function init()
         renderer:render(frame)
     end
 
-    -- Apps get serviced with a counter every 0.1 seconds.
+    -- Apps get serviced with a counter every 0.1 seconds
     local counter = metro.init()
     counter.time = 0.1
     counter.count = -1
