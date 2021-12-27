@@ -3,7 +3,7 @@
 
 * =shado=
 
-The =shado= monome rendering library in Lua for the monome norns.
+The =shado= grid and arc rendering library in Lua for the monome norns.
 
 =shado= is a compositing and sprite library for grid and arc devices attached to the [[https://monome.org/docs/norns/][monome norns]]. It is based on an [[https://github.com/cassiel/net.loadbang.shado/][earlier release]] written in Java as an OSC subsystem; this version is written in Lua to run on norns natively.
 
@@ -13,7 +13,7 @@ The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for 
 
 ** Usage
 
-On norns, download this repository into =/home/we/dust= (at least until we get a proper package built). Then from the norms screen, load the =shado= package. Don't try to load any of the other files - they're an assortment of tests and support scripts.
+On norns, download this repository into =/home/we/dust= (at least until we get a proper package built). Then from the norms screen, load the =shado= package. Don't try to load any of the other files - they're an assortment of tests and support scripts. The main =shado= script is a container for a number of simple and (mostly) interactive demo applications (living in the =apps= directory). The on-screen instructions will introduce the individual demos, and the buttons will scroll between them.
 
 ** Testing Setup
 
