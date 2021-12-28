@@ -9,9 +9,9 @@ local LampState = { }
 LampState.__index = LampState
 
 --[[
-  Calculate the interpolated apparent level ("colour") when this lamp
+  Internal: calculate the interpolated apparent level ("colour") when this lamp
   is laid over another lamp. It's an interpolation between our level
-  and their level, according to our blend value (0.0=opaque), but
+  and their level, according to our blend value (`0.0`=opaque), but
   with the sense of *their* level inverted if our blend is negative.
 ]]
 
