@@ -76,6 +76,32 @@
 	<td class="name" nowrap><a href="#Frame:bottom">Frame:bottom (item)</a></td>
 	<td class="summary">Drop a <code>shado</code> object to the bottom of a frame.</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Frame:hide">Frame:hide (item)</a></td>
+	<td class="summary">Hide a <code>shado</code> object in a frame (effectively, make
+  it transparent).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Frame:show">Frame:show (item)</a></td>
+	<td class="summary">Show a <code>shado</code> object in a frame.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Frame:moveTo">Frame:moveTo (item, x, y)</a></td>
+	<td class="summary">Move an object in a frame to a new location.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Frame:get">Frame:get (i)</a></td>
+	<td class="summary">Retrieve an object from a frame.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Frame:getLamp">Frame:getLamp (x, y)</a></td>
+	<td class="summary">Get the computed "lamp" value for a frame at location
+  <code>(x, y)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Frame:press">Frame:press (x, y, how)</a></td>
+	<td class="summary">The default handler for button press events.</td>
+	</tr>
 </table>
 
 <br/>
@@ -104,11 +130,13 @@
     <strong>Frame:add (item, x, y)</strong>
     </dt>
     <dd>
+    Add an item to a frame, at the top.  Calls can be cascaded, thus:</p>
 
-<p>Add an item to a frame, at the top.  Calls can be cascaded, thus:</p>
-<pre><code>  frame:add(item1, x1, y1):add(item2, x2, y2)
+<pre><code>frame:add(item1, x1, y1):add(item2, x2, y2)
 </code></pre>
 
+<p>  Note: an item should not be added to a frame more than once.
+  (<em>TODO</em> Test for this.)
 
 
     <h3>Parameters:</h3>
@@ -124,6 +152,11 @@
         </li>
     </ul>
 
+    <h3>Returns:</h3>
+    <ol>
+
+        the frame
+    </ol>
 
 
 
@@ -135,8 +168,8 @@
     </dt>
     <dd>
     Remove a <code>shado</code> object from the frame.
- Raises an error if the item isn't present.
- <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:remove">remove</a> should chain.
+  Raises an error if the item isn't present.
+  <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:remove">remove</a> should chain.
 
 
     <h3>Parameters:</h3>
@@ -157,8 +190,8 @@
     </dt>
     <dd>
     Bring a <code>shado</code> object to the top of a frame.
- Raises an error if the item isn't present.
- <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:top">top</a> should chain.
+  Raises an error if the item isn't present.
+  <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:top">top</a> should chain.
 
 
     <h3>Parameters:</h3>
@@ -179,8 +212,8 @@
     </dt>
     <dd>
     Drop a <code>shado</code> object to the bottom of a frame.
- Raises an error if the item isn't present.
- <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:bottom">bottom</a> should chain.
+  Raises an error if the item isn't present.
+  <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:bottom">bottom</a> should chain.
 
 
     <h3>Parameters:</h3>
@@ -195,6 +228,178 @@
 
 
 </dd>
+    <dt>
+    <a name = "Frame:hide"></a>
+    <strong>Frame:hide (item)</strong>
+    </dt>
+    <dd>
+    Hide a <code>shado</code> object in a frame (effectively, make
+  it transparent).  This does not affect its response
+  to button presses.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">item</span>
+         the object to hide
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Frame:show"></a>
+    <strong>Frame:show (item)</strong>
+    </dt>
+    <dd>
+    Show a <code>shado</code> object in a frame.  This does
+  not affect its response to button presses.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">item</span>
+         the object to show
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Frame:moveTo"></a>
+    <strong>Frame:moveTo (item, x, y)</strong>
+    </dt>
+    <dd>
+    Move an object in a frame to a new location.
+  Origin is <code>(1, 1).</code>
+  Returns the frame, for chaining.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">item</span>
+         the object to move
+        </li>
+        <li><span class="parameter">x</span>
+         the new X location
+        </li>
+        <li><span class="parameter">y</span>
+         the new Y location
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the frame
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Frame:get"></a>
+    <strong>Frame:get (i)</strong>
+    </dt>
+    <dd>
+    Retrieve an object from a frame.  The topmost
+  object is at index <code>1</code>. Throws an error if
+  the index is less than <code>1</code> or greater than the
+  number of objects present.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">i</span>
+         the index of the desired object
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the object
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Frame:getLamp"></a>
+    <strong>Frame:getLamp (x, y)</strong>
+    </dt>
+    <dd>
+    Get the computed "lamp" value for a frame at location
+  <code>(x, y)</code>.  If the frame is empty, or the coordinates <code>(x, y)</code> are
+  outside any objects in the frame, the result will be
+  <code>types.LampState.THRU</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X location to examine
+        </li>
+        <li><span class="parameter">y</span>
+         the Y location to examine
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the lamp value
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Frame:press"></a>
+    <strong>Frame:press (x, y, how)</strong>
+    </dt>
+    <dd>
+    The default handler for button press events.  It returns
+  <code>false</code>, which will cause press events to be passed into
+  the frame's component objects. Override to handle buttons
+  in the frame itself, rather than its components.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X location of the press
+        </li>
+        <li><span class="parameter">y</span>
+         the Y location of the press
+        </li>
+        <li><span class="parameter">how</span>
+         the kind of button event: <code>1</code> for press, <code>0</code> for release.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <code>false</code>
+    </ol>
+
+
+
+
+</dd>
 </dl>
 
 
@@ -202,7 +407,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-02-10 21:05:19 </i>
+<i style="float:right;">Last updated 2021-12-28 16:50:55 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
