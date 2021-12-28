@@ -1,9 +1,21 @@
 -- -*- lua-indent-level: 4; -*-
 
+--- Variable-brightness grid renderer.
+
 local types = require "shado.lib.types"
 
 local VariableBlockRenderer = { }
 VariableBlockRenderer.__index = VariableBlockRenderer
+
+--[[--
+  Create a renderer.
+
+  @param width the width of the grid
+  @param height the height of the grid
+  @param grid the underlying grid object
+  @return the renderer
+
+]]
 
 function VariableBlockRenderer:new(width, height, grid)
     local result = {width = width,
@@ -12,6 +24,13 @@ function VariableBlockRenderer:new(width, height, grid)
 
     return setmetatable(result, self)
 end
+
+--[[--
+  Render a renderable `shado` object (block, frame or mask).
+  Update all grid LEDs and refresh.
+
+  @param renderable the `shado` object to render
+]]
 
 function VariableBlockRenderer:render(renderable)
     for x = 1, self.width do

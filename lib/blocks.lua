@@ -98,7 +98,8 @@ end
 
     Block:new(w, h)
 
-  takes two integers and creates a block of width `w` and height `h`.
+  takes two integers and creates a block of width `w` and height `h`,
+  all lamp values `OFF` (opaque black).
 
   The form
 
@@ -171,6 +172,16 @@ function Block:fill(lampState)
     return self
 end
 
+--[[--
+  Get the lamp value of a location in the block, or return `THRU`
+  if out of coordinate range. Top-left is `(1, 1)`.
+
+  @param x the X coordinate
+  @param y the Y coordinate
+  @return the lamp value
+  @see types.LampState
+]]
+
 function Block:getLamp(x, y)
     --[[
         TODO Could just do an '(expr or THRU)' for this, rather than range check?
@@ -183,6 +194,16 @@ function Block:getLamp(x, y)
     end
 end
 
+--[[--
+  The default button press handler. Returns `false`; override to
+  do something useful (and return non-`false` to mark the press
+  as being processed).
+
+  @param x the X coordinate
+  @param y the Y coordinate
+  @param how `1` for press, `0` for release
+]]
+
 function Block:press(x, y, how)
     --[[
         Default press handler returns false, meaning press ignored.
@@ -191,6 +212,12 @@ function Block:press(x, y, how)
     ]]
     return false
 end
+
+--[[--
+  Internal function for routing press-on events. Returns a
+  `RouteResult` object if the location is within range and the
+  block handles the press, otherwise `nil`.
+]]
 
 function Block:routePress00(x, y)
     if self:inRange(x, y) and self:press(x, y, 1) ~= false then

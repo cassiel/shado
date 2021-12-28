@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/blocks.html">blocks</a></li>
+  <li><a href="../modules/frames.html">frames</a></li>
+  <li><a href="../modules/manager.html">manager</a></li>
+  <li><strong>masks</strong></li>
+  <li><a href="../modules/renderers.html">renderers</a></li>
+  <li><a href="../modules/types.html">types</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>masks</code></h1>
+<p>Masks: containers for clipping and offsetting other <code>shado</code> objects.</p>
+<p>
+
+</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Mask:new">Mask:new (content, x, y, width, height)</a></td>
+	<td class="summary">Create a new mask around an existing object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:setX">Mask:setX (x)</a></td>
+	<td class="summary">Update the leftmost coordinate of the mask,
+  shifting it horizontally.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:setY">Mask:setY (y)</a></td>
+	<td class="summary">Update the topmost coordinate of the mask,
+  shifting it vertically.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:getX">Mask:getX ()</a></td>
+	<td class="summary">Get the leftmost coordinate of the mask.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:getY">Mask:getY ()</a></td>
+	<td class="summary">Get the topmost coordinate of the mask.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:inRange">Mask:inRange (x, y)</a></td>
+	<td class="summary">Determine whether a coordinate point <code>(x, y)</code> is within
+  the mask area.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:getLamp">Mask:getLamp (x, y)</a></td>
+	<td class="summary">Get the effective lamp value at position <code>(x, y)</code>.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:press">Mask:press (x, y, how)</a></td>
+	<td class="summary">The default handler for button press events.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Mask:routePress00">Mask:routePress00 (x, y)</a></td>
+	<td class="summary">Internal function for routing press-on events.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Mask:new"></a>
+    <strong>Mask:new (content, x, y, width, height)</strong>
+    </dt>
+    <dd>
+    Create a new mask around an existing object.  The object doesn't
+  shift its position, but is covered with a mask which starts at
+  <code>(x, y)</code> (origin is <code>(1, 1)</code>) and has size <code>(width, height)</code>.
+  Nothing appears outside the mask - the area is transparent - and
+  button presses outside the mask are ignored.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">content</span>
+         the object to mask
+        </li>
+        <li><span class="parameter">x</span>
+         the leftmost coordinate of the mask
+        </li>
+        <li><span class="parameter">y</span>
+         the topmost coordinate of the mask
+        </li>
+        <li><span class="parameter">width</span>
+         the width of the mask
+        </li>
+        <li><span class="parameter">height</span>
+         the height of the mask
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        a new mask
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:setX"></a>
+    <strong>Mask:setX (x)</strong>
+    </dt>
+    <dd>
+    Update the leftmost coordinate of the mask,
+  shifting it horizontally.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:setY"></a>
+    <strong>Mask:setY (y)</strong>
+    </dt>
+    <dd>
+    Update the topmost coordinate of the mask,
+  shifting it vertically.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:getX"></a>
+    <strong>Mask:getX ()</strong>
+    </dt>
+    <dd>
+    Get the leftmost coordinate of the mask.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the X coordinate
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:getY"></a>
+    <strong>Mask:getY ()</strong>
+    </dt>
+    <dd>
+    Get the topmost coordinate of the mask.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the Y coordinate
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:inRange"></a>
+    <strong>Mask:inRange (x, y)</strong>
+    </dt>
+    <dd>
+    Determine whether a coordinate point <code>(x, y)</code> is within
+  the mask area.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <code>true</code> or <code>false</code> depending on inclusion
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:getLamp"></a>
+    <strong>Mask:getLamp (x, y)</strong>
+    </dt>
+    <dd>
+    Get the effective lamp value at position <code>(x, y)</code>.
+  If the position is within the mask, then return the value
+  calculated from the contained object, otherwise
+  return <code>LampState.THRU</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the lamp value
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Mask:press"></a>
+    <strong>Mask:press (x, y, how)</strong>
+    </dt>
+    <dd>
+    The default handler for button press events.  It returns
+  <code>false</code>, which will cause press events to be passed into
+  the mask's contained object. Override to handle buttons
+  in the mask itself, rather than its contained object.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X location of the press
+        </li>
+        <li><span class="parameter">y</span>
+         the Y location of the press
+        </li>
+        <li><span class="parameter">how</span>
+         the kind of button event: <code>1</code> for press, <code>0</code> for release.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <code>false</code>
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Mask:routePress00"></a>
+    <strong>Mask:routePress00 (x, y)</strong>
+    </dt>
+    <dd>
+    Internal function for routing press-on events.  Returns a <code>RouteResult</code>
+  object so that the corresponding press-off can be handled properly.</p>
+
+<p>  Return <code>nil</code> if the coordinate position is outside the mask.
+  Otherwise, if the mask itself does not handle the press, then the constituent
+  object is tried.</p>
+
+<p>  There is some subtlety here; if the mask itself handles the press,
+  the coordinate system treats the top-left corner of the mask
+  as <code>(1, 1)</code>, regardless of where the mask is positioned over its
+  enclosed object. If the object handles the press, the coordinates are
+  as if the mask were not present.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+
+
+
+        </li>
+        <li><span class="parameter">y</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-12-28 19:14:29 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

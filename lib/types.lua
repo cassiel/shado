@@ -1,8 +1,8 @@
 -- -*- lua-indent-level: 4; -*-
 
 --[[--
-  `LampState`: the basic type representing an LED, with variable
-  brightness and opacity.
+  Basic types: at this stage, just `LampState`, the basic type
+  representing an LED, with variable brightness and opacity.
 ]]
 
 local LampState = { }
@@ -66,6 +66,7 @@ LampState.FLIP = LampState:new(0, -1)
 --[[--
   Get the brightness (only, not opacity) state of a lamp
   if drawn against black (off).
+
   @return the brightness, `0.0` to `1.0`
 ]]
 

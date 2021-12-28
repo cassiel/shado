@@ -189,6 +189,7 @@ end
   `false`, which will cause press events to be passed into
   the frame's component objects. Override to handle buttons
   in the frame itself, rather than its components.
+
   @param x the X location of the press
   @param y the Y location of the press
   @param how the kind of button event: `1` for press, `0` for release.
@@ -199,9 +200,15 @@ function Frame:press(x, y, how)
     return false
 end
 
---[[
-    Internal function for routing press-on events. Returns a RouteResult
-    object so that the corresponding press-off can be handled properly.
+--[[--
+  Internal function for routing press-on events. Returns a `RouteResult`
+  object so that the corresponding press-off can be handled properly.
+
+  If the frame itself does not handle the press, then the constituent
+  objects are interrogated from top to bottom, until one does handle
+  it (by returning a result from its `routePress00` method). If there is
+  no result, then the frame as a whole has not handled the press, so
+  return `nil`.
 ]]
 
 function Frame:routePress00(x, y)

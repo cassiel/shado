@@ -100,7 +100,7 @@ Since the renderables might themselves be frames, all sorts of nested movement a
 
 at the top; =hide()= and =show()= calls on it will invert everything. If you want to switch between a number of different patterns, create them all in advance, making sure they are all the same size and are opaque (=ON= or =OFF= values only, no =THRU= or =FLIP=) and them call =frame:top()= on them in sequence.
 
-** Masks
+** MASKS
 
 *Masks* provide a simple way to crop blocks or (more likely) frames, useful if animated sub-frames are being tiled into a larger system. When a mask is built around a renderable (a block or frame - or another mask), the result is a port onto that renderable; anything outside the port is rendered as =THRU= (transparent). There is no change to the coordinate system of the contents of the port.
 
