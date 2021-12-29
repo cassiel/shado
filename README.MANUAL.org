@@ -38,9 +38,11 @@ Here's a simple 4 x 4 square of lights (see the example code for all the details
 
 =0= means =OFF=, =1= means =ON=, =.= means =THRU= and =/= means =FLIP=. Each token is a row; the tokens are separated by white space.
 
+Side note: =shado= constructors are of the form =:new()= rather than =.new()=, in line with the main Lua documentation if not with many of the norns libraries. This assists with inheritance since =shado= objects like blocks often need to be subclassed.
+
 ** FRAMES
 
-A *frame* is a stack of blocks, where items at the "top" obscure, or modify, items lower down. In fact, more generally, a frame is a stack of "renderables", which may be blocks, masks(described later), or other frames. This recursive structure allows a complex animation (say) to be constructed in a frame, and then for this frame to be moved around inside an enclosing frame. (This is how the "UFO" animation demo works.)
+A *frame* is a stack of blocks, where items at the "top" obscure, or modify, items lower down. In fact, more generally, a frame is a stack of "renderables", which may be blocks, masks (described later), or other frames. This recursive structure allows a complex animation (say) to be constructed in a frame, and then for this frame to be moved around inside an enclosing frame. (This is how the "UFO" animation demo works.)
 
 Unlike blocks and masks, frames do not have dimensions; a frame's "size" can be considered to be defined by the extents of any blocks or masks it, or its sub-frames, contain. The renderer does not care about the size of frames (or of blocks or masks, for that matter): it knows the size of the device it's addressing, and scans an area corresponding to the device's width and height, asking renderables to deliver their data. (So, an obvious way to hide a block is to move it beyond the grid's coordinates; there are better ways, outlined below.)
 
@@ -173,4 +175,19 @@ Another side-effect is that an object might receive multiple button-on presses a
 
 ** VARIABLE BRIGHTNESS
 
-TBC.
+To cater for variable-brightness devices (beginning with the original arc controllers), we have generalised the values of the =LampState= type. The constructor is
+
+#+BEGIN_SRC lua
+  LampState:new(level, blend)
+#+END_SRC
+
+where =level= is a brightness value from =0.0= to =1.0=, and =blend= is a kind of normalised transparency: =0.0= is fully opaque, =1.0= is fully transparent, and =-1.0= is a full inversion of whatever is below. Interpolating opacity from =0.0= to =1.0= gradually reveals the inverse of the lower layer.
+
+The "preset" non-greyscale lamp values are defined thus:
+
+#+BEGIN_SRC lua
+  LampState.OFF = LampState:new(0, 0)
+  LampState.ON = LampState:new(1, 0)
+  LampState.THRU = LampState:new(0, 1)
+  LampState.FLIP = LampState:new(0, -1)
+#+END_SRC
