@@ -22,7 +22,7 @@ local manager = require "shado.lib.manager"
 -- Build list of apps (and stack their content in a frame):
 local frame = frames.Frame:new()
 
-local appFiles = util.scandir(os.getenv("HOME") .. "/dust/code/shado/apps")
+local appFiles = util.scandir(_path.code .. "shado/apps")
 local apps = { }
 
 for _, v in ipairs(appFiles) do
