@@ -30,12 +30,19 @@
   <li><a href="../index.html">Index</a></li>
 </ul>
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
 
 
 <h2>Modules</h2>
 <ul class="nowrap">
   <li><strong>blocks</strong></li>
   <li><a href="../modules/frames.html">frames</a></li>
+  <li><a href="../modules/manager.html">manager</a></li>
+  <li><a href="../modules/masks.html">masks</a></li>
+  <li><a href="../modules/renderers.html">renderers</a></li>
   <li><a href="../modules/types.html">types</a></li>
 </ul>
 
@@ -45,24 +52,288 @@
 
 <h1>Module <code>blocks</code></h1>
 <p>Blocks: basic rectangular building blocks for <code>shado</code> applications.</p>
-<p>Blocks are populated with lamps.</p>
+<p> Blocks are populated with lamps.</p>
     <h3>See also:</h3>
     <ul>
     </ul>
 
 
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Block:new">Block:new (a1, a2)</a></td>
+	<td class="summary">Create a new block.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Block:inRange">Block:inRange (x, y)</a></td>
+	<td class="summary">Test whether a coordinate position is within the size
+  range of a block.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Block:setLamp">Block:setLamp (x, y, lampState)</a></td>
+	<td class="summary">Set the lamp value for a single position in the block.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Block:fill">Block:fill (lampState)</a></td>
+	<td class="summary">Fill a block with a single lamp value.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Block:getLamp">Block:getLamp (x, y)</a></td>
+	<td class="summary">Get the lamp value of a location in the block, or return <code>THRU</code>
+  if out of coordinate range.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Block:press">Block:press (x, y, how)</a></td>
+	<td class="summary">The default button press handler.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Block:routePress00">Block:routePress00 (x, y)</a></td>
+	<td class="summary">Internal function for routing press-on events.</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
 
 
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Block:new"></a>
+    <strong>Block:new (a1, a2)</strong>
+    </dt>
+    <dd>
+    Create a new block.  Can be called as</p>
+
+<pre><code>Block:new("xxxx xxxx xxxx")
+</code></pre>
+
+<p>  where the argument string specifies the number of rows (according to the
+  number of space-separated tokens) and the content of each row (according
+  to the character: <code>0</code>, <code>1</code>, <code>.</code>, <code>/</code>).</p>
+
+<p>  The form</p>
+
+<pre><code>Block:new(w, h)
+</code></pre>
+
+<p>  takes two integers and creates a block of width <code>w</code> and height <code>h</code>,
+  all lamp values <code>OFF</code> (opaque black).</p>
+
+<p>  The form</p>
+
+<pre><code>Block:new()
+</code></pre>
+
+<p>  creates a block of size <code>(0, 0)</code> and is used in some circumstances
+  for inheritance.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">a1</span>
+         format string, or width (or omitted for zero-size block)
+        </li>
+        <li><span class="parameter">a2</span>
+         if present: height
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        a new block
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Block:inRange"></a>
+    <strong>Block:inRange (x, y)</strong>
+    </dt>
+    <dd>
+    Test whether a coordinate position is within the size
+  range of a block.  Top-left is <code>(1, 1)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate position
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate position
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        <code>true</code> or <code>false</code> depending on position
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Block:setLamp"></a>
+    <strong>Block:setLamp (x, y, lampState)</strong>
+    </dt>
+    <dd>
+    Set the lamp value for a single position in the block.  Throws an
+  error if the position is out of range.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate position
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate position
+        </li>
+        <li><span class="parameter">lampState</span>
+         the lamp value (type <code>types.LampState</code>)
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Block:fill"></a>
+    <strong>Block:fill (lampState)</strong>
+    </dt>
+    <dd>
+    Fill a block with a single lamp value.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">lampState</span>
+         the lamp value (type <code>types.LampState</code>)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the block
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Block:getLamp"></a>
+    <strong>Block:getLamp (x, y)</strong>
+    </dt>
+    <dd>
+    Get the lamp value of a location in the block, or return <code>THRU</code>
+  if out of coordinate range.  Top-left is <code>(1, 1)</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        the lamp value
+    </ol>
+
+
+    <h3>See also:</h3>
+    <ul>
+    </ul>
+
+
+</dd>
+    <dt>
+    <a name = "Block:press"></a>
+    <strong>Block:press (x, y, how)</strong>
+    </dt>
+    <dd>
+    The default button press handler.  Returns <code>false</code>; override to
+  do something useful (and return non-<code>false</code> to mark the press
+  as being processed).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+        <li><span class="parameter">how</span>
+         <code>1</code> for press, <code>0</code> for release
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Block:routePress00"></a>
+    <strong>Block:routePress00 (x, y)</strong>
+    </dt>
+    <dd>
+    Internal function for routing press-on events.  Returns a
+  <code>RouteResult</code> object if the location is within range and the
+  block handles the press, otherwise <code>nil</code>.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+
+
+
+        </li>
+        <li><span class="parameter">y</span>
+
+
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-02-10 21:05:19 </i>
+<i style="float:right;">Last updated 2021-12-28 19:27:43 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/blocks.html">blocks</a></li>
+  <li><a href="../modules/frames.html">frames</a></li>
+  <li><strong>manager</strong></li>
+  <li><a href="../modules/masks.html">masks</a></li>
+  <li><a href="../modules/renderers.html">renderers</a></li>
+  <li><a href="../modules/types.html">types</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>manager</code></h1>
+<p>Internal button press management machinery.</p>
+<p>  Manage press and release events. Objects in the renderable heirarchy
+  might move around between press and release, so that matching calls to
+  <code>press()</code> on an object might have mismatched coordinates - or the calls
+  may not occur in matching pairs at all. Hence, we retain the object
+  and coordinates for every successful press-on, indexed against actual
+  grid coordinates, so that we can always deliver the corresponding
+  release.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#PressManager:new">PressManager:new (target)</a></td>
+	<td class="summary">The <code>PressManager</code> maintains a two-dimensional map from device <code>(x, y)</code> to
+  <code>RouteResult</code>, which encapsulates a press: it holds the <code>(x, y)</code> position
+  of the original press-down on the target object, and the target itself.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PressManager:press">PressManager:press (x, y, how)</a></td>
+	<td class="summary">Route a button press.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PressManager:release">PressManager:release (x, y)</a></td>
+	<td class="summary">Route a button release.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RouteResult:new">RouteResult:new (target, x, y)</a></td>
+	<td class="summary">A new routing result.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RouteResult:release">RouteResult:release ()</a></td>
+	<td class="summary">Handle a button release.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "PressManager:new"></a>
+    <strong>PressManager:new (target)</strong>
+    </dt>
+    <dd>
+    The <code>PressManager</code> maintains a two-dimensional map from device <code>(x, y)</code> to
+  <code>RouteResult</code>, which encapsulates a press: it holds the <code>(x, y)</code> position
+  of the original press-down on the target object, and the target itself.
+  It has a <code>release()</code> method to send through a release to the target
+  at the same coordinates, even if the target has moved (in location, and/or
+  in the object heirarchy).
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+         the top-level <code>shado</code> object handling button presses (and releases)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        a press manager
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PressManager:press"></a>
+    <strong>PressManager:press (x, y, how)</strong>
+    </dt>
+    <dd>
+    Route a button press.  If the object (or object heirarchy) handles
+  the press, remember the object and location so that a release can be correctly
+  routed to match.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+        <li><span class="parameter">how</span>
+         <code>1</code> for press, <code>0</code> for release
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PressManager:release"></a>
+    <strong>PressManager:release (x, y)</strong>
+    </dt>
+    <dd>
+    Route a button release.  We look for a stored button press
+  in the same physical location.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RouteResult:new"></a>
+    <strong>RouteResult:new (target, x, y)</strong>
+    </dt>
+    <dd>
+    A new routing result.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">target</span>
+         the <code>shado</code> object handling the press
+        </li>
+        <li><span class="parameter">x</span>
+         the X coordinate
+        </li>
+        <li><span class="parameter">y</span>
+         the Y coordinate
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        a route result
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RouteResult:release"></a>
+    <strong>RouteResult:release ()</strong>
+    </dt>
+    <dd>
+    Handle a button release.  Action the release at the
+  correct location on the correct object.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-12-28 19:27:43 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
