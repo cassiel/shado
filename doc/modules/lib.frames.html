@@ -24,7 +24,7 @@
 
 <div id="navigation">
 <br/>
-<h1>ldoc</h1>
+<h1>shado</h1>
 
 <ul>
   <li><a href="../index.html">Index</a></li>
@@ -38,19 +38,21 @@
 
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><a href="../modules/blocks.html">blocks</a></li>
-  <li><strong>frames</strong></li>
-  <li><a href="../modules/manager.html">manager</a></li>
-  <li><a href="../modules/masks.html">masks</a></li>
-  <li><a href="../modules/renderers.html">renderers</a></li>
-  <li><a href="../modules/types.html">types</a></li>
+  <li><a href="../modules/shado.html">shado</a></li>
+  <li><a href="../modules/lib.blocks.html">lib.blocks</a></li>
+  <li><strong>lib.frames</strong></li>
+  <li><a href="../modules/lib.manager.html">lib.manager</a></li>
+  <li><a href="../modules/lib.masks.html">lib.masks</a></li>
+  <li><a href="../modules/lib.renderers.html">lib.renderers</a></li>
+  <li><a href="../modules/lib.types.html">lib.types</a></li>
+  <li><a href="../modules/apps.counter.html">apps.counter</a></li>
 </ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>frames</code></h1>
+<h1>Module <code>lib.frames</code></h1>
 <p>Frames: stacks of shado objects (including sub-frames).</p>
 <p>
 
@@ -69,24 +71,24 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:remove">Frame:remove (item)</a></td>
-	<td class="summary">Remove a <code>shado</code> object from the frame.</td>
+	<td class="summary">Remove a <a href="../modules/shado.html#">shado</a> object from the frame.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:top">Frame:top (item)</a></td>
-	<td class="summary">Bring a <code>shado</code> object to the top of a frame.</td>
+	<td class="summary">Bring a <a href="../modules/shado.html#">shado</a> object to the top of a frame.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:bottom">Frame:bottom (item)</a></td>
-	<td class="summary">Drop a <code>shado</code> object to the bottom of a frame.</td>
+	<td class="summary">Drop a <a href="../modules/shado.html#">shado</a> object to the bottom of a frame.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:hide">Frame:hide (item)</a></td>
-	<td class="summary">Hide a <code>shado</code> object in a frame (effectively, make
+	<td class="summary">Hide a <a href="../modules/shado.html#">shado</a> object in a frame (effectively, make
   it transparent).</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:show">Frame:show (item)</a></td>
-	<td class="summary">Show a <code>shado</code> object in a frame.</td>
+	<td class="summary">Show a <a href="../modules/shado.html#">shado</a> object in a frame.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:moveTo">Frame:moveTo (item, x, y)</a></td>
@@ -149,7 +151,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">item</span>
-         the <code>shado</code> object to add
+         the <a href="../modules/shado.html#">shado</a> object to add
         </li>
         <li><span class="parameter">x</span>
          the horizontal location, <code>1</code> being the origin
@@ -174,15 +176,15 @@
     <strong>Frame:remove (item)</strong>
     </dt>
     <dd>
-    Remove a <code>shado</code> object from the frame.
+    Remove a <a href="../modules/shado.html#">shado</a> object from the frame.
   Raises an error if the item isn't present.
-  <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:remove">remove</a> should chain.
+  <em>TODO</em> Calls to <a href="../modules/lib.frames.html#Frame:remove">remove</a> should chain.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">item</span>
-         the <code>shado</code> object to remove
+         the <a href="../modules/shado.html#">shado</a> object to remove
         </li>
     </ul>
 
@@ -196,15 +198,15 @@
     <strong>Frame:top (item)</strong>
     </dt>
     <dd>
-    Bring a <code>shado</code> object to the top of a frame.
+    Bring a <a href="../modules/shado.html#">shado</a> object to the top of a frame.
   Raises an error if the item isn't present.
-  <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:top">top</a> should chain.
+  <em>TODO</em> Calls to <a href="../modules/lib.frames.html#Frame:top">top</a> should chain.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">item</span>
-         the <code>shado</code> object to raise
+         the <a href="../modules/shado.html#">shado</a> object to raise
         </li>
     </ul>
 
@@ -218,15 +220,15 @@
     <strong>Frame:bottom (item)</strong>
     </dt>
     <dd>
-    Drop a <code>shado</code> object to the bottom of a frame.
+    Drop a <a href="../modules/shado.html#">shado</a> object to the bottom of a frame.
   Raises an error if the item isn't present.
-  <em>TODO</em> Calls to <a href="../modules/frames.html#Frame:bottom">bottom</a> should chain.
+  <em>TODO</em> Calls to <a href="../modules/lib.frames.html#Frame:bottom">bottom</a> should chain.
 
 
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">item</span>
-         the <code>shado</code> object to lower
+         the <a href="../modules/shado.html#">shado</a> object to lower
         </li>
     </ul>
 
@@ -240,7 +242,7 @@
     <strong>Frame:hide (item)</strong>
     </dt>
     <dd>
-    Hide a <code>shado</code> object in a frame (effectively, make
+    Hide a <a href="../modules/shado.html#">shado</a> object in a frame (effectively, make
   it transparent).  This does not affect its response
   to button presses.
 
@@ -262,7 +264,7 @@
     <strong>Frame:show (item)</strong>
     </dt>
     <dd>
-    Show a <code>shado</code> object in a frame.  This does
+    Show a <a href="../modules/shado.html#">shado</a> object in a frame.  This does
   not affect its response to button presses.
 
 
@@ -417,7 +419,7 @@
 
 <p>  If the frame itself does not handle the press, then the constituent
   objects are interrogated from top to bottom, until one does handle
-  it (by returning a result from its <a href="../modules/frames.html#Frame:routePress00">routePress00</a> method). If there is
+  it (by returning a result from its <a href="../modules/lib.frames.html#Frame:routePress00">routePress00</a> method). If there is
   no result, then the frame as a whole has not handled the press, so
   return <code>nil</code>.
 
@@ -447,7 +449,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-12-30 16:05:54 </i>
+<i style="float:right;">Last updated 2021-12-30 16:40:46 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

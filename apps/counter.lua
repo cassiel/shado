@@ -1,5 +1,7 @@
 -- -*- lua-indent-level: 4; -*-
 
+--- Simple counter.
+
 local blocks = require "shado.lib.blocks"
 local frames = require "shado.lib.frames"
 
@@ -45,7 +47,7 @@ return {
        tensFrame:top(blockObjects[tens])
        unitsFrame:top(blockObjects[units])
     end,
-    
+
     displayText = [[
         Counter
         Digit glyphs, counting to 99.

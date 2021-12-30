@@ -1,6 +1,12 @@
--- shado demonstrator.
--- Nick Rothwell, nick@cassiel.com
--- github.com/cassiel/shado
+-----
+-- ## shado
+--
+-- shado demonstrator script.
+-- Nick Rothwell, nick@cassiel.com.
+--
+-- Source: [https://github.com/cassiel/shado](https://github.com/cassiel/shado).
+--
+-- Introduction and description [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
 --
 -- Press K2 and K3
 -- to scroll between apps.
