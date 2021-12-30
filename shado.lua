@@ -1,17 +1,15 @@
 --- ## shado
---
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
+-- github.com/cassiel/shado
 -- https://llllllll.co/t/51408
 --
 -- Press K2 and K3
 -- to scroll between apps.
-
-
+--
 -- Source: [https://github.com/cassiel/shado](https://github.com/cassiel/shado).
 --
 -- Introduction and description [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
---
 
 -- For development, purge any shado scripts/libraries from the cache on reload:
 for k, _ in pairs(package.loaded) do
@@ -34,7 +32,7 @@ local appFiles = util.scandir(_path.code .. "shado/apps")
 local apps = { }
 
 for _, v in ipairs(appFiles) do
-    local _, _, name = string.find(v, "(%a+)%.lua$")
+    local _, _, name = string.find(v, "([%a_]+)%.lua$")
     local app = require("shado.apps." .. name)
     table.insert(apps, app)
     frame:add(app.layer, 1, 9)   -- All apps are visually sitting below the actual grid, at y = 9.
@@ -149,6 +147,8 @@ local function selectApp(app, sense)
     else        -- Immediate move (launch of main script)
         frame:moveTo(frame:get(2), 1, 9)        -- Old top app out of line of sight.
         frame:moveTo(frame:get(1), 1, 1)        -- New top app into line of sight.
+        renderer:render(frame)
+
         appDisplayText = displayText
         redraw()
     end
