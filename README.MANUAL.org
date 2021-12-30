@@ -181,7 +181,7 @@ To cater for variable-brightness devices (beginning with the original arc contro
   LampState:new(level, blend)
 #+END_SRC
 
-where =level= is a brightness value from =0.0= to =1.0=, and =blend= is a kind of normalised transparency: =0.0= is fully opaque, =1.0= is fully transparent, and =-1.0= is a full inversion of whatever is below. Interpolating opacity from =0.0= to =1.0= gradually reveals the inverse of the lower layer.
+where =level= is a brightness value from =0.0= to =1.0=, and =blend= is a kind of normalised transparency: =0.0= is fully opaque, =1.0= is fully transparent, and =-1.0= is a full inversion of whatever is below. (The various intermediate combinations have been unit-tested, but are perhaps not totally intuitive.)
 
 The "preset" non-greyscale lamp values are defined thus:
 
