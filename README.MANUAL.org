@@ -9,13 +9,13 @@ This file will eventually be a manual; for now, it's a working overview of the =
 
 =shado= is a compositing and sprite library for the monome grid and arc, written in Lua. The interface to grid and arc is identical: an arc is just a 64-wide, 4-deep grid. =shado= also supports button tracking for grids, so that button presses and releases are correctly paired even if components move around on the device.
 
-An application which uses =shado= will build structures of *frames*, *blocks* and *masks*. These objects know how to present themselves to a rendering object, which calls into the norn core library.
+An application which uses =shado= will build structures of *frames*, *blocks* and *masks*. These objects know how to present themselves to a rendering object, which calls into the norns core library.
 
 The =shado= library doesn't have things called sprites per se, but any structure of blocks, frames and masks can be manipulated and altered dynamically. If components are moved around relative to one another, or if their layering order or visibility are changed, the result is sprite-like animation.
 
 ** HISTORICAL NOTE
 
-=shado= was originally written for the binary monome grid with on/off LEDs only. Variable brighness was retrofitted as described later, as an extension to the binary feature set described here.
+=shado= was originally written for the binary monome grid with on/off LEDs only. Variable brightness was retrofitted as described later, as an extension to the binary feature set described here.
 
 ** BLOCKS
 
