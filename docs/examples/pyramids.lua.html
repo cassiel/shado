@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>shado</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+
+
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/counter.lua.html">counter.lua</a></li>
+  <li><a href="../examples/nugget.lua.html">nugget.lua</a></li>
+  <li><strong>pyramids.lua</strong></li>
+  <li><a href="../examples/square.lua.html">square.lua</a></li>
+</ul>
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/shado.html">shado</a></li>
+  <li><a href="../modules/lib.blocks.html">lib.blocks</a></li>
+  <li><a href="../modules/lib.frames.html">lib.frames</a></li>
+  <li><a href="../modules/lib.manager.html">lib.manager</a></li>
+  <li><a href="../modules/lib.masks.html">lib.masks</a></li>
+  <li><a href="../modules/lib.renderers.html">lib.renderers</a></li>
+  <li><a href="../modules/lib.types.html">lib.types</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+    <h2>pyramids.lua</h2>
+<pre>
+<span class="comment">-- -*- lua-indent-level: 4; -*-
+</span>
+<span class="comment">--[[
+  Two pyramids. Each is a stack of concentric squares, 8x8 at the bottom
+  to 2x2 at the top. Each responds to button press, randomising its
+  own level and blend (opacity).
+]]</span>
+
+<span class="keyword">local</span> types = <span class="global">require</span> <span class="string">"shado.lib.types"</span>
+<span class="keyword">local</span> blocks = <span class="global">require</span> <span class="string">"shado.lib.blocks"</span>
+<span class="keyword">local</span> frames = <span class="global">require</span> <span class="string">"shado.lib.frames"</span>
+
+<span class="comment">-- Random level and blend/opacity:
+</span>
+<span class="keyword">function</span> randomLamp()
+    <span class="keyword">local</span> level = <span class="global">math</span>.random()             <span class="comment">-- 0.0..1.0
+</span>    <span class="keyword">local</span> blend = <span class="global">math</span>.random() * <span class="number">2</span> - <span class="number">1</span>     <span class="comment">-- -1.0..1.0
+</span>
+    <span class="keyword">return</span>  types.LampState:new(level, blend)
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> makeLayer(size)
+    <span class="comment">-- Create the block:
+</span>    <span class="keyword">local</span> b = blocks.Block:new(size, size):fill(randomLamp())
+
+    <span class="comment">-- A button press should randomise the lamp:
+</span>    b.press =
+        <span class="keyword">function</span>(self, x, y, how)
+            <span class="keyword">if</span> how &gt; <span class="number">0</span> <span class="keyword">then</span>
+                b:fill(randomLamp())
+            <span class="keyword">end</span>
+        <span class="keyword">end</span>
+
+    <span class="comment">-- Create a frame to centre the block (though we could
+</span>    <span class="comment">-- just do that in the outermost frame below):
+</span>    <span class="keyword">local</span> offset = (<span class="number">8</span> - size) // <span class="number">2</span>
+    <span class="keyword">local</span> f = frames.Frame:new():add(b, <span class="number">1</span> + offset, <span class="number">1</span> + offset)
+
+    <span class="keyword">return</span> f
+<span class="keyword">end</span>
+
+<span class="keyword">local</span> frame = frames.Frame:new()
+
+<span class="comment">-- Stack blocks, biggest at the bottom:
+</span><span class="keyword">for</span> i = <span class="number">8</span>, <span class="number">2</span>, -<span class="number">2</span> <span class="keyword">do</span>
+    frame:add(makeLayer(i), <span class="number">1</span>, <span class="number">1</span>)
+<span class="keyword">end</span>
+
+<span class="comment">-- Do it again, for the second pyramid:
+</span><span class="keyword">for</span> i = <span class="number">8</span>, <span class="number">2</span>, -<span class="number">2</span> <span class="keyword">do</span>
+    frame:add(makeLayer(i), <span class="number">9</span>, <span class="number">1</span>)
+<span class="keyword">end</span>
+
+<span class="keyword">return</span> {
+    layer = frame,
+
+    displayText = <span class="string">[[
+        Pyramids
+        Two stacks of concentric
+        squares, 2x2 to 8x8.
+        Press to randomise level and
+        opacity of selected square.
+    ]]</span>
+}</pre>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-12-30 22:00:16 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
