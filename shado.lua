@@ -1,7 +1,7 @@
 --- ## shado
+--
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
--- https://github.com/cassiel/shado
 -- https://llllllll.co/t/51408
 --
 -- Press K2 and K3
