@@ -3,7 +3,7 @@
 
 * S H A D O   M A N U A L
 
-This file will eventually be a manual; for now, it's a working overview of the =shado= architecture and components, with some fragments of Lua code which show how it works. Read in conjunction with the Lua examples and the LuaDocs (forthcoming), it should be enough information to start writing =shado=-based applications.
+This file will eventually be a manual; for now, it's a working overview of the =shado= architecture and components, with some fragments of Lua code which show how it works. Read in conjunction with the Lua examples and the API LuaDocs [[https://cassiel.com/shado/][here]], it should be enough information to start writing =shado=-based applications.
 
 ** THE RENDERING MODEL
 

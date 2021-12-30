@@ -7,9 +7,9 @@ The =shado= grid and arc rendering library in Lua for the monome norns.
 
 =shado= is a compositing and sprite library for grid and arc devices attached to the [[https://monome.org/docs/norns/][monome norns]]. It is based on an [[https://github.com/cassiel/net.loadbang.shado/][earlier release]] written in Java as an OSC subsystem; this version is written in Lua to run on norns natively.
 
-To get a sense for what's achievable in =shado= (as of ten years ago with first-generation monome kit), take a look at this [[http://vimeo.com/1338613][video]].
+To get a sense for what's achievable in =shado= (as of 13 years ago with first-generation monome kit), take a look at this [[http://vimeo.com/1338613][video]].
 
-The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for =shado=; for now, it contains an explanation of the =shado= architecture - quite possibly, along with the examples, just about enough to start writing =shado= "programs".
+The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for =shado=; for now, it contains an explanation of the =shado= architecture - quite possibly, along with the [[https://cassiel.com/shado/][API docs]] and the examples, just about enough to start writing =shado= "programs".
 
 ** Usage
 
@@ -51,7 +51,7 @@ We've used [[https://github.com/stevedonovan/LDoc][LDoc]], which can be cleanly 
   [sudo] luarocks install ldoc
 #+END_SRC
 
-From the main =shado= directory, a =ldoc -v .= reads from =config.ld= and generates docs in =doc=.
+From the main =shado= directory, a =ldoc -v .= reads from =config.ld= and generates docs in =docs= (which is where GitHub Pages wants them).
 
 ** Comparison with Java shado
 
