@@ -28,7 +28,7 @@ local manager = require "shado.lib.manager"
 -- Build list of apps (and stack their content in a frame):
 local frame = frames.Frame:new()
 
-local appFiles = util.scandir(os.getenv("HOME") .. "/dust/code/shado/apps")
+local appFiles = util.scandir(_path.code .. "shado/apps")
 local apps = { }
 
 for _, v in ipairs(appFiles) do
@@ -46,6 +46,15 @@ local currentApp = apps[currentAppIndex]
 local g = grid.connect()
 local renderer = renderers.VariableBlockRenderer:new(16, 8, g)
 
+-- Show application index: alone on butten press, then again with text at end of scroll.
+local function showAppIndex()
+    screen.level(3)
+    screen.font_face(15)    -- "VeraBd".
+    screen.font_size(10)
+    screen.move(127, 10 + 5)
+    screen.text_right(string.format("%02d/%02d", currentAppIndex, #apps))
+end
+
 -- Some local state for app-specific display text (multiple newline-separated lines, first is title):
 local appDisplayText = ""
 
@@ -53,11 +62,13 @@ local appDisplayText = ""
 function redraw()
     screen.clear()
 
-    -- Build table of lines of text:
+    -- Build table of lines of text:    
     local tab = { }
     for line in appDisplayText:gmatch("%s*([^\n]+)") do
         table.insert(tab, line)
     end
+    
+    showAppIndex()
 
     -- Display:
     for i, v in ipairs(tab) do
@@ -70,16 +81,9 @@ function redraw()
             screen.font_face(1)     -- Default.
             screen.font_size(8)
         end
-
+    
         screen.move(0, i * 10 + 5)
         screen.text(v)
-
-        if i == 1 then              -- Add "01/NN"-style application index:
-            screen.level(3)
-            screen.font_size(10)
-            screen.move(127, i * 10 + 5)
-            screen.text_right(string.format("%02d/%02d", currentAppIndex, #apps))
-        end
     end
 
     screen.update()
@@ -101,7 +105,7 @@ local function scroller(oldFrom, oldTo, oldStep, newOffset, displayText)
         -- We've already brought the new app to the top (index 1):
         local oldAppLayer = frame:get(2)
         local newAppLayer = frame:get(1)
-
+    
         -- Scroll the pair of app layers up or down:
         for i = oldFrom, oldTo, oldStep do
             frame:moveTo(oldAppLayer, 1, i)
@@ -109,7 +113,7 @@ local function scroller(oldFrom, oldTo, oldStep, newOffset, displayText)
             renderer:render(frame)
             clock.sleep(0.02)
         end
-
+        
         appDisplayText = displayText
         redraw()
         keysBlocked = false
@@ -122,16 +126,16 @@ local function selectApp(app, sense)
         TODO: we should really wrap each app in a mask to avoid it getting any
         out-of-bounds presses (or displaying out-of-bounds) when it's pushed away.
     ]]
-
+    
     -- Immediately clear screen (we'll draw the new text on end of scroll):
     appDisplayText = ""
     redraw()
-
+    
     local displayText = app.displayText or ""
-
+    
     -- New application to top of display stack:
     frame:top(app.layer)
-
+    
     if sense == 1 then
         -- Old app moves up, corner from (1, 0) to (1, -7).
         -- New app is below, offset 8:
@@ -166,7 +170,7 @@ function key(n, z)
                 newIndex = currentAppIndex
                 sense = 0
             end
-
+        
             currentAppIndex = newIndex
             currentApp = apps[currentAppIndex]
             selectApp(currentApp, sense)
@@ -184,7 +188,7 @@ end
 
 function init()
     renderer:render(frame)
-
+    
     local mgr = manager.PressManager:new(frame)
 
     g.key = function (x, y, how)
@@ -198,6 +202,6 @@ function init()
     counter.count = -1
     counter.event = service
     counter:start()
-
+    
     selectApp(currentApp, 0)
 end
