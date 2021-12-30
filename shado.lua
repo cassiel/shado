@@ -1,5 +1,4 @@
 --- ## shado
---
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
 -- https://github.com/cassiel/shado
