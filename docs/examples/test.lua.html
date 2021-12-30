@@ -32,9 +32,15 @@
 
 
 
+<h2>Examples</h2>
+<ul class="nowrap">
+  <li><a href="../examples/counter.lua.html">counter.lua</a></li>
+  <li><a href="../examples/nugget.lua.html">nugget.lua</a></li>
+  <li><strong>test.lua</strong></li>
+</ul>
 <h2>Modules</h2>
 <ul class="nowrap">
-  <li><strong>shado</strong></li>
+  <li><a href="../modules/shado.html">shado</a></li>
   <li><a href="../modules/lib.blocks.html">lib.blocks</a></li>
   <li><a href="../modules/lib.frames.html">lib.frames</a></li>
   <li><a href="../modules/lib.manager.html">lib.manager</a></li>
@@ -42,38 +48,31 @@
   <li><a href="../modules/lib.renderers.html">lib.renderers</a></li>
   <li><a href="../modules/lib.types.html">lib.types</a></li>
 </ul>
-<h2>Examples</h2>
-<ul class="nowrap">
-  <li><a href="../examples/counter.lua.html">counter.lua</a></li>
-  <li><a href="../examples/nugget.lua.html">nugget.lua</a></li>
-  <li><a href="../examples/test.lua.html">test.lua</a></li>
-</ul>
 
 </div>
 
 <div id="content">
 
-<h1>Module <code>shado</code></h1>
-<p>
-<h2>shado</h2>
+    <h2>test.lua</h2>
+<pre>
+<span class="comment">-- -*- lua-indent-level: 4; -*-
+</span>
+<span class="keyword">local</span> types = <span class="global">require</span> <span class="string">"shado.lib.types"</span>
+<span class="keyword">local</span> blocks = <span class="global">require</span> <span class="string">"shado.lib.blocks"</span>
+<span class="keyword">local</span> frames = <span class="global">require</span> <span class="string">"shado.lib.frames"</span>
 
-<p> shado demonstrator script.</p>
-</p>
-<p> Nick Rothwell, nick@cassiel.com.</p>
+<span class="keyword">local</span> block = blocks.Block:new(<span class="number">4</span>, <span class="number">4</span>):fill(types.LampState.ON)
+<span class="keyword">local</span> frame = frames.Frame:new():add(block, <span class="number">7</span>, <span class="number">3</span>)
 
-<p> Source: <a href="https://github.com/cassiel/shado">https://github.com/cassiel/shado</a>.</p>
+<span class="keyword">return</span> {
+    layer = frame,
 
-<p> Introduction and description <a href="https://github.com/cassiel/shado/blob/master/README.MANUAL.org">here</a>.</p>
-
-<p> Press K2 and K3
- to scroll between apps.</p>
-
-
-
-<br/>
-<br/>
-
-
+    displayText = <span class="string">[[
+        Square
+        Super-simple fixed graphic.
+        No button interaction.
+    ]]</span>
+}</pre>
 
 
 </div> <!-- id="content" -->
