@@ -1,17 +1,17 @@
------
--- ## shado
+--- ## shado
 --
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
 -- https://llllllll.co/t/51408
+--
+-- Press K2 and K3
+-- to scroll between apps.
 
 
 -- Source: [https://github.com/cassiel/shado](https://github.com/cassiel/shado).
 --
 -- Introduction and description [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
 --
--- Press K2 and K3
--- to scroll between apps.
 
 -- For development, purge any shado scripts/libraries from the cache on reload:
 for k, _ in pairs(package.loaded) do
