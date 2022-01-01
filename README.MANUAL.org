@@ -141,7 +141,7 @@ When a button is pressed, =shado= searches a tree of renderables in order, until
 
 A block or mask can only handle a button press which falls within its declared coordinates; if the button press is outside the renderable's dimensions then the renderable never sees it. Frames are effectively infinite, so =press()= can be handled anywhere on the X-Y plane.
 
-If a block measuring =width= by =height= is within range of a press, it will be passed X and Y coordinates within =(1, 1)= and =(width, height)=. If a mask receives a press, the coordinate =(1, 1)= coincides with the top-left corner of the mask area, rather than =(0, 0)= in the mask's own coordinate system.
+If a block measuring =width= by =height= is within range of a press, it will be passed X and Y coordinates within =(1, 1)= and =(width, height)=. If a mask receives a press, the coordinate =(1, 1)= coincides with the top-left corner of the mask area, rather than =(1, 1)= in the coordinate system of the masked element.
 
 A button press can be routed into any renderable: block, frame or mask. (A frame can handle presses directly or will pass them on to its children.) There's a class called =PressManager= which does this (and which also tracks on and off presses, as we describe later):
 
@@ -171,7 +171,7 @@ We have implemented some machinery which guarantees a fundamental property of bu
 
 A side-effect of this is that, if an object chooses to ignore a press (by returning =false= from a =press(x, y, 1)= call) then it will never see the release call - that call will always go to the actual object which dealt with the press (if any).
 
-Another side-effect is that an object might receive multiple button-on presses at the same coordinates. If a =press(1, 1, 1)= event to a block causes it to move, another button on the grid might now map to the Block's top-left, and might send a second =press(1, 1, 1)=. In other words, it's quite possible for button-on events to be duplicated in the same location - and the release events will also be duplicated. This makes perfect sense to the PressManager so it had better make sense to your Lua scripts.
+Another side-effect is that an object might receive multiple button-on presses at the same coordinates. If a =press(1, 1, 1)= event to a block causes it to move, another button on the grid might now map to the Block's top-left, and might send a second =press(1, 1, 1)=. The PressManager always releases a button press at a location prior to any subsequent press. If you end up holding two buttons which created presses at the same location in a component, the first one to be released (not the last) generates a release event.
 
 ** VARIABLE BRIGHTNESS
 

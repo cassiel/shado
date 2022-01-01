@@ -13,7 +13,15 @@ The file [[README.MANUAL.org][README.MANUAL]] will eventually be the manual for 
 
 ** Usage
 
-On norns, download this repository into =/home/we/dust= (at least until we get a proper package built) - it must have the name =shado=. Then from the norms screen, load the =shado= script. Don't try to load any of the other files - they're an assortment of tests and support scripts. The main =shado= script is a container for a number of simple and (mostly) interactive demo applications (living in the =apps= directory). The on-screen instructions will introduce the individual demos, and the buttons will scroll between them.
+On norns, download this repository into =/home/we/dust/code= (at least until we get a proper package built) - it must have the name =shado=. If you download and unpack the ZIP file the folder will be named something like `shado-main`, so rename it.
+
+Maiden can also download and install the package directly, via:
+
+#+BEGIN_SRC shell-script
+  ;install https://github.com/cassiel/shado
+#+END_SRC
+
+Once that's done, from the norms screen, load the =shado= script. Don't try to load any of the other files - they're an assortment of tests and support scripts. The main =shado= script is a container for a number of simple and (mostly) interactive demo applications (living in the =apps= directory). The on-screen instructions will introduce the individual demos, and the buttons will scroll between them.
 
 ** Testing Setup
 
