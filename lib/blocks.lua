@@ -4,8 +4,8 @@
 -- Blocks are populated with lamps.
 -- @see types.LampState:new
 
-local types = require "shado.lib.types"
-local manager = require "shado.lib.manager"
+local types = require "shado/lib/types"
+local manager = require "shado/lib/manager"
 
 local Block = { }
 

@@ -12,7 +12,7 @@
   release.
 ]]
 
-local utils = require "shado.lib.utils"
+local utils = require "shado/lib/utils"
 -- local inspect = require "inspect"
 
 local PressManager = { }

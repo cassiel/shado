@@ -2,8 +2,8 @@
 
 --- Masks: containers for clipping and offsetting other `shado` objects.
 
-local types = require "shado.lib.types"
-local manager = require "shado.lib.manager"
+local types = require "shado/lib/types"
+local manager = require "shado/lib/manager"
 
 local Mask = { }
 Mask.__index = Mask

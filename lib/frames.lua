@@ -2,8 +2,8 @@
 
 --- Frames: stacks of shado objects (including sub-frames).
 
-local types = require "shado.lib.types"
-local manager = require "shado.lib.manager"
+local types = require "shado/lib/types"
+local manager = require "shado/lib/manager"
 
 local Frame = { }
 Frame.__index = Frame
