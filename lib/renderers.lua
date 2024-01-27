@@ -2,7 +2,7 @@
 
 --- Variable-brightness grid renderer.
 
-local types = require "shado/lib/types"
+local types = require "shado.lib.types"
 
 local VariableBlockRenderer = { }
 VariableBlockRenderer.__index = VariableBlockRenderer
