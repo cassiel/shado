@@ -12,6 +12,9 @@
 -- Introduction and description [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
 
 -- For development, purge any shado scripts/libraries from the cache on reload:
+
+local SEAMSTRESS = 1
+
 for k, _ in pairs(package.loaded) do
     if k:find("shado.") == 1 then
         print("purge " .. k)
@@ -28,7 +31,19 @@ local manager = require "shado.lib.manager"
 -- Build list of apps (and stack their content in a frame):
 local frame = frames.Frame:new()
 
-local appFiles = util.scandir(_path.code .. "shado/apps")
+local appFiles
+
+if SEAMSTRESS then
+   appFiles = {
+      "shado.apps.counter.lua",
+      "shado.apps.nugget.lua",
+      "shado.apps.pyramids.lua",
+      "shado.apps.square.lua"
+   }
+else
+   appFiles = util.scandir(_path.code .. "shado/apps")
+end
+
 local apps = { }
 
 for _, v in ipairs(appFiles) do
@@ -58,35 +73,44 @@ end
 -- Some local state for app-specific display text (multiple newline-separated lines, first is title):
 local appDisplayText = ""
 
--- Screen draw: app title (big) and index, then descriptive lines of text:
-function redraw()
-    screen.clear()
+local redraw
 
-    -- Build table of lines of text:
-    local tab = { }
-    for line in appDisplayText:gmatch("%s*([^\n]+)") do
-        table.insert(tab, line)
-    end
+if SEAMSTRESS then
+   -- Screen drawing kind of broken in seamstress, so for now do nothing.
+   redraw = function() end
+else
+   -- Screen draw: app title (big) and index, then descriptive lines of text:
+   redraw = function()
+      if not SEAMSTRESS then
+         screen.clear()
 
-    showAppIndex()
+         -- Build table of lines of text:
+         local tab = { }
+         for line in appDisplayText:gmatch("%s*([^\n]+)") do
+            table.insert(tab, line)
+         end
 
-    -- Display:
-    for i, v in ipairs(tab) do
-        if i == 1 then              -- Title:
-            screen.level(15)
-            screen.font_face(15)    -- "VeraBd".
-            screen.font_size(12)
-        else                        -- Body text:
-            screen.level(5)
-            screen.font_face(1)     -- Default.
-            screen.font_size(8)
-        end
+         showAppIndex()
 
-        screen.move(0, i * 10 + 5)
-        screen.text(v)
-    end
+         -- Display:
+         for i, v in ipairs(tab) do
+            if i == 1 then              -- Title:
+               screen.level(15)
+               screen.font_face(15)    -- "VeraBd".
+               screen.font_size(12)
+            else                        -- Body text:
+               screen.level(5)
+               screen.font_face(1)     -- Default.
+               screen.font_size(8)
+            end
 
-    screen.update()
+            screen.move(0, i * 10 + 5)
+            screen.text(v)
+         end
+
+         screen.update()
+      end
+   end
 end
 
 --[[
@@ -152,8 +176,10 @@ local function selectApp(app, sense)
         appDisplayText = displayText
         redraw()
     end
-
 end
+
+-- For seamstress, call `key` manually in the REPL: `key(2, 1)` or `key(3, 1)`
+-- to cycle between applications.
 
 function key(n, z)
     if not keysBlocked then
