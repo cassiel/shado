@@ -44,6 +44,41 @@ function VariableBlockRenderer:render(renderable)
     self.grid:refresh()
 end
 
+local NUM_LEDS = 64
+
+local VariableArcRenderer = { }
+VariableArcRenderer.__index = VariableArcRenderer
+
+--[[--
+    Create an arc renderer.
+
+    @param num_rings the number of rings
+    @param arc the underlying grid object
+    @return the renderer
+
+]]
+
+function VariableArcRenderer:new(num_rings, arc)
+    local result = {num_rings = num_rings,
+                    arc = arc}
+
+    return setmetatable(result, self)
+end
+
+function VariableArcRenderer:render(renderable)
+    for x = 1, NUM_LEDS do
+        for y = 1, self.num_rings do
+            local f = renderable:getLamp(x, y):againstBlack()
+            self.arc:led(y, x, math.floor(f * 15.0))
+            -- NOTE: arc:led() is ring then x, we're row (along LED) then ring.
+            -- TODO might want nearest rather than floor(), then clamp to 0..15.
+        end
+    end
+
+    self.arc:refresh()
+end
+
 return {
-    VariableBlockRenderer = VariableBlockRenderer
+    VariableBlockRenderer = VariableBlockRenderer,
+    VariableArcRenderer = VariableArcRenderer
 }
