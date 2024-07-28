@@ -1,4 +1,4 @@
---- ## shado
+--- ## shado -*- lua-indent-level: 4; -*-
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
 -- github.com/cassiel/shado
@@ -34,14 +34,14 @@ local frame = frames.Frame:new()
 local appFiles
 
 if SEAMSTRESS then
-   appFiles = {
-      "shado.apps.counter.lua",
-      "shado.apps.nugget.lua",
-      "shado.apps.pyramids.lua",
-      "shado.apps.square.lua"
-   }
+    appFiles = {
+        "shado.apps.counter.lua",
+        "shado.apps.nugget.lua",
+        "shado.apps.pyramids.lua",
+        "shado.apps.square.lua"
+    }
 else
-   appFiles = util.scandir(_path.code .. "shado/apps")
+    appFiles = util.scandir(_path.code .. "shado/apps")
 end
 
 local apps = { }
@@ -76,41 +76,41 @@ local appDisplayText = ""
 local redraw
 
 if SEAMSTRESS then
-   -- Screen drawing kind of broken in seamstress, so for now do nothing.
-   redraw = function() end
+    -- Screen drawing kind of broken in seamstress, so for now do nothing.
+    redraw = function() end
 else
-   -- Screen draw: app title (big) and index, then descriptive lines of text:
-   redraw = function()
-      if not SEAMSTRESS then
-         screen.clear()
+    -- Screen draw: app title (big) and index, then descriptive lines of text:
+    redraw = function()
+        if not SEAMSTRESS then
+            screen.clear()
 
          -- Build table of lines of text:
-         local tab = { }
-         for line in appDisplayText:gmatch("%s*([^\n]+)") do
-            table.insert(tab, line)
-         end
-
-         showAppIndex()
-
-         -- Display:
-         for i, v in ipairs(tab) do
-            if i == 1 then              -- Title:
-               screen.level(15)
-               screen.font_face(15)    -- "VeraBd".
-               screen.font_size(12)
-            else                        -- Body text:
-               screen.level(5)
-               screen.font_face(1)     -- Default.
-               screen.font_size(8)
+            local tab = { }
+            for line in appDisplayText:gmatch("%s*([^\n]+)") do
+                table.insert(tab, line)
             end
 
-            screen.move(0, i * 10 + 5)
-            screen.text(v)
-         end
+            showAppIndex()
 
-         screen.update()
-      end
-   end
+            -- Display:
+            for i, v in ipairs(tab) do
+                if i == 1 then              -- Title:
+                    screen.level(15)
+                    screen.font_face(15)    -- "VeraBd".
+                    screen.font_size(12)
+                else                        -- Body text:
+                    screen.level(5)
+                    screen.font_face(1)     -- Default.
+                    screen.font_size(8)
+                end
+
+                screen.move(0, i * 10 + 5)
+                screen.text(v)
+            end
+
+            screen.update()
+        end
+    end
 end
 
 --[[
