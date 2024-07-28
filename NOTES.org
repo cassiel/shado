@@ -1,0 +1,22 @@
+-*- mode: org; mode: visual-line; -*-
+#+STARTUP: indent
+
+* RANDOM TECHNICAL NOTES
+** Hostname
+
+- When working with more than one norns/shield device on a network, they'll need distinct names (other than ~norns.local~). As documented [[https://monome.org/docs/norns/wifi-files/#hostname][here]], change name via ~raspi-config~.
+
+** Git
+
+- On norns, generate a key with
+
+  #+BEGIN_SRC shell-script
+    ssh-keygen -t ed25519 -C "<email>"
+  #+END_SRC
+
+  Then check out: this combo seems to work:
+
+  #+BEGIN_SRC shell-script
+    exec ssh-agent bash
+    ssh-add
+  #+END_SRC
