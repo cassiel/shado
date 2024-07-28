@@ -11,9 +11,9 @@
 --
 -- Introduction and description [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
 
--- For development, purge any shado scripts/libraries from the cache on reload:
+local SEAMSTRESS = false
 
-local SEAMSTRESS = 1
+-- For development, purge any shado scripts/libraries from the cache on reload:
 
 for k, _ in pairs(package.loaded) do
     if k:find("shado.") == 1 then
