@@ -47,7 +47,7 @@ end
 local apps = { }
 
 for _, v in ipairs(appFiles) do
-    local _, _, name = string.find(v, "([%a_]+)%.lua$")
+    local _, _, name = string.find(v, "([%a%d_]+)%.lua$")
     local app = require("shado.apps." .. name)
     table.insert(apps, app)
     frame:add(app.layer, 1, 9)   -- All apps are visually sitting below the actual grid, at y = 9.
