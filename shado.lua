@@ -2,7 +2,7 @@
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
 -- github.com/cassiel/shado
--- https://llllllll.co/t/51408
+-- 
 --
 -- Press K2 and K3
 -- to scroll between apps.
