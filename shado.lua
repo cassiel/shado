@@ -8,7 +8,7 @@
 --
 -- Source: [https://github.com/cassiel/shado](https://github.com/cassiel/shado).
 --
--- Introduction and description [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
+-- Introduction and tutorial [here](https://github.com/cassiel/shado/blob/master/README.MANUAL.org).
 
 local SEAMSTRESS = false
 
