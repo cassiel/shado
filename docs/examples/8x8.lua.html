@@ -35,9 +35,9 @@
 
 <h2>Examples</h2>
 <ul class="nowrap">
-  <li><a href="../examples/8x8.lua.html">8x8.lua</a></li>
+  <li><strong>8x8.lua</strong></li>
   <li><a href="../examples/counter.lua.html">counter.lua</a></li>
-  <li><strong>nugget.lua</strong></li>
+  <li><a href="../examples/nugget.lua.html">nugget.lua</a></li>
   <li><a href="../examples/pyramids.lua.html">pyramids.lua</a></li>
   <li><a href="../examples/square.lua.html">square.lua</a></li>
 </ul>
@@ -56,7 +56,7 @@
 
 <div id="content">
 
-    <h2>nugget.lua</h2>
+    <h2>8x8.lua</h2>
 <pre>
 <span class="comment">-- -*- lua-indent-level: 4; -*-
 </span>
@@ -65,21 +65,15 @@
 <span class="keyword">local</span> frames = <span class="global">require</span> <span class="string">"shado.lib.frames"</span>
 
 <span class="keyword">local</span> lamp_full = types.LampState.ON
-<span class="keyword">local</span> lamp_dull =  types.LampState:<span class="function-name">new</span>(<span class="number">0.3</span>, <span class="number">0</span>)
 
-<span class="keyword">local</span> block = blocks.Block:<span class="function-name">new</span>(<span class="number">2</span>, <span class="number">2</span>):<span class="function-name">fill</span>(lamp_dull)
-<span class="keyword">local</span> frame = frames.Frame:<span class="function-name">new</span>():<span class="function-name">add</span>(block, <span class="number">1</span>, <span class="number">1</span>)
+<span class="keyword">local</span> pixel = blocks.Block:<span class="function-name">new</span>(<span class="string">"1"</span>)
+<span class="keyword">local</span> frame = frames.Frame:<span class="function-name">new</span>()
 
-<span class="keyword">function</span> block:<span class="function-name">press</span>(x, y, how)
-    <span class="keyword">if</span> how == <span class="number">1</span> <span class="keyword">then</span>
-        self:<span class="function-name">setLamp</span>(x, y, lamp_full)
-
-        <span class="keyword">local</span> newX = <span class="global">math</span>.<span class="function-name">random</span>(<span class="number">1</span>, <span class="number">15</span>)
-        <span class="keyword">local</span> newY = <span class="global">math</span>.<span class="function-name">random</span>(<span class="number">1</span>, <span class="number">7</span>)
-
-        frame:<span class="function-name">moveTo</span>(block, newX, newY)
-    <span class="keyword">else</span>
-        self:<span class="function-name">setLamp</span>(x, y, lamp_dull)
+<span class="keyword">for</span> x = <span class="number">1</span>, <span class="number">8</span> <span class="keyword">do</span>
+    <span class="keyword">for</span> y = <span class="number">1</span>, <span class="number">8</span> <span class="keyword">do</span>
+        <span class="keyword">if</span> <span class="global">math</span>.<span class="function-name">random</span>() &gt; <span class="number">0.5</span> <span class="keyword">then</span>
+            frame:<span class="function-name">add</span>(pixel, x, y)
+        <span class="keyword">end</span>
     <span class="keyword">end</span>
 <span class="keyword">end</span>
 
@@ -87,11 +81,9 @@
     layer = frame,
 
     displayText = <span class="string">[[
-        Nugget
-        Testing press- and release-
-        tracking for moving objects.
-        Random teleport, remembering
-        which corners are "held".
+        8x8
+        Simple display demo for the
+        vintage 8x8 greyscale grid.
     ]]</span>
 }</pre>
 

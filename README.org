@@ -3,7 +3,7 @@
 
 * =shado=
 
-The =shado= grid and arc rendering library in Lua for the monome norns (and shields).
+The =shado= grid and arc rendering library in Lua for the monome norns (and shields - and [[https://monome.org/docs/grid/studies/seamstress/][seamstress]]).
 
 =shado= is a compositing and sprite library for grid and arc devices attached to the [[https://monome.org/docs/norns/][monome norns]]. It is based on an [[https://github.com/cassiel/net.loadbang.shado/][earlier release]] written in Java as an OSC subsystem; this version is written in Lua to run on norns natively.
 
@@ -25,6 +25,8 @@ Maiden can also download and install the package directly, via:
 
 Once that's done, from the norms screen, load the =shado= script. Don't try to load any of the other files - they're an assortment of tests and support scripts. The main =shado= script is a container for a number of simple and (mostly) interactive demo applications (living in the =apps= directory). The on-screen instructions will introduce the individual demos, and the buttons will scroll between them.
 
+The =shado= script has a variable to flag whether it's running under seamstress (which is missing a few bits of norns library): set this to =true= or =false= according to taste.
+
 ** Testing Setup
 
 Install =luarocks= (the Lua package manager) and =luaunit= (the unit testing library). On norns:
@@ -34,7 +36,7 @@ Install =luarocks= (the Lua package manager) and =luaunit= (the unit testing lib
   sudo luarocks install luaunit
 #+END_SRC
 
-Note: the command-line Lua on norns is currently version 5.1. (You might be able to upgrade it.) The Lua used for scripting is 5.3. The unit tests should work under 5.1, although that version is under-tested.
+Note: the command-line Lua on norns is currently version 5.1. (You might be able to upgrade it.) The Lua used for scripting is 5.3. The unit tests should work fine under 5.1.
 
 To set up the tests on macOS (with Homebrew):
 
