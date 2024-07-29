@@ -1,4 +1,4 @@
---- ## shado -*- lua-indent-level: 4; -*-
+--- ## shado
 -- shado demonstrator script.
 -- Nick Rothwell, nick@cassiel.com.
 -- github.com/cassiel/shado
@@ -233,3 +233,7 @@ function init()
 
     selectApp(currentApp, 0)
 end
+
+-- Local Variables: ***
+-- lua-indent-level: 4 ***
+-- End: ***
