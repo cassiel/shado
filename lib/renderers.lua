@@ -8,12 +8,12 @@ local VariableBlockRenderer = { }
 VariableBlockRenderer.__index = VariableBlockRenderer
 
 --[[--
-  Create a renderer.
+    Create a renderer.
 
-  @param width the width of the grid
-  @param height the height of the grid
-  @param grid the underlying grid object
-  @return the renderer
+    @param width the width of the grid
+    @param height the height of the grid
+    @param grid the underlying grid object
+    @return the renderer
 
 ]]
 
@@ -26,10 +26,10 @@ function VariableBlockRenderer:new(width, height, grid)
 end
 
 --[[--
-  Render a renderable `shado` object (block, frame or mask).
-  Update all grid LEDs and refresh.
+    Render a renderable `shado` object (block, frame or mask).
+    Update all grid LEDs and refresh.
 
-  @param renderable the `shado` object to render
+    @param renderable the `shado` object to render
 ]]
 
 function VariableBlockRenderer:render(renderable)
@@ -53,7 +53,7 @@ VariableArcRenderer.__index = VariableArcRenderer
     Create an arc renderer.
 
     @param num_rings the number of rings
-    @param arc the underlying grid object
+    @param arc the underlying arc object
     @return the renderer
 
 ]]
@@ -64,6 +64,13 @@ function VariableArcRenderer:new(num_rings, arc)
 
     return setmetatable(result, self)
 end
+
+--[[--
+    Render a renderable `shado` object (block, frame or mask).
+    Update all arc LEDs and refresh.
+
+    @param renderable the `shado` object to render
+]]
 
 function VariableArcRenderer:render(renderable)
     for x = 1, NUM_LEDS do

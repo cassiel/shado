@@ -15,17 +15,19 @@ function Frame:new()
 end
 
 --[[--
-  Add an item to a frame, at the top. Calls can be cascaded, thus:
+    Add an item to a frame, at the top. Calls can be cascaded, thus:
 
     frame:add(item1, x1, y1):add(item2, x2, y2)
 
-  Note: an item should not be added to a frame more than once.
-  (*TODO* Test for this.)
+    Note: an item should not be added to a frame more than once. If
+    you want to do that, put the item into its own frame each time add
+    that to the main frame. (At some point we will test for duplicate
+    addition and throw an error.)
 
-  @param item the `shado` object to add
-  @param x the horizontal location, `1` being the origin
-  @param y the vertical location, `1` being the origin
-  @return the frame
+    @param item the `shado` object to add
+    @param x the horizontal location, `1` being the origin
+    @param y the vertical location, `1` being the origin
+    @return the frame
 ]]
 
 function Frame:add(item, x, y)
@@ -55,10 +57,11 @@ local function find(stack, item)
 end
 
 --[[--
-  Remove a `shado` object from the frame.
-  Raises an error if the item isn't present.
-  *TODO* Calls to `remove` should chain.
-  @param item the `shado` object to remove
+    Remove a `shado` object from the frame.
+    Raises an error if the item isn't present.
+    *TODO* Calls to `remove` should chain.
+
+    @param item the `shado` object to remove
 ]]
 
 function Frame:remove(item)
@@ -67,10 +70,11 @@ function Frame:remove(item)
 end
 
 --[[--
-  Bring a `shado` object to the top of a frame.
-  Raises an error if the item isn't present.
-  *TODO* Calls to `top` should chain.
-  @param item the `shado` object to raise
+    Bring a `shado` object to the top of a frame.
+    Raises an error if the item isn't present.
+    *TODO* Calls to `top` should chain.
+
+    @param item the `shado` object to raise
 ]]
 
 function Frame:top(item)
@@ -82,10 +86,11 @@ function Frame:top(item)
 end
 
 --[[--
-  Drop a `shado` object to the bottom of a frame.
-  Raises an error if the item isn't present.
-  *TODO* Calls to `bottom` should chain.
-  @param item the `shado` object to lower
+    Drop a `shado` object to the bottom of a frame.
+    Raises an error if the item isn't present.
+    *TODO* Calls to `bottom` should chain.
+
+    @param item the `shado` object to lower
 ]]
 
 function Frame:bottom(item)
@@ -102,10 +107,11 @@ local function setVisibility(stack, item, how)
 end
 
 --[[--
-  Hide a `shado` object in a frame (effectively, make
-  it transparent). This does not affect its response
-  to button presses.
-  @param item the object to hide
+    Hide a `shado` object in a frame (effectively, make
+    it transparent). This does not affect its response
+    to button presses.
+
+    @param item the object to hide
 ]]
 
 function Frame:hide(item)
@@ -113,9 +119,10 @@ function Frame:hide(item)
 end
 
 --[[--
-  Show a `shado` object in a frame. This does
-  not affect its response to button presses.
-  @param item the object to show
+    Show a `shado` object in a frame. This does
+    not affect its response to button presses.
+
+    @param item the object to show
 ]]
 
 function Frame:show(item)
@@ -123,13 +130,14 @@ function Frame:show(item)
 end
 
 --[[--
-  Move an object in a frame to a new location.
-  Origin is `(1, 1).`
-  Returns the frame, for chaining.
-  @param item the object to move
-  @param x the new X location
-  @param y the new Y location
-  @return the frame
+    Move an object in a frame to a new location.
+    Origin is `(1, 1).`
+    Returns the frame, for chaining.
+
+    @param item the object to move
+    @param x the new X location
+    @param y the new Y location
+    @return the frame
 ]]
 
 function Frame:moveTo(item, x, y)
@@ -141,12 +149,13 @@ function Frame:moveTo(item, x, y)
 end
 
 --[[--
-  Retrieve an object from a frame. The topmost
-  object is at index `1`. Throws an error if
-  the index is less than `1` or greater than the
-  number of objects present.
-  @param i the index of the desired object
-  @return the object
+    Retrieve an object from a frame. The topmost
+    object is at index `1`. Throws an error if
+    the index is less than `1` or greater than the
+    number of objects present.
+
+    @param i the index of the desired object
+    @return the object
 ]]
 
 function Frame:get(i)
@@ -160,14 +169,15 @@ function Frame:get(i)
 end
 
 --[[--
-  Get the computed "lamp" value for a frame at location
-  `(x, y)`. If the frame is empty, or the coordinates `(x, y)` are
-  outside any objects in the frame, the result will be
-  `types.LampState.THRU`.
-  @param x the X location to examine
-  @param y the Y location to examine
-  @return the lamp value
-  @see types.LampState
+    Get the computed "lamp" value for a frame at location
+    `(x, y)`. If the frame is empty, or the coordinates `(x, y)` are
+    outside any objects in the frame, the result will be
+    `types.LampState.THRU`.
+
+    @param x the X location to examine
+    @param y the Y location to examine
+    @return the lamp value
+    @see types.LampState
 ]]
 
 function Frame:getLamp(x, y)
@@ -185,15 +195,15 @@ function Frame:getLamp(x, y)
 end
 
 --[[--
-  The default handler for button press events. It returns
-  `false`, which will cause press events to be passed into
-  the frame's component objects. Override to handle buttons
-  in the frame itself, rather than its components.
+    The default handler for button press events. It returns
+    `false`, which will cause press events to be passed into
+    the frame's component objects. Override to handle buttons
+    in the frame itself, rather than its components.
 
-  @param x the X location of the press
-  @param y the Y location of the press
-  @param how the kind of button event: `1` for press, `0` for release.
-  @return `false`
+    @param x the X location of the press
+    @param y the Y location of the press
+    @param how the kind of button event: `1` for press, `0` for release.
+    @return `false`
 ]]
 
 function Frame:press(x, y, how)
@@ -201,14 +211,14 @@ function Frame:press(x, y, how)
 end
 
 --[[--
-  Internal function for routing press-on events. Returns a `RouteResult`
-  object so that the corresponding press-off can be handled properly.
+    Internal function for routing press-on events. Returns a `RouteResult`
+    object so that the corresponding press-off can be handled properly.
 
-  If the frame itself does not handle the press, then the constituent
-  objects are interrogated from top to bottom, until one does handle
-  it (by returning a result from its `routePress00` method). If there is
-  no result, then the frame as a whole has not handled the press, so
-  return `nil`.
+    If the frame itself does not handle the press, then the constituent
+    objects are interrogated from top to bottom, until one does handle
+    it (by returning a result from its `routePress00` method). If there is
+    no result, then the frame as a whole has not handled the press, so
+    return `nil`.
 ]]
 
 function Frame:routePress00(x, y)
@@ -231,5 +241,5 @@ function Frame:routePress00(x, y)
 end
 
 return {
-   Frame = Frame
+    Frame = Frame
 }

@@ -1,10 +1,7 @@
--- -*- lua-indent-level: 4; -*-
-
---[[
-  Two pyramids. Each is a stack of concentric squares, 8x8 at the bottom
-  to 2x2 at the top. Each responds to button press, randomising its
-  own level and blend (opacity).
-]]
+-----
+-- Two pyramids. Each is a stack of concentric squares, 8x8 at the bottom
+-- to 2x2 at the top. Each responds to button press, randomising its
+-- own level and blend (opacity).
 
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
@@ -15,14 +12,14 @@ local frames = require "shado.lib.frames"
 function randomLamp()
     local level = math.random()             -- 0.0..1.0
     local blend = math.random() * 2 - 1     -- -1.0..1.0
-    
+
     return  types.LampState:new(level, blend)
 end
 
 function makeLayer(size)
     -- Create the block:
     local b = blocks.Block:new(size, size):fill(randomLamp())
-    
+
     -- A button press should randomise the lamp:
     b.press =
         function(self, x, y, how)
@@ -30,12 +27,12 @@ function makeLayer(size)
                 b:fill(randomLamp())
             end
         end
-    
+
     -- Create a frame to centre the block (though we could
     -- just do that in the outermost frame below):
     local offset = (8 - size) // 2
     local f = frames.Frame:new():add(b, 1 + offset, 1 + offset)
-    
+
     return f
 end
 
@@ -62,3 +59,7 @@ return {
         opacity of selected square.
     ]]
 }
+
+-- Local Variables: ***
+-- lua-indent-level: 4 ***
+-- End: ***

@@ -1,21 +1,20 @@
--- -*- lua-indent-level: 4; -*-
-
---- Simple counter.
+-----
+-- Simple counter.
 
 local blocks = require "shado.lib.blocks"
 local frames = require "shado.lib.frames"
 
 local patterns = {
-   "111 101 101 101 111",       -- 0
-   "110 010 010 010 111",       -- 1
-   "111 001 111 100 111",       -- 2
-   "111 001 111 001 111",       -- 3
-   "101 101 111 001 001",       -- 4
-   "111 100 111 001 111",       -- 5
-   "111 100 111 101 111",       -- 6
-   "111 001 001 001 001",       -- 7
-   "111 101 111 101 111",       -- 8
-   "111 101 111 001 111"        -- 9
+    "111 101 101 101 111",       -- 0
+    "110 010 010 010 111",       -- 1
+    "111 001 111 100 111",       -- 2
+    "111 001 111 001 111",       -- 3
+    "101 101 111 001 001",       -- 4
+    "111 100 111 001 111",       -- 5
+    "111 100 111 101 111",       -- 6
+    "111 001 001 001 001",       -- 7
+    "111 101 111 101 111",       -- 8
+    "111 101 111 001 111"        -- 9
 }
 
 -- A frame for each digit counter:
@@ -30,10 +29,10 @@ local outerFrame = frames.Frame:new():add(tensFrame, 5, 2):add(unitsFrame, 10, 2
 local blockObjects = { }
 
 for _, v in ipairs(patterns) do
-   local b = blocks.Block:new(v)
-   table.insert(blockObjects, b)
-   tensFrame:add(b, 1, 1)
-   unitsFrame:add(b, 1, 1)
+    local b = blocks.Block:new(v)
+    table.insert(blockObjects, b)
+    tensFrame:add(b, 1, 1)
+    unitsFrame:add(b, 1, 1)
 end
 
 return {
@@ -54,3 +53,7 @@ return {
         No button interaction.
     ]]
 }
+
+-- Local Variables: ***
+-- lua-indent-level: 4 ***
+-- End: ***

@@ -1,4 +1,5 @@
--- -*- lua-indent-level: 4; -*-
+-----
+-- Nugget: press and release tracking demo.
 
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
@@ -25,7 +26,7 @@ end
 
 return {
     layer = frame,
-    
+
     displayText = [[
         Nugget
         Testing press- and release-
@@ -34,3 +35,7 @@ return {
         which corners are "held".
     ]]
 }
+
+-- Local Variables: ***
+-- lua-indent-level: 4 ***
+-- End: ***

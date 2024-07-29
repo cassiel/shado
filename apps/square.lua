@@ -1,4 +1,5 @@
--- -*- lua-indent-level: 4; -*-
+-----
+-- Simple fixed graphics.
 
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
@@ -16,3 +17,7 @@ return {
         No button interaction.
     ]]
 }
+
+-- Local Variables: ***
+-- lua-indent-level: 4 ***
+-- End: ***

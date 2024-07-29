@@ -91,8 +91,11 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:hide">Frame:hide (item)</a></td>
-	<td class="summary">Hide a <a href="../modules/shado.html#">shado</a> object in a frame (effectively, make
-  it transparent).</td>
+	<td class="summary">
+<p>Hide a <a href="../modules/shado.html#">shado</a> object in a frame (effectively, make</p>
+<pre><code>it transparent).
+</code></pre>
+</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:show">Frame:show (item)</a></td>
@@ -108,8 +111,11 @@
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:getLamp">Frame:getLamp (x, y)</a></td>
-	<td class="summary">Get the computed "lamp" value for a frame at location
-  <code>(x, y)</code>.</td>
+	<td class="summary">
+<p>Get the computed "lamp" value for a frame at location</p>
+<pre><code>&lt;code&gt;(x, y)&lt;/code&gt;.
+</code></pre>
+</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#Frame:press">Frame:press (x, y, how)</a></td>
@@ -147,13 +153,18 @@
     <strong>Frame:add (item, x, y)</strong>
     </dt>
     <dd>
-    Add an item to a frame, at the top.  Calls can be cascaded, thus:</p>
+
+<p>Add an item to a frame, at the top.  Calls can be cascaded, thus:</p>
 
 <pre><code>frame:add(item1, x1, y1):add(item2, x2, y2)
+
+Note: an item should not be added to a frame more than once. If
+you want to do that, put the item into its own frame each time add
+that to the main frame. (At some point we will test for duplicate
+addition and throw an error.)
 </code></pre>
 
-<p>  Note: an item should not be added to a frame more than once.
-  (<em>TODO</em> Test for this.)
+
 
 
     <h3>Parameters:</h3>
@@ -184,9 +195,13 @@
     <strong>Frame:remove (item)</strong>
     </dt>
     <dd>
-    Remove a <a href="../modules/shado.html#">shado</a> object from the frame.
-  Raises an error if the item isn't present.
-  <em>TODO</em> Calls to <a href="../modules/lib.frames.html#Frame:remove">remove</a> should chain.
+
+<p>Remove a <a href="../modules/shado.html#">shado</a> object from the frame. </p>
+<pre><code>Raises an error if the item isn't present.
+*TODO* Calls to &lt;a href="../modules/lib.frames.html#Frame:remove"&gt;remove&lt;/a&gt; should chain.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -206,9 +221,13 @@
     <strong>Frame:top (item)</strong>
     </dt>
     <dd>
-    Bring a <a href="../modules/shado.html#">shado</a> object to the top of a frame.
-  Raises an error if the item isn't present.
-  <em>TODO</em> Calls to <a href="../modules/lib.frames.html#Frame:top">top</a> should chain.
+
+<p>Bring a <a href="../modules/shado.html#">shado</a> object to the top of a frame. </p>
+<pre><code>Raises an error if the item isn't present.
+*TODO* Calls to &lt;a href="../modules/lib.frames.html#Frame:top"&gt;top&lt;/a&gt; should chain.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -228,9 +247,13 @@
     <strong>Frame:bottom (item)</strong>
     </dt>
     <dd>
-    Drop a <a href="../modules/shado.html#">shado</a> object to the bottom of a frame.
-  Raises an error if the item isn't present.
-  <em>TODO</em> Calls to <a href="../modules/lib.frames.html#Frame:bottom">bottom</a> should chain.
+
+<p>Drop a <a href="../modules/shado.html#">shado</a> object to the bottom of a frame. </p>
+<pre><code>Raises an error if the item isn't present.
+*TODO* Calls to &lt;a href="../modules/lib.frames.html#Frame:bottom"&gt;bottom&lt;/a&gt; should chain.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -250,9 +273,13 @@
     <strong>Frame:hide (item)</strong>
     </dt>
     <dd>
-    Hide a <a href="../modules/shado.html#">shado</a> object in a frame (effectively, make
-  it transparent).  This does not affect its response
-  to button presses.
+
+<p>Hide a <a href="../modules/shado.html#">shado</a> object in a frame (effectively, make</p>
+<pre><code>it transparent).  This does not affect its response
+to button presses.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -272,8 +299,12 @@
     <strong>Frame:show (item)</strong>
     </dt>
     <dd>
-    Show a <a href="../modules/shado.html#">shado</a> object in a frame.  This does
-  not affect its response to button presses.
+
+<p>Show a <a href="../modules/shado.html#">shado</a> object in a frame.  This does</p>
+<pre><code>not affect its response to button presses.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -293,9 +324,13 @@
     <strong>Frame:moveTo (item, x, y)</strong>
     </dt>
     <dd>
-    Move an object in a frame to a new location.
-  Origin is <code>(1, 1).</code>
-  Returns the frame, for chaining.
+
+<p>Move an object in a frame to a new location. </p>
+<pre><code>Origin is &lt;code&gt;(1, 1).&lt;/code&gt;
+Returns the frame, for chaining.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -326,10 +361,14 @@
     <strong>Frame:get (i)</strong>
     </dt>
     <dd>
-    Retrieve an object from a frame.  The topmost
-  object is at index <code>1</code>. Throws an error if
-  the index is less than <code>1</code> or greater than the
-  number of objects present.
+
+<p>Retrieve an object from a frame.  The topmost</p>
+<pre><code>object is at index &lt;code&gt;1&lt;/code&gt;. Throws an error if
+the index is less than &lt;code&gt;1&lt;/code&gt; or greater than the
+number of objects present.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -354,10 +393,14 @@
     <strong>Frame:getLamp (x, y)</strong>
     </dt>
     <dd>
-    Get the computed "lamp" value for a frame at location
-  <code>(x, y)</code>.  If the frame is empty, or the coordinates <code>(x, y)</code> are
-  outside any objects in the frame, the result will be
-  <code>types.LampState.THRU</code>.
+
+<p>Get the computed "lamp" value for a frame at location</p>
+<pre><code>&lt;code&gt;(x, y)&lt;/code&gt;.  If the frame is empty, or the coordinates &lt;code&gt;(x, y)&lt;/code&gt; are
+outside any objects in the frame, the result will be
+&lt;code&gt;types.LampState.THRU&lt;/code&gt;.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -388,10 +431,14 @@
     <strong>Frame:press (x, y, how)</strong>
     </dt>
     <dd>
-    The default handler for button press events.  It returns
-  <code>false</code>, which will cause press events to be passed into
-  the frame's component objects. Override to handle buttons
-  in the frame itself, rather than its components.
+
+<p>The default handler for button press events.  It returns</p>
+<pre><code>&lt;code&gt;false&lt;/code&gt;, which will cause press events to be passed into
+the frame's component objects. Override to handle buttons
+in the frame itself, rather than its components.
+</code></pre>
+
+
 
 
     <h3>Parameters:</h3>
@@ -422,14 +469,17 @@
     <strong>Frame:routePress00 (x, y)</strong>
     </dt>
     <dd>
-    Internal function for routing press-on events.  Returns a <code>RouteResult</code>
-  object so that the corresponding press-off can be handled properly.</p>
 
-<p>  If the frame itself does not handle the press, then the constituent
-  objects are interrogated from top to bottom, until one does handle
-  it (by returning a result from its <a href="../modules/lib.frames.html#Frame:routePress00">routePress00</a> method). If there is
-  no result, then the frame as a whole has not handled the press, so
-  return <code>nil</code>.
+<p>Internal function for routing press-on events.  Returns a <code>RouteResult</code></p>
+<pre><code>object so that the corresponding press-off can be handled properly.
+
+If the frame itself does not handle the press, then the constituent
+objects are interrogated from top to bottom, until one does handle
+it (by returning a result from its &lt;a href="../modules/lib.frames.html#Frame:routePress00"&gt;routePress00&lt;/a&gt; method). If there is
+no result, then the frame as a whole has not handled the press, so
+return &lt;code&gt;nil&lt;/code&gt;.
+</code></pre>
+
 
 
     <h3>Parameters:</h3>
@@ -457,7 +507,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/lunarmodules/LDoc">LDoc 1.5.0</a></i>
-<i style="float:right;">Last updated 2024-07-29 16:19:21 </i>
+<i style="float:right;">Last updated 2024-07-29 17:08:05 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -1,4 +1,6 @@
--- -*- lua-indent-level: 4; -*-
+-----
+-- Simple static random pattern, 8x8.
+-- No interaction.
 
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
@@ -19,10 +21,14 @@ end
 
 return {
     layer = frame,
-    
+
     displayText = [[
         8x8
         Simple display demo for the
         vintage 8x8 greyscale grid.
     ]]
 }
+
+-- Local Variables: ***
+-- lua-indent-level: 4 ***
+-- End: ***
