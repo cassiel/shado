@@ -32,7 +32,7 @@ local frame = frames.Frame:new()
 
 local appFiles
 
-if SEAMSTRESS then
+if SEAMSTRESS then      --  No scandir available, so hardware (some) apps.
     appFiles = {
         "shado.apps.counter.lua",
         "shado.apps.nugget.lua",
@@ -47,9 +47,11 @@ local apps = { }
 
 for _, v in ipairs(appFiles) do
     local _, _, name = string.find(v, "([%a%d_]+)%.lua$")
-    local app = require("shado.apps." .. name)
-    table.insert(apps, app)
-    frame:add(app.layer, 1, 9)   -- All apps are visually sitting below the actual grid, at y = 9.
+    if name then
+        local app = require("shado.apps." .. name)
+        table.insert(apps, app)
+        frame:add(app.layer, 1, 9)   -- All apps are visually sitting below (under) the actual grid, at y = 9.
+    end
 end
 
 -- Keep track of currently selected/running app:
@@ -83,7 +85,7 @@ else
         if not SEAMSTRESS then
             screen.clear()
 
-         -- Build table of lines of text:
+            -- Build table of lines of text:
             local tab = { }
             for line in appDisplayText:gmatch("%s*([^\n]+)") do
                 table.insert(tab, line)
@@ -172,6 +174,7 @@ local function selectApp(app, sense)
         frame:moveTo(frame:get(1), 1, 1)        -- New top app into line of sight.
         renderer:render(frame)
 
+        print("Set display text: " .. displayText)
         appDisplayText = displayText
         redraw()
     end
@@ -193,7 +196,7 @@ function key(n, z)
                 newIndex = currentAppIndex - 1
                 if newIndex < 1 then newIndex = #apps end
                 sense = -1
-            else                -- (Not reachable:)
+            else                -- (Not actually reachable:)
                 newIndex = currentAppIndex
                 sense = 0
             end
@@ -230,6 +233,10 @@ function init()
     counter.event = service
     counter:start()
 
+    selectApp(currentApp, 0)
+end
+
+function foo()
     selectApp(currentApp, 0)
 end
 
