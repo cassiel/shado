@@ -32,7 +32,7 @@ local frame = frames.Frame:new()
 
 local appFiles
 
-if SEAMSTRESS then      --  No scandir available, so hardware (some) apps.
+if SEAMSTRESS then      --  No scandir available, so hardwire (some) apps.
     appFiles = {
         "shado.apps.counter.lua",
         "shado.apps.nugget.lua",
