@@ -70,3 +70,5 @@ From the main =shado= directory, a =ldoc -v .= reads from =config.ld= and genera
 - All coordinates have origin or top-left at =(1, 1)= (Lua-style) rather than =(0, 0)= (every other language in the world-style).
 - Rename: =ViewPort= is now called =Mask=, which is a bit snappier and more indicative of what it actually does.
 - In the Java implementation, =press()= is a boolean method returning =true= for press handled, =false= otherwise. Since Lua is more dynamic, we can have press-handled as the default by omitting any =return= statement - i.e., a result of =nil= implies handled. In fact, =false= is the only return value to mark a press as not handled.
+
+We considered changing function/methods names from Java-style camel-case to Lua-style snake-case, but the latter doesn't seem to be totally idiomatic, and it appeals to keep the existing names to reflect the package's Java heritage.
