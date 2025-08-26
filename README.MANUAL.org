@@ -135,7 +135,9 @@ Here's how it works: the Block, Frame and Mask classes can be augmented with a m
   function Class:press(x, y, how) ... end
 #+END_SRC
 
-This represents a button press. Arguments =x= and =y= are location (1-based), while =how= is =1= for press and =0= for release. The built-in classes provide a method which does nothing; in order to respond to button presses, a block, frame or mask must have this method overridden, either via inheritance (fiddly) or simply by assigning this method directly into an object.
+This represents a button press. Arguments =x= and =y= are location (1-based), while =how= is =1= for press and =0= for release(*). The built-in classes provide a method which does nothing; in order to respond to button presses, a block, frame or mask must have this method overridden, either via inheritance (fiddly) or simply by assigning this method directly into an object.
+
+(*) I know: both =1= and =0= are truthy in Lua. So: test for truth of ~how == 1~, not just =how=.
 
 When a button is pressed, =shado= searches a tree of renderables in order, until it finds one which handles the press; once the press is handled, the search stops. Unless the renderable returns =false= from the call to =press()=, it is considered to have handled the event.
 
