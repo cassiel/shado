@@ -15,7 +15,7 @@ local SEAMSTRESS = false
 -- For development, purge any shado scripts/libraries from the cache on reload:
 
 for k, _ in pairs(package.loaded) do
-    if k:find("shado.") == 1 then
+    if k:find("shado%.") == 1 then
         print("purge " .. k)
         package.loaded[k] = nil
     end

@@ -1,6 +1,6 @@
 -----
 -- Simple static random pattern, 8x8.
--- No interaction.
+-- No variable brightness. No interaction.
 
 local types = require "shado.lib.types"
 local blocks = require "shado.lib.blocks"
@@ -26,6 +26,7 @@ return {
         8x8
         Simple display demo for the
         vintage 8x8 greyscale grid.
+        No variable brightness.
     ]]
 }
 
