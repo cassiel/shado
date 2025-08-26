@@ -139,7 +139,7 @@ This represents a button press. Arguments =x= and =y= are location (1-based), wh
 
 (*) I know: both =1= and =0= are truthy in Lua. So: test for truth of ~how == 1~, not just =how=.
 
-When a button is pressed, =shado= searches a tree of renderables in order, until it finds one which handles the press; once the press is handled, the search stops. Unless the renderable returns =false= from the call to =press()=, it is considered to have handled the event.
+When a button is pressed, =shado= searches a tree of renderables in order, until it finds one which handles the press; once the press is handled, the search stops. Unless the renderable returns =false= (specifically: not =nil=) from the call to =press()=, it is considered to have handled the event.
 
 A block or mask can only handle a button press which falls within its declared coordinates; if the button press is outside the renderable's dimensions then the renderable never sees it. Frames are effectively infinite, so =press()= can be handled anywhere on the X-Y plane.
 
